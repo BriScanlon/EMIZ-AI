@@ -1,0 +1,28 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: emiz-mongodb-container
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
+    volumes:
+      - ./Database/db:/data/db
+      - ./Database/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  mongo-init:
+    build: ./Database
+    restart: "no"
+    env_file: ./.env
+    volumes:
+      - ./Database:/app
+
+volumes:
+  db:
+
+
+networks:
+  default:
+    external: false
