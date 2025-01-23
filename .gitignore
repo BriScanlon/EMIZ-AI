@@ -1,4 +1,2 @@
 .env
-Database/db/diagnostic.data/metrics.interim
-Database/db/
-Database/db/*
+neo4j/

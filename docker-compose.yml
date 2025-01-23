@@ -1,27 +1,44 @@
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: emiz-mongodb-container
+  neo4j:
+    image: neo4j:latest
+    container_name: neo4j-container
     ports:
-      - "27018:27017"
+      - "${DATABASE_WEB_PORT}:${DATABASE_WEB_PORT}" # Neo4j browser web interface
+      - "${DATABASE_BOLT_PORT}:${DATABASE_BOLT_PORT}" # Bolt protocol for database connections
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
-      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
+      NEO4J_AUTH: "neo4j/${NEO4J_PASSWORD}" # Replace with your desired username/password
     volumes:
-      - ./Database/db:/data/db
-      - ./Database/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./neo4j/data:/data # Data directory for database files
+      - ./neo4j/logs:/logs # Logs directory
+      - ./neo4j/import:/import # Directory for importing files
+      - ./neo4j/plugins:/plugins # Directory for plugins
+    restart: unless-stopped
 
-  mongo-init:
-    build: ./Database
-    restart: "no"
-    env_file: ./.env
+  api-service:
+    build:
+      context: ./API # Build context is the /API/ folder
+      dockerfile: Dockerfile # Uses the Dockerfile within the /API/ folder
+    container_name: api-container
+    ports:
+      - "${API_EXTERNAL_PORT}:${API_INTERNAL_PORT}" # Exposes the API on port 8000
+    env_file:
+      - ./.env # Loads environment variables from the .env file
+    environment:
+      DATABASE_URL: "bolt://${NEO4J_USER}:${NEO4J_PASSWORD}@neo4j-container:${DATABASE_BOLT_PORT}" # Neo4j connection string
+      CUDA_VISIBLE_DEVICES: "0"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    runtime: nvidia
     volumes:
-      - ./Database:/app
-
-volumes:
-  db:
-
+      - ./API:/app # Mounts the /API/ folder to /app in the container
+    depends_on:
+      - neo4j # Ensures Neo4j starts before the Python app
+    restart: unless-stopped
 
 networks:
   default:

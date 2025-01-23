@@ -1,0 +1,6 @@
+langchain_community
+langchain_experimental
+neo4j
+pandas
+uvicorn
+fastapi
