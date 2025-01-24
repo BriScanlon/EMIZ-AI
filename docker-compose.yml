@@ -1,17 +1,19 @@
 services:
-  neo4j:
+  neo4j-db:
     image: neo4j:latest
-    container_name: neo4j-container
+    container_name: neo4j-db-container
     ports:
       - "${DATABASE_WEB_PORT}:${DATABASE_WEB_PORT}" # Neo4j browser web interface
       - "${DATABASE_BOLT_PORT}:${DATABASE_BOLT_PORT}" # Bolt protocol for database connections
     environment:
-      NEO4J_AUTH: "neo4j/${NEO4J_PASSWORD}" # Replace with your desired username/password
+      NEO4J_AUTH: "neo4j/TestPassword" # Replace with your desired username/password
+      NEO4JLABS_PLUGINS: '["apoc"]' # Add APOC plugin
+      NEO4J_dbms_security_procedures_unrestricted: "apoc.*"
     volumes:
-      - ./neo4j/data:/data # Data directory for database files
-      - ./neo4j/logs:/logs # Logs directory
-      - ./neo4j/import:/import # Directory for importing files
-      - ./neo4j/plugins:/plugins # Directory for plugins
+      - ./neo4j-db/data:/data # Data directory for database files
+      - ./neo4j-db/logs:/logs # Logs directory
+      - ./neo4j-db/import:/import # Directory for importing files
+      - ./neo4j-db/plugins:/plugins # Directory for plugins
     restart: unless-stopped
 
   api-service:
@@ -24,7 +26,9 @@ services:
     env_file:
       - ./.env # Loads environment variables from the .env file
     environment:
-      DATABASE_URL: "bolt://${NEO4J_USER}:${NEO4J_PASSWORD}@neo4j-container:${DATABASE_BOLT_PORT}" # Neo4j connection string
+      DATABASE_URL: "bolt://neo4j-db-container:${DATABASE_BOLT_PORT}" # Neo4j connection string
+      NEO4J_USER: ${NEO4J_USER}
+      NEO4J_PASSWORD: ${NEO4J_PASSWORD}
       CUDA_VISIBLE_DEVICES: "0"
     deploy:
       resources:
@@ -37,7 +41,20 @@ services:
     volumes:
       - ./API:/app # Mounts the /API/ folder to /app in the container
     depends_on:
-      - neo4j # Ensures Neo4j starts before the Python app
+      - neo4j-db # Ensures Neo4j starts before the Python app
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-container
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama:/var/lib/ollama
+    runtime: nvidia # Enable NVIDIA runtime for GPU access
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all # Expose all GPUs
+      - NVIDIA_DRIVER_CAPABILITIES=all # Grant all driver capabilities
     restart: unless-stopped
 
 networks:

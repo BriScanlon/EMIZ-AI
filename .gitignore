@@ -1,2 +1,3 @@
 .env
-neo4j/
+neo4j-db/
+API/__pycache__/app.cpython-38.pyc

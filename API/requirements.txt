@@ -1,6 +1,8 @@
 langchain_community
 langchain_experimental
+langchain_ollama
 neo4j
 pandas
 uvicorn
 fastapi
+json_repair
