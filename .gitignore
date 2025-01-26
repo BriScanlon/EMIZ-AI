@@ -1,3 +1,7 @@
 .env
 neo4j-db/
 API/__pycache__/
+API/venv
+nvidia
+package-lock.json
+ollama/

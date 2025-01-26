@@ -13,7 +13,7 @@ from neo4j import GraphDatabase
 import pandas as pd
 
 # environment settings
-NEO4J_CONNECTION = os.getenv("DATABASE_URL")
+NEO4J_URI="bolt://neo4j-db-container:7687"
 NEO4J_USER = os.getenv("NEO4J_USER")
 NEO4J_PASSWORD = "TestPassword"
 
@@ -36,13 +36,16 @@ They work closely with their respective teams to develop innovative products and
 
 # create neo4j driver instance
 try: 
-  driver = GraphDatabase.driver(NEO4J_CONNECTION, auth=(NEO4J_USER, NEO4J_PASSWORD))
+  driver = GraphDatabase.driver("bolt://neo4j-db-container:7687", auth=(NEO4J_USER, NEO4J_PASSWORD))
 except Exception as e:
   raise Exception(f"Failed to connect to Neo4j: {str(e)}")
 
 # Neo4j settings
-graph = Neo4jGraph()
-graph.query('MATCH (n) DETACH DELETE n;')
+graph = Neo4jGraph(
+  url="bolt://neo4j-db-container:7687",
+    username="neo4j",
+    password="TestPassword"
+)
 
 # create text loader
 loader = TextLoader(file_path=text, encoding = 'UTF-8')
