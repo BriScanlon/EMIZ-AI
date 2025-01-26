@@ -12,6 +12,7 @@ from langchain_ollama.llms import OllamaLLM
 from neo4j import GraphDatabase
 import pandas as pd
 
+
 # environment settings
 NEO4J_URI="bolt://neo4j-db-container:7687"
 NEO4J_USER = os.getenv("NEO4J_USER")
