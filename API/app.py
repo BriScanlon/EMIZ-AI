@@ -268,24 +268,6 @@ alternator drive belt failed."""
 # Neo4j settings
 graph_driver = Neo4jGraph(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
 
-""" # create Document Object directly for test text
-docs = [Document(page_content=text1)]
-
-
-# split text into chunks
-text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP
-)
-documents = text_splitter.split_documents(documents=docs)
-
-try:
-    graph_documents = llm_transformer.convert_to_graph_documents(documents)
-    graph_driver.add_graph_documents(
-        graph_documents, baseEntityLabel=True, include_source=True
-    )
-except Exception as e:
-    raise Exception(f"Error: {e}") """
-
 # initialise FastAPI
 app = FastAPI()
 
