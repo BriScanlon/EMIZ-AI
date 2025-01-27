@@ -6,3 +6,6 @@ pandas
 uvicorn
 fastapi
 json_repair
+python-multipart
+PyPDF2
+python-docx

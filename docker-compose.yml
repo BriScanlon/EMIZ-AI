@@ -26,7 +26,7 @@ services:
     env_file:
       - ./.env # Loads environment variables from the .env file
     environment:
-      DATABASE_URL: "bolt://neo4j-db-container:${DATABASE_BOLT_PORT}" # Neo4j connection string
+      NEO4J_URI: "bolt://neo4j-db-container:${DATABASE_BOLT_PORT}" # Neo4j connection string
       NEO4J_USER: ${NEO4J_USER}
       NEO4J_PASSWORD: ${NEO4J_PASSWORD}
       CUDA_VISIBLE_DEVICES: "0"

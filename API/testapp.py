@@ -23,7 +23,7 @@ llm = OllamaLLM(base_url="http://127.0.0.1:11434", model="phi4", temperature=0)
 llm_transformer = LLMGraphTransformer(llm=llm)
 
 # chunk settings
-CHUNK_SIZE = 1000
+CHUNK_SIZE = 3000
 CHUNK_OVERLAP = 50
 
 # second test text
@@ -267,7 +267,7 @@ alternator drive belt failed."""
 graph = Neo4jGraph("bolt://127.0.0.1:7687", NEO4J_USER, NEO4J_PASSWORD)
 
 # create Document Object directly for test text
-docs = [Document(page_content=text)]
+docs = [Document(page_content=text1)]
 
 
 # split text into chunks
