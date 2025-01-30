@@ -19,17 +19,18 @@ import pandas as pd
 from pydantic import BaseModel
 
 # environment settings
-NEO4J_URI = "bolt://neo4j-db-container"
+NEO4J_URI = os.getenv("NEO4J_URI", "bolt://neo4j-db-container")
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
-NEO4J_PASSWORD = "TestPassword"
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
+API_CONTEXT_SIZE = os.getenv("API_CONTEXT_SIZE", "2048")
 
 # ollama settings
-llm = OllamaLLM(base_url="http://ollama-container:11434", model="phi4", temperature=0)
+llm = OllamaLLM(base_url="http://ollama-container:11434", model="phi4", temperature=0, options=API_CONTEXT_SIZE)
 llm_transformer = LLMGraphTransformer(llm=llm)
 
 # chunk settings
-CHUNK_SIZE = 3000
-CHUNK_OVERLAP = 150
+CHUNK_SIZE = 1000
+CHUNK_OVERLAP = 200
 
 # Neo4j settings
 graph_driver = Neo4jGraph(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
