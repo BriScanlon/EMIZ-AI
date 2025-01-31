@@ -1,5 +1,5 @@
 import os
-import pprint
+import subprocess
 from tempfile import NamedTemporaryFile
 from fastapi import FastAPI, HTTPException, File, UploadFile, Body, Query
 from langchain_community.document_loaders import TextLoader
@@ -143,3 +143,4 @@ async def query_graph_with_cypher(request: QueryRequest):
             status_code=500,
             detail=f"An error occurred while querying the database: {e}",
         )
+        
