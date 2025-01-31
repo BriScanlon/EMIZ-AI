@@ -1,5 +1,5 @@
 import os
-import pprint
+import subprocess
 from tempfile import NamedTemporaryFile
 from fastapi import FastAPI, HTTPException, File, UploadFile, Body, Query
 from langchain_community.document_loaders import TextLoader
@@ -28,8 +28,8 @@ llm = OllamaLLM(base_url="http://ollama-container:11434", model="phi4", temperat
 llm_transformer = LLMGraphTransformer(llm=llm)
 
 # chunk settings
-CHUNK_SIZE = 3000
-CHUNK_OVERLAP = 150
+CHUNK_SIZE = 1000
+CHUNK_OVERLAP = 200
 
 # Neo4j settings
 graph_driver = Neo4jGraph(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
@@ -143,3 +143,4 @@ async def query_graph_with_cypher(request: QueryRequest):
             status_code=500,
             detail=f"An error occurred while querying the database: {e}",
         )
+        

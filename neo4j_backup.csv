@@ -1,0 +1,1719 @@
+"_id","_labels","chunk_index","embedding","id","index","name","text","weather","_start","_end","_type","fromYear"
+"0",":Document","","","a55757b83bcabeabc6f870733e2fdeea","","","© Crown copyright 2010 16
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+ACCIDENT
+Aircraft Type and Registration: De Havilland Canada DHC-6 300 Twin Otter, C-FAKB
+No & Type of Engines: 2 Pratt & Whitney PT6A-27 turboprop engines
+Year of Manufacture: 1969 serial number 273
+Date & Time (UTC): 24 February 2010 at 0057 hrs
+Location: London Gatwick Airport
+Type of Flight: Ferry flight
+Persons on Board: Crew - 2 Passengers - None
+Injuries: Crew - None Passengers - N/A
+Nature of Damage: Electrical fire in cabin
+Commanders Licence: Air Transport Pilots Licence
+Commanders Age: 38 years
+Commanders Flying Experience: 10,018 hours (of which 8,560 hours were on type)
+Last 90 days - 95 hours
+Last 28 days - 23 hours
+Information Source: AAIB Field Investigation
+Synopsis","",,,,
+"1",":Event:__Entity__","","","Accident","","","","",,,,
+"2",":Persons on Board:__Entity__","","","Crew","","","","",,,,
+"3",":Aircraft Type:__Entity__","","","De Havilland Canada DHC-6 300 Twin Otter","","","","",,,,
+"4",":Count:__Entity__","","","2","","","","",,,,
+"5",":Engines:__Entity__","","","2 Pratt & Whitney PT6A-27 turboprop engines","","","","",,,,
+"6",":Hours:__Entity__","","","23 hours","","","","",,,,
+"7",":License:__Entity__","","","Air Transport Pilots Licence","","","","",,,,
+"8",":Person:__Entity__","","","Commander","","","","",,,,
+"9",":Year:__Entity__","","","1969","","","","",,,,
+"10",":Aircraft:Registration:__Entity__","","","C-FAKB","","","","",,,,
+"11",":Location:__Entity__","","","London Gatwick Airport","","","","",,,,
+"12",":Persons on Board:__Entity__","","","Passengers","","","","",,,,
+"13",":Experience:__Entity__","","","10,018 hours (of which 8,560 hours were on type)","","","","",,,,
+"14",":Serial Number:__Entity__","","","273","","","","",,,,
+"15",":Flight Type:__Entity__","","","Ferry flight","","","","",,,,
+"16",":Count:__Entity__","","","None","","","","",,,,
+"17",":Damage Type:__Entity__","","","Electrical fire in cabin","","","","",,,,
+"18",":Hours:__Entity__","","","95 hours","","","","",,,,
+"19",":Age:__Entity__","","","38 years","","","","",,,,
+"20",":Document","","","957e5f7dd6f4ec2792731bb18fb963f4","","","Synopsis
+During a ferry flight from Calgary, Canada to the Maldives, an electrical fire started in the power distribution and generator control box located in the roof of the passenger cabin. The crew isolated the electrical systems and successfully diverted to London Gatwick Airport. The source of the fire was traced to the left generator reverse current relay, which was found to have a different part number to the relays authorised for use on the DHC-6 series of aircraft.
+Five Safety Recommendations were made.
+Background information","",,,,
+"21",":System:__Entity__","","","electrical systems","","","","",,,,
+"22",":Event:__Entity__","","","incident","","","","",,,,
+"23",":Event:Incident:Situation:__Entity__","","","electrical fire","","","","",,,,
+"24",":Cause:__Entity__","","","source of the fire","","","","",,,,
+"25",":Group:Group of People:Person:__Entity__","","","crew","","","","",,,,
+"26",":Event:__Entity__","","","ferry flight","","","","",,,,
+"27",":Equipment:__Entity__","","","relays authorised for use on the DHC-6 series of aircraft","","","","",,,,
+"28",":Box:Component:Equipment:Location:__Entity__","","","power distribution and generator control box","","","","",,,,
+"29",":Equipment:__Entity__","","","left generator reverse current relay","","","","",,,,
+"30",":Document:__Entity__","","","Five Safety Recommendations","","","","",,,,
+"31",":Location:__Entity__","","","Calgary, Canada to the Maldives","","","","",,,,
+"32",":Document","","","f0f81d7287be23a6729b84684f91b3a8","","","Background information
+C-FAKB was going to make a series of positioning flights starting from Calgary, Canada, finishing in the Maldives. The passenger seats were removed from the aircraft to create space for two 925 litre fuel tanks, which were attached to the floor rails in the cabin and connected to the main fuel system. Two 45 gallon drums were secured to the rear bulkhead in the cabin and one was secured to the floor points behind the forward bulkhead. The drums were filled with fuel, which was to be manually transferred to the 925 litre tanks if unfavourable headwinds were experienced during any of the long over-water legs. Immediately behind the flight deck, on the right side, was an oxygen cylinder, which provided supplementary oxygen to the crew through two
+© Crown copyright 2010 17
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+constant-flow nasal cannula hoses. This allowed the unpressurised aircraft to operate at higher flight levels than would otherwise have been the case.","",,,,
+"33",":Location:__Entity__","","","Maldives","","","","",,,,
+"34",":Location:__Entity__","","","rear bulkhead in the cabin","","","","",,,,
+"35",":Equipment:__Entity__","","","925 litre fuel tanks","","","","",,,,
+"36",":Equipment:__Entity__","","","oxygen cylinder","","","","",,,,
+"37",":Purpose:__Entity__","","","positioning flights","","","","",,,,
+"38",":Location:__Entity__","","","Calgary, Canada","","","","",,,,
+"39",":Location:__Entity__","","","flight deck, on the right side","","","","",,,,
+"40",":System:__Entity__","","","main fuel system","","","","",,,,
+"41",":Equipment:__Entity__","","","45 gallon drums","","","","",,,,
+"42",":Location:__Entity__","","","floor points behind the forward bulkhead","","","","",,,,
+"43",":Function:__Entity__","","","supplementary oxygen to the crew","","","","",,,,
+"44",":Equipment:__Entity__","","","925 litre tanks","","","","",,,,
+"45",":Component:__Entity__","","","passenger seats","","","","",,,,
+"46",":Substance:__Entity__","","","fuel","","","","",,,,
+"47",":Document","","","d106634e9c6c60fc1baca6d929c836b3","","","The first leg, from Calgary to Iqualuit, was planned for 20 February 2010. After starting the right engine, the crew noticed that the right generator caution light failed to illuminate after the start switch was released and so the engine was shut down in accordance with the Emergency Checklist. Following work by engineers to diagnose the problem, it was decided to replace the right engine reverse current relay (RCR) and, when the rectification work was complete, the generator functioned correctly.
+The aircraft flew three flights, during which the crew experienced no further problems, and at the end of the third flight it landed at Birmingham Airport.
+History of the flight","",,,,
+"48",":Object:Vehicle:__Entity__","","","aircraft","","","","",,,,
+"49",":Component:Engine:Equipment:__Entity__","","","right engine","","","","",,,,
+"50",":Procedure:__Entity__","","","Emergency Checklist","","","","",,,,
+"51",":Equipment:__Entity__","","","right generator caution light","","","","",,,,
+"52",":Date:__Entity__","","","20 February 2010","","","","",,,,
+"53",":Airport:Location:__Entity__","","","Birmingham Airport","","","","",,,,
+"54",":Equipment:__Entity__","","","generator","","","","",,,,
+"55",":Procedure:__Entity__","","","rectification work","","","","",,,,
+"56",":Equipment:__Entity__","","","right engine reverse current relay (RCR)","","","","",,,,
+"57",":Event:__Entity__","","","three flights","","","","",,,,
+"58",":Event:__Entity__","","","first leg","","","","",,,,
+"59",":Person:__Entity__","","","engineers","","","","",,,,
+"60",":Document","","","e0961e43e76e99e9c4e10bea14df4651","","","History of the flight
+On 23 February 2010, C-FAKB departed from Birmingham Airport at 2336 hrs and climbed to FL170 for a flight to Dubrovnik, Croatia. A few minutes after levelling off for the cruise, the captain noticed “two brief flickers” of the left generator caution light. After discussion with the co-pilot, the commander opened the DC bus tie in order to separate the two DC generator busbars electrically. This action was known to enable continued operation of both generators in circumstances where they were not properly balanced.
+Approximately five minutes later, the commander noticed a faint smell, but he and the co-pilot saw nothing abnormal. The crew discussed the symptoms they had observed but decided not to reset the left generator because there had been no steady generator","",,,,
+"61",":Device:Equipment:__Entity__","","","DC bus tie","","","","",,,,
+"62",":Person:__Entity__","","","Captain of C-FAKB","","","","",,,,
+"63",":Sensation:__Entity__","","","faint smell","","","","",,,,
+"64",":Flight Level:__Entity__","","","FL170","","","","",,,,
+"65",":Person:__Entity__","","","Commander of C-FAKB","","","","",,,,
+"66",":Event:__Entity__","","","two brief flickers of the left generator caution light","","","","",,,,
+"67",":Location:__Entity__","","","Dubrovnik, Croatia","","","","",,,,
+"68",":Document","","","2998ea9de91477304b975e916a35df15","","","caution light. A few minutes later, they noticed a “dim orange flickering glow” between two ceiling panels on the right side of the cabin close to the location of both RCRs. The commander declared an emergency and asked for assistance from ATC to land at the nearest suitable airport. The aircraft was at FL170 overhead the River Thames estuary near Manston, but Manston Airport was closed, as was Lydd Airport. Ostend Airport, Belgium, was 58 nautical miles away but the crew did not wish to fly for that distance over the sea. Southend Airport was open but there was broken cloud at 200 ft aal and the crew decided the weather was not suitable to make an approach. After further discussion with ATC, the crew decided to make an approach to Runway 26L at London Gatwick Airport.","",,,,
+"69",":Airport:__Entity__","","","Southend Airport","","","","",,,,
+"70",":Location:__Entity__","","","Runway 26L at London Gatwick Airport","","","","",,,,
+"71",":Event:__Entity__","","","emergency","","","","",,,,
+"72",":Person:__Entity__","","","commander","","","","",,,,
+"73",":Airport:__Entity__","","","Ostend Airport, Belgium","","","","",,,,
+"74",":Status:__Entity__","","","open","","","","",,,,
+"75",":Distance:__Entity__","","","58 nautical miles away","","","","",,,,
+"76",":Location:__Entity__","","","River Thames estuary","","","","",,,,
+"77",":Weather Condition:__Entity__","","","broken cloud at 200 ft aal","","","","",,,,
+"78",":Status:__Entity__","","","closed","","","","",,,,
+"79",":Airport:__Entity__","","","Lydd Airport","","","","",,,,
+"80",":Location:__Entity__","","","sea","","","","",,,,
+"81",":Organization:__Entity__","","","ATC","","","","",,,,
+"82",":Airport:__Entity__","","","Manston Airport","","","","",,,,
+"83",":Document","","","862f1dbb22f3203834b7cab467b360c3","","","While trying to identify the fault, the crew saw that the left generator load meter was showing a full scale deflection to the left, and that the right generator load meter was deflected to the right although not to full scale. The nature of the problem was not obvious to the crew and there was no applicable procedure in the Emergency Checklist. Nevertheless, the pilots decided to shut down the right generator because it was the RCR associated with the right generator that had caused the problem they experienced in Calgary. After shutting down the generator, the right generator caution light remained off. During the descent, the crew switched off unnecessary electrical items as well as equipment that the pilots believed had wiring that ran close to the RCRs. The commander also went into the cabin to turn off the supplementary oxygen. There was no obvious improvement in the symptoms they could see in the cabin and so the crew decided to switch off the left generator, leaving the","",,,,
+"84",":Equipment:__Entity__","","","unnecessary electrical items and equipment with wiring close to RCRs","","","","",,,,
+"85",":Event:__Entity__","","","problem experienced in Calgary","","","","",,,,
+"86",":Equipment:__Entity__","","","supplementary oxygen in the cabin","","","","",,,,
+"87",":Equipment:__Entity__","","","right generator load meter","","","","",,,,
+"88",":Condition:__Entity__","","","full scale deflection","","","","",,,,
+"89",":Equipment:__Entity__","","","right generator","","","","",,,,
+"90",":Equipment:__Entity__","","","left generator","","","","",,,,
+"91",":Equipment:__Entity__","","","left generator load meter","","","","",,,,
+"92",":Condition:__Entity__","","","not to full scale","","","","",,,,
+"93",":Component:__Entity__","","","RCR associated with the right generator","","","","",,,,
+"94",":Action:__Entity__","","","after shutting down the right generator","","","","",,,,
+"95",":Person:__Entity__","","","pilots","","","","",,,,
+"96",":Document","","","fccfe25c115eaba07abd5c89b98c3cab","","","to switch off the left generator, leaving the battery as the only source of electrical power. The left generator caution light also remained off although the captain considered that this might have been because he had tripped a large number of circuit breakers.","",,,,
+"97",":Resource:__Entity__","","","electrical power","","","","",,,,
+"98",":Equipment:__Entity__","","","left generator caution light","","","","",,,,
+"99",":Event:__Entity__","","","tripped circuit breakers","","","","",,,,
+"100",":Component:Equipment:__Entity__","","","battery","","","","",,,,
+"101",":Action:__Entity__","","","unknown action","","","","",,,,
+"102",":Document","","","70362d092716fb61a221e3ceb7e98edb","","","© Crown copyright 2010 18
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+During the final approach to Gatwick Airport, the crew thought that the glow behind the ceiling panels had reduced, but a heat blister had developed on the cabin side of the panels and it was smoking slightly. The aircraft landed, taxied clear of the runway and the crew attempted to shut down the engines. The left engine shut down correctly but, after shutting off the fuel to the right engine it continued to run at between 12% to 15% Ng. The captain thought that the starter motor was probably engaged and stopped the engine by selecting the battery Master Switch to off .
+The airport fire crew attended the aircraft and determined that the temperature in the vicinity of the RCRs was slowly increasing. Therefore, they disconnected the aircraft battery from the electrical system and remained with the aircraft until they were satisfied that there was no longer a risk of a fire.","",,,,
+"103",":Person:__Entity__","","","captain","","","","",,,,
+"104",":Condition:__Entity__","","","the aircraft until no longer a risk of a fire","","","","",,,,
+"105",":Group:__Entity__","","","airport fire crew","","","","",,,,
+"106",":Condition:__Entity__","","","heat blister on the cabin side of the panels","","","","",,,,
+"107",":Action:__Entity__","","","aircraft battery from the electrical system","","","","",,,,
+"108",":Performance:__Entity__","","","between 12% to 15% Ng","","","","",,,,
+"109",":Condition:__Entity__","","","heat blister","","","","",,,,
+"110",":Observation:__Entity__","","","starter motor was probably engaged","","","","",,,,
+"111",":Location:__Entity__","","","the aircraft","","","","",,,,
+"112",":Effect:__Entity__","","","smoking slightly","","","","",,,,
+"113",":Action:__Entity__","","","shut down the engines","","","","",,,,
+"114",":Action:__Entity__","","","selecting the battery Master Switch to off","","","","",,,,
+"115",":Observation:__Entity__","","","glow behind the ceiling panels had reduced","","","","",,,,
+"116",":Document","","","e8ce66a6137e54275f033dc3733b0b05","","","Description of the aircraft DC electrical system
+General
+The aircraft is equipped with a 28VDC electrical system. Each engine is fitted with a starter-generator, which supplies electrical power to its respective DC busbar through a reverse current relay RCR, see Figure 1. A secondary source of DC power is a 24V battery, which feeds the left DC busbar through the battery bus and reverse current circuit breaker. During normal operation the left and right DC busbars are connected by the bus tie, which allows both systems to operate in parallel. The left and right DC electrical systems can operate as separate systems by opening the DC bus tie. A load meter allows the crew to determine the current flowing into or out of the starter generator, its scale indicates between +1 and –1, which corresponds to +200 amps and -200 amps. Movement of the pointer to the instrument stops corresponds to approximately 400 amps.
+Figure 1
+Simplified diagram of aircraft DC electrical generation","",,,,
+"117",":Component:__Entity__","","","load meter scale","","","","",,,,
+"118",":Device:__Entity__","","","battery bus and reverse current circuit breaker","","","","",,,,
+"119",":Range:__Entity__","","","+1 to –1 corresponding to +200 amps and -200 amps","","","","",,,,
+"120",":System:__Entity__","","","left and right DC electrical systems","","","","",,,,
+"121",":Power Source:__Entity__","","","24V battery","","","","",,,,
+"122",":System:__Entity__","","","28VDC electrical system","","","","",,,,
+"123",":Functionality:__Entity__","","","parallel operation of both systems","","","","",,,,
+"124",":Device:__Entity__","","","bus tie","","","","",,,,
+"125",":Instrument:__Entity__","","","load meter","","","","",,,,
+"126",":Measurement:__Entity__","","","current flowing into or out of the starter generator","","","","",,,,
+"127",":Component:__Entity__","","","DC busbar","","","","",,,,
+"128",":Mode:__Entity__","","","separate systems","","","","",,,,
+"129",":Device:__Entity__","","","reverse current relay RCR","","","","",,,,
+"130",":Component:__Entity__","","","left DC busbar","","","","",,,,
+"131",":Component:__Entity__","","","each engine","","","","",,,,
+"132",":Device:__Entity__","","","starter-generator","","","","",,,,
+"133",":Document","","","0446d897fed20d33806bfd75dd31a834","","","5 amp gen CBreversecurrent relayleft dc busS/Gdc bus tieS/G5 amp gen CBreversecurrent relayright dc busstarter/generatorstarter/generatorloadmeterloadmeterreversecurrent CBbatterybusbattery
+© Crown copyright 2010 19
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+Reverse current relays","",,,,
+"134",":System:__Entity__","","","reversecurrent relayright dc bus","","","","",,,,
+"135",":System:__Entity__","","","dc busS/G","","","","",,,,
+"136",":Equipment:__Entity__","","","reversecurrent CB","","","","",,,,
+"137",":Equipment:__Entity__","","","starter/generator","","","","",,,,
+"138",":System:__Entity__","","","loadmeter","","","","",,,,
+"139",":System:__Entity__","","","reversecurrent relayleft dc bus","","","","",,,,
+"140",":System:__Entity__","","","batterybus","","","","",,,,
+"141",":Equipment:__Entity__","","","5 amp gen CB","","","","",,,,
+"142",":Document","","","b866d82195c7ccb6c737f64764d2f03a","","","Reverse current relays
+The purpose of the RCR is to provide a connection between the generator and the bus, or battery, and to provide reverse current protection in the event of a generator failure or a loss of generator voltage. The RCRs are located within the power distribution and generator control box, which is mounted in the roof on the right side of the cabin. Each RCR contains three relays (Figure 2). Relay R1 operates when the generator voltage reaches approximately 22V, relay R2 is a polarized differential relay which senses the direction of the current flow and relay R3 operates the main contacts. A generatorGENERATOR caution light, located on the instrument panel in the cockpit, illuminates when the main contact is open and the engine start switch is at the off position.","",,,,
+"143",":Condition:__Entity__","","","approximately 22V","","","","",,,,
+"144",":Component:__Entity__","","","Relay R1","","","","",,,,
+"145",":Indicator:__Entity__","","","generator caution light","","","","",,,,
+"146",":Component:__Entity__","","","three relays","","","","",,,,
+"147",":Condition:__Entity__","","","reverse current","","","","",,,,
+"148",":Condition:__Entity__","","","off position","","","","",,,,
+"149",":System:__Entity__","","","generator and bus or battery","","","","",,,,
+"150",":Action:Event:__Entity__","","","current flow","","","","",,,,
+"151",":Component:__Entity__","","","Relay R2","","","","",,,,
+"152",":Component:Device:Equipment:__Entity__","","","RCR","","","","",,,,
+"153",":Location:__Entity__","","","roof on the right side of the cabin","","","","",,,,
+"154",":Document","","","7c89c87458c70c7c5e007ce43e46053a","","","The sequence of operation of the RCR is as follows. When the generator voltage reaches approximately 22V, relay R1 closes. This energises relay R2, which is connected across the open main contacts. The voltage on the Diff Volt coil of relay R2 is now the difference between the generator voltage and the battery / bus voltage. When this difference reaches between 0.35V and 0.65V (generator must be the highest voltage) relay R2 will close. This applies a voltage to the Main Relay coil R3, which immediately closes and connects the generator to the bus. If the generator voltage decreases below the battery / bus voltage, a current will flow from the bus to the generator. The Rev Current coil in Relay R2 senses the change in direction of the current and the contact opens. The Main Relay coil in Relay R3 is then de-energised, the main contacts open and the generator is disconnected from the bus.","",,,,
+"155",":Component:__Entity__","","","Main Relay coil R3","","","","",,,,
+"156",":Component:__Entity__","","","bus","","","","",,,,
+"157",":Component:__Entity__","","","Rev Current coil in Relay R2","","","","",,,,
+"158",":Measurement:__Entity__","","","generator voltage","","","","",,,,
+"159",":Event:__Entity__","","","contact opens","","","","",,,,
+"160",":Event:__Entity__","","","relay R2 closes","","","","",,,,
+"161",":Component:__Entity__","","","open main contacts","","","","",,,,
+"162",":Direction:__Entity__","","","bus to generator","","","","",,,,
+"163",":Condition:__Entity__","","","generator voltage reaches approximately 22V","","","","",,,,
+"164",":Voltage:__Entity__","","","battery / bus voltage","","","","",,,,
+"165",":Component:__Entity__","","","contact of relay R2","","","","",,,,
+"166",":Component:__Entity__","","","main contacts of relay R3","","","","",,,,
+"167",":Event:__Entity__","","","relay R1 closes","","","","",,,,
+"168",":Event:__Entity__","","","change in direction of current","","","","",,,,
+"169",":Component:__Entity__","","","Main Relay coil in Relay R3","","","","",,,,
+"170",":Voltage:__Entity__","","","22V","","","","",,,,
+"171",":Component:__Entity__","","","relay R1","","","","",,,,
+"172",":Measurement:__Entity__","","","generator voltage and the battery / bus voltage","","","","",,,,
+"173",":Component:__Entity__","","","Diff Volt coil of relay R2","","","","",,,,
+"174",":Event:__Entity__","","","Main Relay coil in Relay R3 is de-energised","","","","",,,,
+"175",":Component:__Entity__","","","relay R2","","","","",,,,
+"176",":Voltage Range:__Entity__","","","0.35V to 0.65V","","","","",,,,
+"177",":Flow:__Entity__","","","current","","","","",,,,
+"178",":Document","","","d5341dc38a3bf92534f0dc6559ee1016","","","The drawing for the power distribution and generator control (No C6NF1171) lists the part numbers for RCRs approved for use on the DHC-6 as A-700AP and A-700AAP, rated at 300 amps, and A-701D, rated at 400 amps.
+Voltage regulator
+A voltage regulator is fitted in each generator circuit and controls the generator output at a nominal 28.5V over the full range of generator speed, load and operating temperature. An equalizer circuit in each voltage regulator ensures equal loading (within 20 amps) when the generators are operating in parallel.
+Examination of the aircraft
+Examination of the aircraft revealed that there had been an electrical fire, which had almost consumed the left RCR, Figure 3. The fire had burnt through the cover of the power distribution and generator control box and, whilst the heat had caused the trim in the cabin to blister,
+Gen control Gen caution light
+Figure 2
+Schematic diagram of reverse current relay
+© Crown copyright 2010 20","",,,,
+"179",":Event:__Entity__","","","aircraft examination","","","","",,,,
+"180",":Circuit:__Entity__","","","equalizer circuit","","","","",,,,
+"181",":Component:Equipment:Product:__Entity__","","","RCRs","","","","",,,,
+"182",":Component:Equipment:Location:System:__Entity__","","","left RCR","","","","",,,,
+"183",":Condition:__Entity__","","","heat from fire","","","","",,,,
+"184",":Voltage:__Entity__","","","28.5V","","","","",,,,
+"185",":Event:Incident:__Entity__","","","fire","","","","",,,,
+"186",":Component:__Entity__","","","voltage regulator","","","","",,,,
+"187",":Cabin Feature:__Entity__","","","trim in the cabin","","","","",,,,
+"188",":Rating:Specification:__Entity__","","","300 amps","","","","",,,,
+"189",":Rating:Specification:__Entity__","","","400 amps","","","","",,,,
+"190",":Component:__Entity__","","","RCR A-701D","","","","",,,,
+"191",":Aircraft:__Entity__","","","DHC-6","","","","",,,,
+"192",":Circuit:__Entity__","","","generator circuit","","","","",,,,
+"193",":Rating:__Entity__","","","20 amps","","","","",,,,
+"194",":Component:__Entity__","","","RCR A-700AP","","","","",,,,
+"195",":Document:__Entity__","","","drawing","","","","",,,,
+"196",":Component:__Entity__","","","RCR A-700AAP","","","","",,,,
+"197",":Document","","","a14623a2cda63c707bf1171de3071669","","","© Crown copyright 2010 20
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+the trim remained intact and there was no evidence of any smoke damage in the cabin. The trail of the combustion products shows that the smoke remained trapped between the fuselage and cabin trim and was drawn out of the cabin vent mounted in the roof of the aircraft. The heat had also damaged the wiring for the entertainment system and the aerial for a redundant ADF system; there was no other damage to any of the aircraft wiring. Although the adjacent structure and components were covered with combustion products there was no evidence of heat damage outside of the power distribution and generator control box, except to the adjacent cabin trim, .","",,,,
+"198",":Substance:__Entity__","","","combustion products","","","","",,,,
+"199",":Condition:__Entity__","","","heat damage","","","","",,,,
+"200",":Location:__Entity__","","","fuselage and cabin trim","","","","",,,,
+"201",":Location:__Entity__","","","cabin","","","","",,,,
+"202",":Observation:Substance:__Entity__","","","smoke","","","","",,,,
+"203",":Observation:__Entity__","","","no evidence of any smoke damage","","","","",,,,
+"204",":Cause:Condition:__Entity__","","","heat","","","","",,,,
+"205",":Component:__Entity__","","","trim","","","","",,,,
+"206",":Location:__Entity__","","","power distribution and generator control box, except to the adjacent cabin trim","","","","",,,,
+"207",":Condition:__Entity__","","","intact","","","","",,,,
+"208",":Location:__Entity__","","","adjacent structure and components","","","","",,,,
+"209",":Component:__Entity__","","","wiring for the entertainment system and the aerial for a redundant ADF system","","","","",,,,
+"210",":Component:__Entity__","","","cabin vent mounted in the roof of the aircraft","","","","",,,,
+"211",":Document","","","836b0ecb2d6c67f0ac41f502e165a675","","","Both generators were visually examined and the brushes were found to be in good condition. The 5 amp circuit breaker for the right generator, mounted near the generator relay in the engine nacelle, had tripped. The aircraft battery appeared, from a visual inspection, to be in good condition and had a voltage of 25.7v.
+The power distribution and generator control box was replaced and the aircraft was flown to a maintenance organisation in Switzerland where a detailed inspection of the complete aircraft electrical system was carried out. The maintenance organisation advised the AAIB that whilst the wiring in the aircraft was in a bad general condition..... they could not find any obvious cause for the electrical fire. The complete aircraft wiring was replaced and engine ground runs were carried out to test the electrical generation and distribution system. All the systems operated satisfactorily and the aircraft was flown to the Maldives.
+Previous occurrences","",,,,
+"212",":Procedure:__Entity__","","","engine ground runs","","","","",,,,
+"213",":System:__Entity__","","","electrical generation and distribution system","","","","",,,,
+"214",":Equipment:__Entity__","","","aircraft battery","","","","",,,,
+"215",":Equipment:__Entity__","","","5 amp circuit breaker","","","","",,,,
+"216",":Condition:__Entity__","","","good condition","","","","",,,,
+"217",":Location:__Entity__","","","generator relay in the engine nacelle","","","","",,,,
+"218",":Equipment:__Entity__","","","circuit breaker","","","","",,,,
+"219",":Location:__Entity__","","","maintenance organisation in Switzerland","","","","",,,,
+"220",":Component:__Entity__","","","brushes","","","","",,,,
+"221",":Equipment:__Entity__","","","generators","","","","",,,,
+"222",":Organization:__Entity__","","","maintenance organisation","","","","",,,,
+"223",":Condition:__Entity__","","","bad general condition","","","","",,,,
+"224",":Measurement:__Entity__","","","25.7v","","","","",,,,
+"225",":Document","","","054fda0ca3988b80c99c65349cea28bf","","","Previous occurrences
+The Type Certificate Holder provided the AAIB with copies of their Service Difficulty Reports detailing 18 failures of the RCR since 1974. Of the 18 occurrences, 15 reports recorded that either the contacts were welded closed or there were signs of overheating, smoke or sparks. Eleven of the RCR were rated at 300 amps and five at 400 amps. There was insufficient information to establish the current rating of the remaining two RCRs.
+Significant airworthiness directives, modifications and service bulletins
+Airworthiness directives (AD)
+AD CF-75-11 was issued by Transport Canada and became effective on 1 December 1975. The AD is applicable to DHC-6 series of aircraft and requires the inspection of the contact points on A-700AAP and A-700AP relays.
+Figure 3
+Damage to power distribution box and generator control box
+© Crown copyright 2010 21
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01","",,,,
+"226",":Equipment:__Entity__","","","2 RCRs","","","","",,,,
+"227",":Report:__Entity__","","","15 reports","","","","",,,,
+"228",":Organization:__Entity__","","","The Type Certificate Holder","","","","",,,,
+"229",":Aircraft:__Entity__","","","DHC-6 series of aircraft","","","","",,,,
+"230",":Organization:__Entity__","","","Transport Canada","","","","",,,,
+"231",":Equipment:__Entity__","","","11 RCRs","","","","",,,,
+"232",":Document:__Entity__","","","Service Difficulty Reports","","","","",,,,
+"233",":Event:__Entity__","","","18 failures of the RCR since 1974","","","","",,,,
+"234",":Organization:__Entity__","","","AAIB","","","","",,,,
+"235",":Directive:__Entity__","","","AD CF-75-11","","","","",,,,
+"236",":Equipment:__Entity__","","","5 RCRs","","","","",,,,
+"237",":Specification:__Entity__","","","current rating","","","","",,,,
+"238",":Equipment:__Entity__","","","contact points on A-700AAP and A-700AP relays","","","","",,,,
+"239",":Condition:__Entity__","","","contacts were welded closed or signs of overheating, smoke or sparks","","","","",,,,
+"240",":Document","","","9cd93389688399b88d3652937af72f49","","","AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+AD CF-77-08 was issued by Transport Canada and became effective on 30 September 1977. The AD is applicable to DHC-6 aircraft serial numbers 1 through 530. The AD states:
+To preclude the possibility of total electrical failure due to contact welding of reverse current relays Hartman A700AP or A7000AAP and subsequent burning through of relay covers and adjacent wiring, install de Havilland Modification 6/1598 in accordance with de Havilland Service Bulletin No 6/353.
+AD 78-01-05 was issued by the Federal Aviation Administration and became effective on 9 February 1978. The AD required the De Havilland modification 6/1598 and SB 6/353 to be incorporated on DHC-6 series aircraft.
+De Havilland Service Bulletins","",,,,
+"241",":Date:__Entity__","","","30 September 1977","","","","",,,,
+"242",":Aircraft Series:__Entity__","","","DHC-6 aircraft serial numbers 1 through 530","","","","",,,,
+"243",":Regulation:__Entity__","","","AD 78-01-05","","","","",,,,
+"244",":Action:__Entity__","","","De Havilland modification 6/1598 and SB 6/353 to be incorporated on DHC-6 series aircraft","","","","",,,,
+"245",":Regulation:__Entity__","","","AD CF-77-08","","","","",,,,
+"246",":Modification:__Entity__","","","de Havilland Modification 6/1598","","","","",,,,
+"247",":Component:__Entity__","","","Hartman A700AP or A7000AAP","","","","",,,,
+"248",":Organization:__Entity__","","","Federal Aviation Administration","","","","",,,,
+"249",":Date:__Entity__","","","9 February 1978","","","","",,,,
+"250",":Service Bulletin:__Entity__","","","de Havilland Service Bulletin No 6/353","","","","",,,,
+"251",":Issue:__Entity__","","","total electrical failure due to contact welding of reverse current relays","","","","",,,,
+"252",":Document","","","56e97a25e7ac107ef9d836cd9cbbc9fa","","","De Havilland Service Bulletins
+SB 6/338 was issued on 24 October 1975 and revised on 29 October 1982. This SB requires RCRs rated at 300 amps A-700AP and AAPto be removed from the aircraft and inspected at intervals of not more than 1,200 hours. The inspection requirement is to look for signs of overheating and pitting or corrosion of the contact points.
+SB 6/353 was issued on 13 May 1977 and revised on 28 February 1978. This SB introduces heat shielding around the RCR and the rerouting of critical wiring away from the RCRs.
+De Havilland Modifications
+Modification 6/1585 introduced a new RCR, part number A-701D, rated at 400 amps.
+Modification 6/1598 was approved in 1977 and reroutes the electrical wiring adjacent to the RCRs and introduces fire resistant panels in the power distribution and generator control box.
+Modification state of aircraft wiring
+An entry in the aircraft technical log, dated 7/12/09, stated:","",,,,
+"253",":Date:__Entity__","","","29 October 1982","","","","",,,,
+"254",":Service Bulletin:__Entity__","","","SB 6/353","","","","",,,,
+"255",":Modification:__Entity__","","","Modification 6/1598","","","","",,,,
+"256",":Date:__Entity__","","","13 May 1977","","","","",,,,
+"257",":Service Bulletin:__Entity__","","","SB 6/338","","","","",,,,
+"258",":Task:__Entity__","","","critical wiring away from the RCRs","","","","",,,,
+"259",":Time Interval:__Entity__","","","not more than 1,200 hours","","","","",,,,
+"260",":Task:__Entity__","","","look for signs of overheating and pitting or corrosion of the contact points","","","","",,,,
+"261",":Year:__Entity__","","","1977","","","","",,,,
+"262",":Equipment:__Entity__","","","RCRs rated at 300 amps A-700AP and AAP","","","","",,,,
+"263",":Date:__Entity__","","","24 October 1975","","","","",,,,
+"264",":Task:__Entity__","","","electrical wiring adjacent to the RCRs","","","","",,,,
+"265",":Modification:__Entity__","","","Modification 6/1585","","","","",,,,
+"266",":Date:__Entity__","","","28 February 1978","","","","",,,,
+"267",":Equipment:__Entity__","","","part number A-701D, rated at 400 amps","","","","",,,,
+"268",":Document","","","a6070d345ae60dc1c92622c1625ce61d","","","U.S AWD 78-01-05 main distribution box rewiring complied with as per modification No. 6/1598 And S.B 6/353.
+Examination of right RCR removed at Calgary
+The right RCR (s/n A98995), which was removed at Calgary before the start of the ferry flight, was examined by the AAIB and tested by a specialist organisation. The RCR was fitted with a data plate identifying it as Part Number A-700A, rated at 300 amps. With the exception of the test for the volt relay coil (R1), and the resistance check across the generator and battery terminals, the RCR met all the requirements in the specification.","",,,,
+"269",":Organization:__Entity__","","","a specialist organisation","","","","",,,,
+"270",":Modification:__Entity__","","","modification No. 6/1598 And S.B 6/353","","","","",,,,
+"271",":Equipment:__Entity__","","","right RCR (s/n A98995)","","","","",,,,
+"272",":Location:__Entity__","","","Calgary","","","","",,,,
+"273",":Test:__Entity__","","","test for the volt relay coil (R1), and the resistance check across the generator and battery terminals","","","","",,,,
+"274",":Specification:__Entity__","","","Part Number A-700A, rated at 300 amps","","","","",,,,
+"275",":Equipment:__Entity__","","","U.S AWD 78-01-05 main distribution box","","","","",,,,
+"276",":Document","","","2b8121f509a5f143cbe61223ba9f0bf4","","","The tests established that relay R1 closed at 15V and opened at 3v. These values were outside the specified limits of 20V to 24V for closing and more than 18V for opening. The RCR was removed from its container and the relay was operated by hand before being retested. During the second test the relay closing and opening voltages were found to be 22.7V and 18.7V respectively, which is within the acceptable limits.
+The resistance across the generator and battery terminals was established by measuring the voltage drop when a load bank and standard resistor were connected in series with the RCR. The measured voltage drop was 39.2 mV at 50 amps, which gave a resistance across the contacts of 0.748 mΩ. The specification states that for a maximum
+© Crown copyright 2010 22
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+voltage drop of 100 mV at 300 amps, the resistance should not exceed 0.333 mΩ. Therefore the contact resistance was higher than the maximum permitted value.","",,,,
+"277",":Voltage:__Entity__","","","18.7V","","","","",,,,
+"278",":Voltage Range:__Entity__","","","20V to 24V","","","","",,,,
+"279",":Equipment:__Entity__","","","generator and battery terminals","","","","",,,,
+"280",":Voltage:__Entity__","","","more than 18V","","","","",,,,
+"281",":Resistance:__Entity__","","","0.748 mΩ","","","","",,,,
+"282",":Voltage Drop Limit:__Entity__","","","100 mV at 300 amps","","","","",,,,
+"283",":Container:__Entity__","","","container","","","","",,,,
+"284",":Specification:__Entity__","","","specification","","","","",,,,
+"285",":Value:__Entity__","","","maximum permitted value","","","","",,,,
+"286",":Resistance:__Entity__","","","0.333 mΩ","","","","",,,,
+"287",":Voltage Drop:__Entity__","","","39.2 mV at 50 amps","","","","",,,,
+"288",":Voltage:__Entity__","","","15V","","","","",,,,
+"289",":Measurement:__Entity__","","","contact resistance","","","","",,,,
+"290",":Voltage:__Entity__","","","3V","","","","",,,,
+"291",":Voltage:__Entity__","","","22.7V","","","","",,,,
+"292",":Document","","","56f1fcbc4cc94d2621108aae06a133f0","","","The RCR appeared, from a visual inspection, to be old and the covering of the voltage relay coil (R1) had the appearance of having being degraded by heat. There was light pitting on the contacts of the main relay coil (R3) and it was noted that a fine braid, forming a connection at the differential voltage contacts, was passed around the spindle of the moving part of the differential relay R2.
+Examination of power distribution and generator control box
+The damage indicates that the left RCR was the source of the fire and the temperature was sufficiently high to destroy the majority of the cover and the container in which the components for the RCR are located, Figure 4.","",,,,
+"293",":Component:__Entity__","","","contacts of the main relay coil (R3)","","","","",,,,
+"294",":Characteristic:__Entity__","","","old","","","","",,,,
+"295",":Component:__Entity__","","","covering of the voltage relay coil (R1)","","","","",,,,
+"296",":Characteristic:__Entity__","","","light pitting","","","","",,,,
+"297",":Component:__Entity__","","","fine braid","","","","",,,,
+"298",":Object:__Entity__","","","majority of the cover and the container in which the components for the RCR are located","","","","",,,,
+"299",":Condition:__Entity__","","","temperature","","","","",,,,
+"300",":Location:__Entity__","","","differential voltage contacts","","","","",,,,
+"301",":Document","","","7ceba64f0e3355527e9411c9962e110c","","","One of the two contact faces in the main relay (R3) had welded closed and the face on the second contact had light pitting. This pitting was similar to that seen on the faces of the main contact in the right RCR which had been removed at Calgary. While the data plate had been destroyed, the components in the left RCR, and the design of the main contacts (R3), were found to be identical to the components in the right RCR that had been replaced at Calgary; the right RCR had a data plate identifying it as an A-700A relay. The documentation for the left RCR also identified it as an A-700A relay rated at 300 amps.","",,,,
+"302",":Product:__Entity__","","","A-700A relay rated at 300 amps","","","","",,,,
+"303",":Characteristic:__Entity__","","","welded closed face","","","","",,,,
+"304",":Characteristic:__Entity__","","","pitting on main contact faces in right RCR","","","","",,,,
+"305",":Component:__Entity__","","","second contact in main relay (R3)","","","","",,,,
+"306",":Component:__Entity__","","","main contacts (R3)","","","","",,,,
+"307",":Component:__Entity__","","","data plate on right RCR","","","","",,,,
+"308",":Component:Equipment:__Entity__","","","right RCR","","","","",,,,
+"309",":Component:__Entity__","","","components in right RCR","","","","",,,,
+"310",":Part:Product:__Entity__","","","A-700A relay","","","","",,,,
+"311",":Characteristic:__Entity__","","","pitting on second contact face","","","","",,,,
+"312",":Component:__Entity__","","","main relay (R3)","","","","",,,,
+"313",":Document","","","526379c00d4cb6be88f253876a9a9e6d","","","Four holes had been burnt through the stainless steel heat shield positioned around the left RCR, Figure 5. The holes were the result of arcing between the metal components in the left RCR and the heat shields; three of the holes were approximately 10 mm high and 20 mm long, the fourth was slightly smaller. The sides of the DC bus tie and the right RCR, which were mounted adjacent to the left RCR, had also been damaged by heat. The insulation on all the electrical control wires to the left RCR had melted and there was evidence of arcing having occurred between some of the wires
+Left RCR
+Figure 4
+Damage to left RCR
+© Crown copyright 2010 23
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+and adjacent metal components. The insulation on the electrical control wires for the right RCR had also melted where they passed through the access hole in the side of the power distribution box. The damage was such that all these wires would have shorted on the side of the power distribution box.","",,,,
+"314",":Comparison:__Entity__","","","slightly smaller than three holes","","","","",,,,
+"315",":Component:__Entity__","","","wires","","","","",,,,
+"316",":Location:__Entity__","","","access hole in power distribution box","","","","",,,,
+"317",":Component:__Entity__","","","stainless steel heat shield","","","","",,,,
+"318",":Measurement:__Entity__","","","10 mm high and 20 mm long","","","","",,,,
+"319",":Cause:__Entity__","","","arcing","","","","",,,,
+"320",":Damage:__Entity__","","","fourth hole","","","","",,,,
+"321",":Damage:__Entity__","","","three holes","","","","",,,,
+"322",":Component:__Entity__","","","electrical control wires for right RCR","","","","",,,,
+"323",":Location:__Entity__","","","side of the power distribution box","","","","",,,,
+"324",":Damage:__Entity__","","","holes","","","","",,,,
+"325",":Component:__Entity__","","","insulation on electrical control wires to left RCR","","","","",,,,
+"326",":Component:__Entity__","","","sides of the DC bus tie and right RCR","","","","",,,,
+"327",":Cause:__Entity__","","","arcing between metal components and heat shields","","","","",,,,
+"328",":Document","","","44c5828a36091999884feaf533956974","","","The routing of the wiring in the power distribution and generator control box is dependent on the modification state of the aircraft. However, the routing of the wiring did not appear to conform to any of the four drawings in SB 6/353: the installation was closest to the configuration detailed at A/S 136-310 Pre Mod 6/1274 & Pre Mod 6/1389. This was not considered to be a factor in this accident.
+Examination by the Original Equipment Manufacturer
+The Original Equipment Manufacturer (OEM) examined the right RCR (part number A-700A) removed at Calgary prior to the ferry flight.
+The OEM was of the opinion that the RCR might have been manufactured between 1944 and 1966 when the part number A-700A became obsolete and was replaced with part number A-700AP. The OEM no longer held any drawings for the A-700A units and had no production information for either of the RCRs (part number A-700A) fitted to C-FAKB. They were, therefore, unable to determine if the RCRs were authentic components.","",,,,
+"329",":Component:__Entity__","","","right RCR (part number A-700A) removed at Calgary","","","","",,,,
+"330",":Configuration:__Entity__","","","configuration detailed at A/S 136-310 Pre Mod 6/1274 & Pre Mod 6/1389","","","","",,,,
+"331",":Document:__Entity__","","","drawings for the A-700A units","","","","",,,,
+"332",":Time Period:__Entity__","","","RCR might have been manufactured between 1944 and 1966","","","","",,,,
+"333",":State:__Entity__","","","modification state of the aircraft","","","","",,,,
+"334",":Organization:__Entity__","","","The Original Equipment Manufacturer (OEM)","","","","",,,,
+"335",":Installation:__Entity__","","","The installation","","","","",,,,
+"336",":Document:__Entity__","","","SB 6/353 drawings","","","","",,,,
+"337",":Process:__Entity__","","","The routing of the wiring","","","","",,,,
+"338",":Organization:__Entity__","","","The OEM","","","","",,,,
+"339",":Authenticity:__Entity__","","","if the RCRs were authentic components","","","","",,,,
+"340",":Document","","","60d37a45d585d3a336293f8eb1394844","","","The OEM was not aware of any overhaul manuals having been produced for the A-700A relays. They also had no production test documentation or any other documents that contained adjustment or repair instructions. Their advice was that the relays should be discarded if they are removed from the aircraft.
+History of the reverse current relays
+The documentation for the RCRs fitted to the aircraft at the time of the accident and the right RCR removed at Calgary indicated that they had all been recently
+Holes in heat shield Right RCRBus tie Reverse current CB
+Figure 5
+Damage to heat shield
+© Crown copyright 2010 24
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+overhauled and had flown relatively few hours prior to the accident.
+Left RCR","",,,,
+"341",":Equipment:__Entity__","","","relays removed from aircraft","","","","",,,,
+"342",":Vehicle:__Entity__","","","aircraft at the time of accident","","","","",,,,
+"343",":Document:__Entity__","","","overhaul manuals for A-700A relays","","","","",,,,
+"344",":Time:__Entity__","","","relatively few hours","","","","",,,,
+"345",":Document:__Entity__","","","production test documentation","","","","",,,,
+"346",":Document:__Entity__","","","adjustment or repair instructions","","","","",,,,
+"347",":Organization:__Entity__","","","OEM","","","","",,,,
+"348",":Document","","","3c372476207100530d7d1acfadde539e","","","Left RCR
+The left RCR (A-700A, s/n 50747) was rated at 300 amps and had been fitted to the aircraft in December 2009, 35 flying hours prior to the accident. The Authorized Release Certificate, which was dated 10/8/2009, recorded that the unit had been overhauled I.A.W. Hartman Manual A-700A. The following comment was recorded in the teardown report:
+Found all contacts are pitted
+and in the work accomplished section of the report the following action was recorded:
+Overhaul the unit I.A.W Hartman Manual No. A-700A reqd (Polish and repair the contacts, carried out current drop test as per reqd).
+Right RCR
+The right RCR (A-701D, s/n CON318) was fitted at Calgary on 21 February 2010 and was rated at 400 amps. The Authorized Release Certificate, which was dated 12/17/2009, recorded that the unit had been repaired and tested I.A.W. Hartman Manual No A-700D. Rev. M Apr/1996.
+Right RCR removed at Calgary","",,,,
+"349",":Condition:__Entity__","","","pitted","","","","",,,,
+"350",":Location and Date:__Entity__","","","Calgary on 21 February 2010","","","","",,,,
+"351",":Manual:__Entity__","","","Hartman Manual A-700A","","","","",,,,
+"352",":Manual:__Entity__","","","Hartman Manual No A-700D. Rev. M Apr/1996","","","","",,,,
+"353",":Duration:__Entity__","","","35 flying hours","","","","",,,,
+"354",":Date:__Entity__","","","December 2009","","","","",,,,
+"355",":Action:__Entity__","","","Overhaul the unit I.A.W Hartman Manual No. A-700A reqd (Polish and repair the contacts, carried out current drop test as per reqd)","","","","",,,,
+"356",":Document","","","ae8af8d6a6e91f5bae58bf63c3dcf7c0","","","Right RCR removed at Calgary
+The right RCR (A-700A, s/n A98995) removed at Calgary on 21 February 2010 was rated at 300 amps and had been fitted to the aircraft on 29 November 2009. It had flown 13 flying hours before it was removed from the aircraft on 21 February 2010. The Authorized Release Certificate, which was dated 10/7/2009, recorded that the unit had been overhauled I.A.W. Hartman Manual A-700A. The following comment was recorded in the teardown report:
+Found all contacts are pitted
+and in the work accomplished section of the report the following action was recorded:
+Overhaul the unit I.A.W Hartman Manual No. A-700A reqd (Polish and repair the contacts, carried out current drop test as per reqd).","",,,,
+"357",":Date:__Entity__","","","29 November 2009","","","","",,,,
+"358",":Date:__Entity__","","","10/7/2009","","","","",,,,
+"359",":Report:__Entity__","","","Teardown report","","","","",,,,
+"360",":Manual:__Entity__","","","Hartman Manual No. A-700A","","","","",,,,
+"361",":Component:__Entity__","","","RCR (A-700A, s/n A98995)","","","","",,,,
+"362",":Certificate:Document:__Entity__","","","Authorized Release Certificate","","","","",,,,
+"363",":Specification:__Entity__","","","13 flying hours","","","","",,,,
+"364",":Section:__Entity__","","","Work accomplished section of the report","","","","",,,,
+"365",":Document","","","757abf9d5607bd1538d69e9176361667","","","The maintenance organisation that overhauled and repaired the RCR provided the investigation with a copy of the Hartman Manual referenced in the Authorized Release Certificate. The cover sheet of this document had the title Donallco aircraft accessories and component parts. The remainder of the document was annotated Hartman and had the title Installation Instructions for Switch, Generator Control relay (Differential) …. Manufacturers Part No A-700A). However, this document only provided information on the testing of the relay and did not contain any information as to how to overhaul or repair the component.
+Inspection requirements for reverse current relays","",,,,
+"366",":Title:__Entity__","","","Installation Instructions for Switch, Generator Control relay (Differential) …. Manufacturers Part No A-700A)","","","","",,,,
+"367",":Annotation:__Entity__","","","Hartman","","","","",,,,
+"368",":Document Part:__Entity__","","","cover sheet of Hartman Manual","","","","",,,,
+"369",":Task:__Entity__","","","overhaul or repair of component","","","","",,,,
+"370",":Document:__Entity__","","","Hartman Manual","","","","",,,,
+"371",":Title:__Entity__","","","Donallco aircraft accessories and component parts","","","","",,,,
+"372",":Activity:__Entity__","","","testing of the relay","","","","",,,,
+"373",":Document Part:__Entity__","","","remainder of Hartman Manual","","","","",,,,
+"374",":Event:__Entity__","","","investigation","","","","",,,,
+"375",":Document","","","b113827e19ec811343b5b6bc2ff79838","","","The DHC-6 is on a 3,000 hour inspection schedule with a C check required every 500 hours. The inspection Requirements Manual (PSM 1-6-7) calls for the contacts on relays A-700AP and A-700AAP to be examined in accordance with SB 6/338 every 1,200 hours. It also calls for the relay to be removed and bench tested every 3,000 hrs during the C6 check. There is no requirement for the relays to be overhauled.
+Analysis
+Cause of fire
+The damage to the aircraft indicates that the electrical fire started in the left RCR and the fire, and associated heat damage, did not spread outside the power distribution and generator control box.
+© Crown copyright 2010 25
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01","",,,,
+"376",":Inspection Schedule:__Entity__","","","3,000 hour inspection schedule","","","","",,,,
+"377",":Maintenance Procedure:__Entity__","","","relay to be removed and bench tested every 3,000 hours during the C6 check","","","","",,,,
+"378",":Manual:__Entity__","","","PSM 1-6-7","","","","",,,,
+"379",":Maintenance Requirement:__Entity__","","","no requirement for overhaul","","","","",,,,
+"380",":Maintenance Check:__Entity__","","","C check every 500 hours","","","","",,,,
+"381",":Component:__Entity__","","","Relays A-700AP and A-700AAP","","","","",,,,
+"382",":Maintenance Procedure:__Entity__","","","contacts on relays A-700AP and A-700AAP every 1,200 hours","","","","",,,,
+"383",":Event:__Entity__","","","fire and associated heat damage","","","","",,,,
+"384",":Document","","","61006b592191f5f2e88128da31972563","","","AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+The first indication to the crew was the two brief flickers on the left generatorGENERATOR caution caption. It is likely that this was caused by the rapid opening and closing of the main contacts (R3) in the left RCR. With the left generator on-line, it is likely that this action would have resulted in arcing between the moving and fixed contact plates, which may have been sufficient to weld one of the two contacts in the closed position. When the crew checked the DC load meter they noticed that on the left system the needle was fully deflected to the left, and on the right system was partially deflected to the right. This indicates that while the right generator was providing power to the right DC bus, current of at least 400 amps was flowing into the left starter/generator. It is this current flow which most probably caused, and sustained, the electrical fire.","",,,,
+"385",":Event:__Entity__","","","arc","","","","",,,,
+"386",":Outcome:__Entity__","","","welding of one of the two contacts in closed position","","","","",,,,
+"387",":Observation:__Entity__","","","needle fully deflected to the left on the left system DC load meter","","","","",,,,
+"388",":Event:__Entity__","","","action resulting in arcing between moving and fixed contact plates","","","","",,,,
+"389",":Component:__Entity__","","","right DC bus","","","","",,,,
+"390",":Event:__Entity__","","","two brief flickers on the left generator caution caption","","","","",,,,
+"391",":Mechanism:__Entity__","","","rapid opening and closing of the main contacts (R3) in the left RCR","","","","",,,,
+"392",":Document","","","a380009225ae57eab47b8dfa43088051","","","Although the crew had turned both generators off , and disconnected the DC bus tie, the right engine continued to turn at 12% to 15% Ng after both engines had been shut down. This shows that at the end of the flight the aircraft battery was providing electrical power to the right starter/generator, and the DC bus tie and the main contacts in the right RCR must have been in the closed position. It is, therefore, probable that the damage to the left RCR and the electrical control wires in the electrical power distribution box had already occurred before the crew attempted to disconnect the generators.","",,,,
+"393",":State:__Entity__","","","closed position","","","","",,,,
+"394",":Action:__Entity__","","","disconnecting generators","","","","",,,,
+"395",":Component:__Entity__","","","right starter/generator","","","","",,,,
+"396",":Component:__Entity__","","","main contacts in the right RCR","","","","",,,,
+"397",":Measurement:__Entity__","","","12% to 15% Ng","","","","",,,,
+"398",":Event:__Entity__","","","damage to the left RCR and electrical control wires","","","","",,,,
+"399",":Document","","","15723691c0538583a23d0f0b8aa5cc6b","","","The investigation was unable to determine the reason why the main contacts (R3) in the left RCR might have started to open and close during the flight. No faults were found in the electrical wiring outside the power distribution and generator control box. After the aircraft had been rewired, and the damaged components replaced, the DC electrical generator system was found to operate satisfactorily indicating that there were no faults in the generators or voltage regulators.
+The left RCR and the wiring in the power distribution and generator control box were extensively damaged and consequently it was not possible to determine if the fire had been the result of a fault in the RCR or a damaged wire that controlled the RCR.
+Heat shield","",,,,
+"400",":Location:__Entity__","","","outside the power distribution and generator control box","","","","",,,,
+"401",":Cause:__Entity__","","","fault in the RCR or a damaged wire that controlled the RCR","","","","",,,,
+"402",":Event:__Entity__","","","started to open and close during the flight","","","","",,,,
+"403",":System:__Entity__","","","electrical wiring","","","","",,,,
+"404",":Document","","","9c7868ce1c801e0b0c3058d4285b6b89","","","Heat shield
+As a result of previous occurrences of RCRs overheating and damaging adjacent components, Transport Canada issued an AD in 1977 that resulted in the introduction of fire resistance panels in the power distribution and generator control box. While the required modification (6/1598) had been embodied on C-FAKB, the heat shields were breached in four places as a result of arcing between the metal components in the RCR and the heat shields. Consequently the DC bus tie, right RCR, battery power cable and several electrical control cables all sustained some damage. The following Safety Recommendation is therefore made to Transport Canada:
+Safety Recommendation 2010-083
+It is recommended that Transport Canada reviews the design and efficacy of the heat shields fitted around the Reverse Current Relays on De Havilland DHC-6 aircraft that were introduced as a result of Airworthiness Directive CF-77-08.
+Reverse current relays","",,,,
+"405",":Cause:__Entity__","","","arcing between the metal components in the RCR and the heat shields","","","","",,,,
+"406",":Modification:__Entity__","","","fire resistance panels in the power distribution and generator control box","","","","",,,,
+"407",":Cause:__Entity__","","","breached heat shields","","","","",,,,
+"408",":Equipment:__Entity__","","","Reverse Current Relays on De Havilland DHC-6 aircraft","","","","",,,,
+"409",":Recommendation:__Entity__","","","Safety Recommendation 2010-083","","","","",,,,
+"410",":Component:__Entity__","","","Heat shields","","","","",,,,
+"411",":Components:__Entity__","","","DC bus tie, right RCR, battery power cable, several electrical control cables","","","","",,,,
+"412",":Document","","","6376e140018289eae7ad6680abd1ab22","","","Reverse current relays
+The investigation established that the left RCR that failed during the accident flight and the right relay removed prior to the start of the ferry flight were both identified as A-700A relays, which is an obsolete part that has not been approved for use on the De Havilland
+© Crown copyright 2010 26
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+DHC-6. The following safety recommendation is therefore made to Transport Canada:
+Safety Recommendation 2010-084
+It is recommended that Transport Canada takes appropriate action to ensure that only approved Reverse Current Relays are fitted to De Havilland DHC-6 aircraft.","",,,,
+"413",":Action:__Entity__","","","only approved Reverse Current Relays are fitted to De Havilland DHC-6 aircraft","","","","",,,,
+"414",":Airplane Model:__Entity__","","","De Havilland DHC-6","","","","",,,,
+"415",":Component:__Entity__","","","right relay","","","","",,,,
+"416",":Equipment:Part:__Entity__","","","A-700A relays","","","","",,,,
+"417",":Event:__Entity__","","","start of the ferry flight","","","","",,,,
+"418",":Document","","","db723c6379a33a632968d583869edc7d","","","A review of previous occurrences of overheating of the RCRs indicates that failures generally occurred due to arcing, and welding, of the main contacts and was most likely to occur on the relays rated at 300 amps (A-700AP and A-700AAP). While modification 6/1585 introduced relay A-701D, rated at 400 amps with an improved contact design, there was no requirement to replace the existing 300 amps relays providing their contacts were examined every 1,200 hours. Given that most of the occurrences of overheating appear to have occurred with the relays rated at 300 amps, the following Safety Recommendation is made to Transport Canada:
+Safety Recommendation 2010-085
+It is recommended that Transport Canada require the replacement of existing Reverse Current Relays (part number A-700AP and A-700AAP) fitted to De Havilland DHC-6 aircraft with relays of a higher current rating and improved design of the electrical contacts.","",,,,
+"419",":Event:__Entity__","","","overheating occurrences","","","","",,,,
+"420",":Product:__Entity__","","","relays rated at 300 amps","","","","",,,,
+"421",":Product:__Entity__","","","existing 300 amps relays","","","","",,,,
+"422",":Condition:__Entity__","","","contacts examined every 1,200 hours","","","","",,,,
+"423",":Specification:__Entity__","","","relays of a higher current rating and improved design","","","","",,,,
+"424",":Product:__Entity__","","","existing Reverse Current Relays (A-700AP and A-700AAP)","","","","",,,,
+"425",":Product:__Entity__","","","relay A-701D","","","","",,,,
+"426",":Failure Cause:__Entity__","","","arcing, welding of main contacts","","","","",,,,
+"427",":Characteristic:__Entity__","","","improved contact design","","","","",,,,
+"428",":Event:__Entity__","","","failures","","","","",,,,
+"429",":Recommendation:__Entity__","","","Safety Recommendation 2010-085","","","","",,,,
+"430",":Product:__Entity__","","","relays rated at 300 amps (A-700AP and A-700AAP)","","","","",,,,
+"431",":Document","","","395be5a66371244eabcffea88ff5c4e5","","","While the Authorised Release Certificates recorded that both A-700A relays had been overhauled, the maintenance organisation responsible confirmed that they had not undergone a full overhaul, but instead had been electrically tested in accordance with what they believed was the OEM manual. The normal practice was that if the relay failed any part of the test then the relevant component would be replaced and the relay retested. This approach was entirely consistent with the DHC-6 Inspection Requirements Manual, which only required the relays to be bench tested every 3,000 flying hours. However, the left RCR which caught fire had only flown for approximately 35 flying hours since it was last tested and the right RCR (serial number A98995) removed prior to the start of the ferry flight, had only flown approximately 13 flying hours.","",,,,
+"432",":Time Period:__Entity__","","","approximately 35 flying hours","","","","",,,,
+"433",":Time Period:__Entity__","","","approximately 13 flying hours","","","","",,,,
+"434",":Document:__Entity__","","","Authorised Release Certificates","","","","",,,,
+"435",":Equipment:__Entity__","","","relays","","","","",,,,
+"436",":Equipment:__Entity__","","","relay","","","","",,,,
+"437",":Identifier:__Entity__","","","A98995","","","","",,,,
+"438",":Organization:__Entity__","","","maintenance organisation responsible","","","","",,,,
+"439",":Component:__Entity__","","","relevant component","","","","",,,,
+"440",":Procedure:__Entity__","","","approach","","","","",,,,
+"441",":Manual:__Entity__","","","DHC-6 Inspection Requirements Manual","","","","",,,,
+"442",":Time Period:__Entity__","","","3,000 flying hours","","","","",,,,
+"443",":Manual:__Entity__","","","OEM manual","","","","",,,,
+"444",":Document","","","676a50697fe5c184e5c6a092ff557b7b","","","While the subsequent internal visual examination of the right RCR (serial number A98995) established that one of the coils appeared to have been degraded by heat due to normal aging, there would have been no requirement to replace this coil providing the RCR passed the required electrical test. The contact pressure is a factor in preventing arcing across the contacts and is normally established by measuring the relay over-travel, but this parameter is only checked during overhaul of the relay and cannot be established during electrical tests. It is, therefore, possible that an RCR with a degraded coil and insufficient contact pressure could pass all the required tests and be authorised to fly for a further 3,000 hours. The following Safety Recommendation is, therefore, made to Transport Canada:
+Safety Recommendation 2010-086","",,,,
+"445",":Duration:__Entity__","","","further 3,000 hours","","","","",,,,
+"446",":Event:__Entity__","","","arcing across the contacts","","","","",,,,
+"447",":Equipment:__Entity__","","","RCR (serial number A98995)","","","","",,,,
+"448",":Characteristic:__Entity__","","","contact pressure","","","","",,,,
+"449",":Condition:__Entity__","","","degraded coil due to heat from normal aging","","","","",,,,
+"450",":Equipment Condition:__Entity__","","","RCR with degraded coil and insufficient contact pressure","","","","",,,,
+"451",":Test:__Entity__","","","required electrical test","","","","",,,,
+"452",":Method:__Entity__","","","relay over-travel","","","","",,,,
+"453",":Tests:__Entity__","","","required tests","","","","",,,,
+"454",":Recommendation:__Entity__","","","Safety Recommendation 2010-086","","","","",,,,
+"455",":Parameter:__Entity__","","","parameter (contact pressure)","","","","",,,,
+"456",":Process:__Entity__","","","overhaul of the relay","","","","",,,,
+"457",":Document","","","65d69bc80ecb4447f78e1a9571335daa","","","Safety Recommendation 2010-086
+It is recommended that Transport Canada reviews the maintenance requirements for the Reverse Current Relay fitted to De Havilland DHC-6 aircraft and considers requiring the relay to be overhauled on a regular basis.
+The Authorized Release Certificate for RCRs serial numbers 33284 and 33283 stated that the relays had been overhauled I.A.W Hartman Manual A-700A.
+© Crown copyright 2010 27
+AAIB Bulletin: 11/2010 C-FAKB EW/C2010/02/01
+While the document which the overhaul agency referred to was annotated with the OEMs name, the OEM has advised the investigation that they have not produced an overhaul manual for the A-700A RCRs. Moreover, the title of the document is Installation Instructions and only contained information on the testing of the relay. The following Safety Recommendation is, therefore, made to the overhaul agency:
+Safety Recommendation 2010-087","",,,,
+"458",":Serial Numbers:__Entity__","","","33284 and 33283","","","","",,,,
+"459",":Organization Name:__Entity__","","","OEM's name","","","","",,,,
+"460",":Component:__Entity__","","","Reverse Current Relay (RCR)","","","","",,,,
+"461",":Component:__Entity__","","","A-700A RCRs","","","","",,,,
+"462",":Document:__Entity__","","","Authorized Release Certificate for RCRs serial numbers 33284 and 33283","","","","",,,,
+"463",":Document:__Entity__","","","Document referred by overhaul agency","","","","",,,,
+"464",":Recommendation:__Entity__","","","Safety Recommendation 2010-087","","","","",,,,
+"465",":Organization:__Entity__","","","overhaul agency","","","","",,,,
+"466",":Aircraft Model:__Entity__","","","De Havilland DHC-6 aircraft","","","","",,,,
+"467",":Maintenance Requirement:__Entity__","","","maintenance requirements for Reverse Current Relay on De Havilland DHC-6 aircraft","","","","",,,,
+"468",":Component:__Entity__","","","Reverse Current Relay","","","","",,,,
+"469",":Document","","","ab51a433a0d812792c47f2cf495c7f7d","","","Safety Recommendation 2010-087
+It is recommended that Transport Canada conduct an audit of Condor Aircraft Accessories Incs internal processes to ensure that work recorded on the Authorized Release Certificate accurately reflects the work carried out on the component.","",,,,
+"470",":Recorded Work:__Entity__","","","Work recorded on the Authorized Release Certificate","","","","",,,,
+"471",":Process:__Entity__","","","Condor Aircraft Accessories Inc's internal processes","","","","",,,,
+"472",":Activity:__Entity__","","","Audit","","","","",,,,
+"473",":Actual Work:__Entity__","","","work carried out on the component","","","","",,,,
+"474",":Document:__Entity__","","","work recorded on the Authorized Release Certificate","","","","",,,,
+"475",":Document","","","9cffc590c1d9eccbcc40aae341581165","","","Synopsis
+The pilot, believing that he had an electrical fire,
+undertook a precautionary landing. During the ground
+run the nose wheel hit a rut causing the aircraft to turn
+over on to its back. Both the pilot and passenger were
+uninjured. An engineering investigation found that the
+alternator drive belt had failed.
+History of the flight
+The pilot carried out the pre-flight check during which he
+confirmed that there was sufficient oil in the engine and
+then departed from his home airfield at Andrewsfield on a
+local cross country flight. After flying for approximately
+35 minutes at a height of 1,800 ft the pilot noticed blue
+smoke coming out of the forward section of both sides of
+the engine cowling. At the same time the pilot became
+aware of a strong smell of electrical burning and
+reported hearing a change in the engine noise similar to
+when the magneto checks are carried out. He checked
+the engine indications, which appeared normal, and
+noticed that the low voltage warning light was glowing
+very brightly.
+The pilot, believing that he had an electrical fire, decided
+to make an immediate landing in a large field of wheat
+directly ahead of the aircraft. As he closed the throttle
+to idle the smoke appeared to stop; nevertheless, he
+made a Mayday call to Andrewsfield Radio on 130.55
+Mhz and continued with the precautionary landing. The
+pilot states that he consulted the emergency checklist
+for fire in flight, but elected to leave the electrical
+Master Switch ON so that he could operate the flaps
+and radio. The aircraft was established on a stable
+approach, with a 5 kt tail wind, and once full flaps were
+selected, the pilot stated that he turned off the Master
+Switch and subsequently held the aircraft in the flare
+until the mainwheels touched down at approximately
+50 kt. However, as the nose was lowered the aircraft
+appeared to come to an abrupt halt and turned over on to
+its back. The engine stopped as the propeller struck the
+ground and the pilot exited the aircraft through his door
+and then assisted the passenger to vacate the aircraft.
+Shortly afterwards two farmers and the Police and
+Air Ambulance helicopters arrived to offer assistance.
+Both the pilot and passenger were unhurt.
+Damage to aircraft
+The nose landing gear leg was bent back against the
+fuselage; the fin, rudder and wings were buckled and
+distorted; the windscreen was cracked; one blade on
+the propeller was bent; the engine was shock loaded,
+the casing on the alternator had suffered impact damage
+and the drive belt had failed. There was no evidence of
+a fire having occurred.
+Comment
+From photographs of the accident site and comments
+from an engineer who inspected the aircraft it was
+established that the aircraft touched down on all three
+wheels in a level attitude. The engineer stated that there
+was a large rut across the field approximately 12 m
+after the touch down point, which he believes caused
+the nose landing gear to collapse and the aircraft to turn","",,,,
+"476",":Action:Aircraft Control:__Entity__","","","electrical Master Switch","","","","",,,,
+"477",":Person:__Entity__","","","pilot","","","","",,,,
+"478",":Damage:Failure:Status:__Entity__","","","true","","","","",,,,
+"479",":Aircraft Part:__Entity__","","","windscreen","","","","",,,,
+"480",":Decision:__Entity__","","","immediate landing in wheat field","","","","",,,,
+"481",":Action:__Entity__","","","precautionary landing","","","","",,,,
+"482",":Person:__Entity__","","","passenger","","","","",,,,
+"483",":Sensation:__Entity__","","","strong smell of electrical burning","","","","",,,,
+"484",":Sound:__Entity__","","","engine noise","","","","",,,,
+"485",":Aircraft Part:__Entity__","","","casing on alternator","","","","",,,,
+"486",":Activity:__Entity__","","","engineering investigation","","","","",,,,
+"487",":Obstacle:__Entity__","","","rut","","","","",,,,
+"488",":Position:__Entity__","","","its back","","","","",,,,
+"489",":Aircraft Part:__Entity__","","","drive belt","","","","",,,,
+"490",":Action:__Entity__","","","emergency checklist for fire in flight","","","","",,,,
+"491",":Location:__Entity__","","","Andrewsfield airfield","","","","",,,,
+"492",":Aircraft Part:__Entity__","","","engine","","","","",,,,
+"493",":Aircraft Instrument:__Entity__","","","low voltage warning light","","","","",,,,
+"494",":Aircraft Part:__Entity__","","","nose landing gear leg","","","","",,,,
+"495",":Communication:__Entity__","","","Andrewsfield Radio on 130.55 Mhz","","","","",,,,
+"496",":Aircraft Part:__Entity__","","","one blade on propeller","","","","",,,,
+"497",":Aircraft Parts:__Entity__","","","fin, rudder and wings","","","","",,,,
+"498",":Observation:__Entity__","","","blue smoke from engine cowling","","","","",,,,
+"499",":Damage:__Entity__","","","fuselage","","","","",,,,
+"500",":Action:__Entity__","","","pre-flight check","","","","",,,,
+"501",":Aircraft Part:__Entity__","","","nose wheel","","","","",,,,
+"502",":Failure:Finding:__Entity__","","","alternator drive belt failure","","","","",,,,
+"503",":Document","","","e8fc96204216d2acd62e1b5acfe808e4","","","after the touch down point, which he believes caused
+the nose landing gear to collapse and the aircraft to turn
+over. The flaps were found in the retracted position.
+Another battery was fitted to the aircraft and its electrical
+systems were operated for 15 minutes and found to
+operate normally with no evidence of any electrical
+burning smells. The engine oil level was found to be
+satisfactory with no indication of there having been
+either an oil leak or spillage.
+It is believed that the blue smoke and the illumination of
+the low voltage warning light were both caused when the
+alternator drive belt failed.","",,,,
+"504",":Position:__Entity__","","","retracted position","","","","",,,,
+"505",":Equipment:__Entity__","","","another battery","","","","",,,,
+"506",":Event:__Entity__","","","blue smoke and low voltage warning light illumination","","","","",,,,
+"507",":Event:__Entity__","","","touch down point","","","","",,,,
+"508",":Incident:__Entity__","","","nose landing gear collapse","","","","",,,,
+"509",":Incident:__Entity__","","","oil leak or spillage","","","","",,,,
+"510",":Measurement:__Entity__","","","engine oil level","","","","",,,,
+"511",":Condition:__Entity__","","","satisfactory","","","","",,,,
+"512",":Incident:__Entity__","","","aircraft turn over","","","","",,,,
+"513",":Duration:__Entity__","","","15 minutes","","","","",,,,
+"514",":Component:__Entity__","","","flaps","","","","",,,,
+"515",":Condition:__Entity__","","","no evidence of electrical burning smells","","","","",,,,
+"516",":Document","","","e92aafc9330a59bb53d0b75b23e4a1fd","","","Brian rode a bike in the storm.  The storm took place over Derby shire.  The river Trent, that runs 
+through Derbyshire flooded as a  result.","",,,,
+"517",":Location:__Entity__","","","Derbyshire","","","","",,,,
+"518",":Location:__Entity__","","","Derby shire","","","","",,,,
+"519",":Person:__Entity__","","","Brian","","","","",,,,
+"520",":Object:__Entity__","","","bike","","","","",,,,
+"521",":Geographical Feature:__Entity__","","","river Trent","","","","",,,,
+"522",":Event:__Entity__","","","storm","","","","",,,,
+"523",":Document","","","6b937f565fe8c216cfd9f92e028abb57","","","Brian, who lives in Derbyshire, en joys riding his bike.  He pre fers riding it in sunny weather but  
+will ride in stormy weather if necessary.  Last we ek, he road it to the reservoir.","",,,,
+"524",":Location:__Entity__","","","the reservoir","","","","",,,,
+"525",":Condition:__Entity__","","","sunny weather","","","","",,,,
+"526",":Condition:__Entity__","","","stormy weather","","","","",,,,
+"527",":Activity:__Entity__","","","riding his bike","","","","",,,,
+"528",":Chunk:__KGBuilder__","","[-0.029078376,0.016876439,0.047028728,-0.02391765,0.03957319,0.0034769,-0.027140971,0.028355112,0.040385682,-0.044473268,-0.034108635,-0.033175655,-0.012827524,0.017039107,-0.0195418,-0.018340712,-0.008566236,0.034429297,-0.04728029,0.0029177677,0.07172115,0.024653196,-0.07384151,-0.04205235,0.050051384,0.046922714,0.034445707,0.029965566,0.019938616,0.03957645,0.028024834,-0.03794144,0.024860168,-0.0388758,0.019247336,0.020229544,0.039888054,-0.04783452,0.01029995,-0.052116722,0.04457364,-0.03766268,0.0024698153,0.004266615,-0.050743252,0.004710001,0.02669288,-0.031290814,-0.019824939,-0.02137205,-0.00886046,0.020330021,0.07503668,-0.06732724,0.033432882,-0.0031233125,0.008580209,0.0029714622,-3.312673E-4,0.022525275,0.014682852,-0.030135063,0.021389386,-4.2053804E-4,-0.019231146,0.05131837,0.02591442,0.028605245,0.014479185,0.016477278,-0.027227266,0.050026827,-0.018953847,-9.265014E-5,-0.04632267,-0.033374947,-0.03953672,4.539393E-4,0.056712233,-0.017481562,0.029138733,0.04936821,0.01155406,-0.030344373,-0.02009556,-0.016907457,0.022571621,0.06530656,-0.014272332,0.04645889,0.034995466,0.01360436,0.015998876,-0.027605454,-0.004277582,0.0041578007,-0.016384056,0.04287685,-0.012007747,0.02515408,0.013343422,-0.0078712795,-0.014099795,0.05699919,-0.018311273,0.017895043,-0.047522064,0.025245393,0.022526724,-0.020754121,0.042179167,0.02597462,0.013430837,0.021970307,-0.022788446,0.04585204,-0.009671188,0.021830425,-0.021195598,-0.019957287,0.014911733,0.0033829326,0.03570199,-0.032776464,-0.04587886,-0.040788066,-0.026962416,0.03785972,0.0052511264,0.009240029,0.002108548,-0.050367214,-0.021833276,-0.020423822,-0.0023428483,0.018344566,7.1805186E-4,-0.009151128,-0.008525898,-0.032881115,0.038181007,-0.004474576,-0.00870413,0.05877597,0.011045065,0.05545446,0.017082227,-0.007951486,-0.020610284,0.03853738,-0.0067169815,-0.028779283,0.012378839,0.026396941,-0.010789566,-0.0077716485,0.042475037,0.020592617,0.024044037,-0.00544624,-0.011528662,-0.052226745,0.0019019096,0.004944766,-0.002203637,-8.016919E-4,-0.008682532,-0.047427937,0.0034552484,0.0077561922,0.026160536,0.010673037,-0.0047723725,-0.003153658,0.028441483,0.005742844,-0.0021969834,-0.005067469,-0.057129428,-0.0020400558,-3.0980045E-5,0.0029142513,-0.0022392054,0.03306472,-0.0033310326,0.023086276,0.011393406,-0.013697593,-0.009641814,-0.017585713,-0.030554326,0.029320067,0.017509742,0.055924132,0.014413313,0.023177987,-0.050376356,-0.012025,-0.019984938,0.0139593,-0.01969698,-0.0026652059,0.0042582536,0.02731675,0.038374957,-0.05578571,0.045436323,0.046994846,-0.029965466,-0.057767514,0.037887916,0.015066014,0.017959943,-0.014230044,0.014388431,-0.0075515914,-0.022475516,0.0075730383,-0.048643768,0.014366512,0.025417408,0.010107364,-0.0029551904,0.054054495,-0.025032429,-0.025736865,0.006225458,0.042306095,-0.016109113,-0.0119662285,0.012728084,0.006445173,-0.021555798,0.032244653,0.019892124,0.03542571,-0.012800973,3.9658297E-4,-0.0077747074,-0.02223706,-0.015043983,0.019592756,0.055376787,-0.0039718472,-0.024261108,0.063813984,-0.036938697,0.0026205375,-0.060821407,0.018527454,0.03674886,0.031824525,1.7881466E-4,-0.0066012247,-0.033432804,0.035321675,0.024333624,0.022040084,0.0031807495,-0.058236085,-0.0064737936,0.0011209341,-0.024097694,-0.033697184,0.029614018,0.034205176,-0.020544264,0.014930808,0.025545936,-0.048950825,-0.019865666,-0.027682101,-0.011600805,-0.009590556,-0.045884423,0.027709497,0.071209006,-0.031529635,0.026843477,-0.0035151213,-0.005433982,0.025117537,-0.032250363,0.02616948,-0.0100764185,0.0028429544,0.0043052016,0.014249293,-0.01595688,-0.01659422,-0.008699676,-0.04120617,-0.025284372,-0.015959065,0.011737859,-0.01757277,0.0014891339,0.03984673,0.0052074767,-0.06000956,-0.04097804,0.027840676,-0.029314827,-0.020024264,-0.028499698,-0.0384779,0.01962083,-0.007164331,0.023331665,0.019194264,-2.695856E-4,0.03433943,-0.0387637,0.0011603518,-0.047247503,0.012800796,0.013894196,0.036838718,-0.012591393,-0.011810368,-0.027128417,-0.03112404,0.013717944,0.011226782,-0.046089675,0.012715409,0.037357148,-0.038479153,0.02921122,0.0077943653,-0.023547098,-0.05382219,-0.069662675,-0.017806761,0.026749006,0.0034251446,0.029757934,-0.015870506,0.020087998,-0.0034845816,5.775887E-4,-0.008407274,0.045314383,0.051956616,-0.0237069,-0.039751973,0.039744783,0.0045739226,-0.017061392,0.046478644,-0.09099679,-2.1102902E-4,0.041303847,0.023373859,-0.0016596897,-0.0040682475,-0.018302765,-0.047535557,-0.055984233,-0.018891279,-0.013866281,-0.0014782948,0.029086316,0.014807151,-0.038727127,-0.022218907,-0.017193705,0.015741346,0.04151815,-0.044996306,0.029375192,0.0022105926,-0.027250607,-0.024313355,0.004683244,-0.00385216,0.0022258067,-0.028740427,0.027308261,-0.022890083,-0.0051381853,-0.042261366,0.046831354,0.0057698004,0.025093855,-0.03185331,-0.02349287,0.03440243,-0.016384823,-0.011961399,-0.011873087,-0.026534552,0.0035360847,-0.012534498,-0.02208801,-0.018935226,0.06138417,0.049397454,-0.022819486,-0.030413082,0.04552661,0.034156054,0.024546968,0.042608015,-0.008578865,0.05924882,-0.010204099,0.02215457,0.03412927,-0.028672783,-0.031039184,0.013282049,0.009439725,0.005537316,0.04696413,0.043632902,-0.03023822,0.010667827,-0.0067094914,0.003413694,-0.08407608,0.010719489,0.020985283,0.027358433,0.0071137557,0.018251583,0.014541465,0.004046948,0.030098515,0.03539467,-0.009216268,-0.028103167,0.024445202,-0.016568856,0.033283338,-0.01264247,0.028528178,-0.03155129,-0.019765224,0.016767047,0.016980827,0.10164904,0.054696176,0.0043517104,0.0013014327,0.03086332,-0.007590035,-0.005270025,-0.041017286,-0.013836574,-0.06336855,-0.027728774,-0.013320635,-0.016874485,0.0038210214,-0.019076992,9.901144E-4,0.021156706,-0.014859092,-0.00813577,0.022442222,0.021743946,0.02940002,0.008667835,-0.020544581,-0.0071336892,-0.036095113,0.054265153,0.0042003402,0.048187114,-0.02986133,-0.006854431,0.038512062,-0.06741487,0.012851909,-0.0069284327,0.015243906,0.02207021,0.01938126,0.0073488774,0.008382322,-0.011100417,-0.026063198,0.026547154,-0.004429253,-0.0808801,-0.026153013,-0.012688232,-0.0402041,-0.0027067766,-0.014361223,-0.03931401,-0.052436076,0.0020530634,0.014155535,-0.07075186,-0.054389756,-0.027979884,1.1586052E-4,-0.0052058515,0.043134585,0.052037224,0.01918999,0.031119386,-0.028491035,-0.051800244,-0.027280219,-0.018281396,-0.037900146,0.007450518,0.0042036646,-0.05660362,-0.009672378,0.02818702,-0.026007015,0.024369406,0.07620784,-0.009020105,0.027469195,0.045544848,0.015816033,-0.051395465,-0.016270852,0.065885074,-0.04045108,-0.007730731,0.031353146,0.039631233,-0.03195209,-0.07737712,-0.003349909,-0.018911554,-0.031723864,-0.009075109,-0.05410643,0.0029631373,-0.008878324,0.02269628,-0.0038369608,0.014658238,-0.021759564,0.0019376958,-0.006659021,-0.0073161013,-0.08122819,-0.004541343,0.022661602,0.018118309,0.0022520304,-0.008086678,-0.0046986295,0.0070324005,0.011951127,-0.013391225,-0.007659106,-0.04888342,-0.022496013,0.010834173,-0.0023252175,0.028100157,0.01727188,0.016852845,0.022689994,-0.09019855,0.034223817,-0.04865064,-0.0020565842,-0.0332443,0.048376586,0.0015629309,-0.008958942,9.0631365E-4,0.023377895,0.04551677,0.0020136188,-0.010903605,-0.033567186,-0.01942064,-0.037878882,-0.021951875,0.025638778,-0.05408489,-0.005777262,0.04051589,-0.0034084222,-0.009780516,-8.825166E-4,0.05668289,-0.002949645,-0.0313505,-0.053353768,0.016955905,-0.012360671,-0.024218187,-0.069766186,-0.016360443,-0.017837603,0.012663721,0.0098857405,-0.015194466,-0.044167466,0.02972094,0.04169914,-0.015129973,0.073841445,0.028183412,0.0074334205,-0.016476167,0.007853751,0.012997038,0.029650223,0.04595185,-2.0071708E-5,-0.005261447,0.04839789,0.0299083,-0.039559815,-0.03821839,0.032227222,0.015096971,-0.06317366,0.0017863367,0.027790647,-0.03168819,-0.016819565,-0.056933675,-0.035817042,-0.05362841,-0.011025257,0.030695718,0.010662651,-0.014787611,0.014880665,0.036081105,0.008124355,0.0036191635,-0.0019401817,0.0064344164,-0.011138494,0.00924478,0.0781574,0.009862268,0.053935785,-0.03154396,-0.044805698,-0.0010298886,0.008957458,0.0035048858,0.011385433,0.003607672,-0.012833647,0.012517181,-6.642484E-4,0.0019623172,-0.010202147,-0.0075951153,-0.0069336756,-0.015660109,-0.03525504,4.3876644E-4,0.07481014,-0.010039174,-0.025025718,0.008589793,0.025429657,-0.02154496,0.00734038,-0.039020445,-0.053661432,-0.040995497,0.00452915,-0.042834625,-0.03552712,0.0019918205,0.014928791,0.022194639,0.038888097,-0.028346404,0.022931648,-0.0114285415,0.015538429,3.993131E-4,-0.027055517,7.589272E-4,-0.011747878,-0.024633704,0.009165007,-0.02891681,-0.0066542723,-0.018150037,0.024695605,-0.060111362,0.043125488,0.0037382501,-0.015771922,0.10792527,-0.035682797,-0.03951863,0.0038832792,0.011032729,-0.013116819,0.062154524,1.9887513E-4,0.0078186,-0.007874143,-0.026086597,0.004827265,0.029742274,0.052842464,-0.05190926,-0.006357091,-0.0060109855,-0.004302188,-0.011366509,-0.034435496,0.0028363105,0.031126957,-0.07421286,0.008527268,0.026648328,-0.023937965,-0.04237047,0.016917486,-0.0041913525,0.060490157,-0.0076054814,2.665743E-4,-0.013007637,-0.026071655,0.048630316,-0.006259536,-0.019608574,0.062600724,0.018801238,0.023946086,-0.013687796,0.018587822,-0.012073995,-0.019288884,-0.005053131,0.003051985,0.037703533,0.015079015,0.017783877,-0.06275104,-0.016518876,-0.034578957,-0.049670547,-0.012500884,0.04830423,0.016195728,-0.006521603,0.0025417872,-0.022973936,-0.073319815,0.04054254,-7.7179883E-4,0.018615397,0.022599181,0.032054298,0.051749256,-0.01319279,-0.007532521,0.029141985,0.034202803,-0.04841356,-0.07246381,0.027680503,-0.013946596,-0.01723462,-0.008998614,-0.0085686855,-0.0037986946,-0.014438007,-0.019618802,-0.006364268,0.013418009,-0.003037014,0.038461406,-0.0139608085,0.033363607,0.0070560114,0.013358728,0.05226522,-0.023004021,-0.04143905,0.04477324,0.027230337,0.03325176,0.048696727,0.023986949,0.011755716,-0.010457864,-0.02951691,-0.010099461,0.013282388,0.005251456,0.038454365,-0.0019053572,0.01797131,-1.9302983E-4,0.0023529346,0.0027916413,-7.673433E-4,0.040143594,0.030772042,-0.017333886,-0.001453321,-0.023695633,0.008061547,-0.025570877,1.2733501E-5,0.0057925517,9.351492E-4,-0.0343433,-0.017068215,0.011094675,0.001987796,-0.008087045,0.020091096,-0.024717985,-0.02091263,0.08317119,0.009812459,-0.022387283,0.08057252,-0.005899877,0.035336882,-0.018111039,-0.0155897075,-0.027520077,-0.0680216,0.01612241,0.035074316,0.046442218,-0.0045859665,-0.027812377,0.012525819,0.023323558,-0.047028717,0.0015163134,-0.0015711794,-0.010879842,-0.07070147,-0.023043599,0.014974662,-0.034836985,0.022054654,-0.006763542,-0.0043399236,0.017910456,-0.01972536,-0.004721152,0.05616935,-0.015872132,-0.019832704,0.028655678,0.017929288,0.037988868,0.013610999,-0.010078133,0.006972495,-0.024861887,0.018627133,0.012084233,-0.031492442,0.028433466,-0.020188076,0.006293221,-0.02227983,0.014953742,-0.03297846,-0.036536854,0.018538546,0.0074635874,-0.030316679,0.017396731,-0.017395236,0.033535775,-0.024179302,0.024809713,0.02733403,-0.036405824,0.020401925,-0.047646973,0.047552157,0.013125869,-0.04653423,-0.051295877,-0.043187372,-0.005577736,-0.021946855,-0.035730492,-0.019854141,0.041055042,0.060843766,0.003357954,-0.023573538,-0.029812433,-0.03727052,-0.0052353237,0.034328077,-0.060160678,-9.523148E-4,-0.015086324,-0.0035525197,0.0019893735,0.014956363,-0.0075104404,-0.060211934,0.022334518,-0.0040233782,0.010712659,-0.034931097,0.001574471,0.043426067,0.012241807,0.019939438,-0.018844187,-0.056702666,-0.002975184,-0.022490405,-0.07600801,-0.034576163,-0.017021379,0.010508082,0.017239982,-0.007372915,-0.034822922,0.24908333,0.026192559,0.017880483,-0.031733923,-0.014470006,0.043007646,0.017238196,-0.010572441,0.0469153,-0.03638852,-0.013530183,0.049226858,0.008561256,-0.025580486,0.01141373,0.036039867,-0.0020577135,0.017690068,-0.001376596,-0.041083656,-0.06506223,-0.01967467,-0.041116226,0.015382839,0.0042377035,0.010691644,0.0074566538,0.0072763995,-0.02201287,0.026055409,-0.017834088,-0.029593492,-0.019959893,-0.038132165,-0.014907236,-0.014097004,-0.020324387,0.0015655836,-8.030898E-4,-0.011062469,-0.030487034,0.037884027,-8.0080127E-4,-0.04402616,0.0012842702,0.024023756,0.025258994,0.0146251805,0.007875961,0.02218232,0.03437123,-0.038856518,0.02054051,-0.037222866,0.0015118461,0.009824261,0.040593274,0.020198718,-0.026816018,-0.010851791,0.021225866,0.039496254,0.022150455,-0.007397141,0.0034369763,0.07069975,0.04292984,0.012652698,0.02599537,0.0037104671,0.03276237,-0.037223727,-0.052905038,-0.04844784,0.04874985,-0.004145207,-0.006583949,-0.030932065,0.015789494,0.005640925,-0.049285848,-0.0049084774,-0.045904882,-0.04458146,-0.002972077,-0.0279852,-0.0143531,-0.016221143,0.0021689455,0.10003027,0.04360365,0.005295837,-0.048642546,0.011574086,0.029529868]","7e6b8c14-9feb-4e79-8473-3510084797e9","0","","The son of Duke Leto Atreides and the Lady Jessica, Paul is the heir of House Atreides,
+an aristocratic family that rules the planet Caladan, the rainy planet, since 10191.","",,,,
+"529",":Person:__Entity__:__KGBuilder__","0","","7e6b8c14-9feb-4e79-8473-3510084797e9:0","","Duke Leto Atreides","","",,,,
+"530",":Person:__Entity__:__KGBuilder__","0","","7e6b8c14-9feb-4e79-8473-3510084797e9:1","","Lady Jessica","","",,,,
+"531",":Person:__Entity__:__KGBuilder__","0","","7e6b8c14-9feb-4e79-8473-3510084797e9:2","","Paul","","",,,,
+"532",":House:__Entity__:__KGBuilder__","0","","7e6b8c14-9feb-4e79-8473-3510084797e9:3","","","","",,,,
+"533",":Planet:__Entity__:__KGBuilder__","0","","7e6b8c14-9feb-4e79-8473-3510084797e9:4","","","","rainy",,,,
+"534",":Chunk:__KGBuilder__","","[-0.029078376,0.016876439,0.047028728,-0.02391765,0.03957319,0.0034769,-0.027140971,0.028355112,0.040385682,-0.044473268,-0.034108635,-0.033175655,-0.012827524,0.017039107,-0.0195418,-0.018340712,-0.008566236,0.034429297,-0.04728029,0.0029177677,0.07172115,0.024653196,-0.07384151,-0.04205235,0.050051384,0.046922714,0.034445707,0.029965566,0.019938616,0.03957645,0.028024834,-0.03794144,0.024860168,-0.0388758,0.019247336,0.020229544,0.039888054,-0.04783452,0.01029995,-0.052116722,0.04457364,-0.03766268,0.0024698153,0.004266615,-0.050743252,0.004710001,0.02669288,-0.031290814,-0.019824939,-0.02137205,-0.00886046,0.020330021,0.07503668,-0.06732724,0.033432882,-0.0031233125,0.008580209,0.0029714622,-3.312673E-4,0.022525275,0.014682852,-0.030135063,0.021389386,-4.2053804E-4,-0.019231146,0.05131837,0.02591442,0.028605245,0.014479185,0.016477278,-0.027227266,0.050026827,-0.018953847,-9.265014E-5,-0.04632267,-0.033374947,-0.03953672,4.539393E-4,0.056712233,-0.017481562,0.029138733,0.04936821,0.01155406,-0.030344373,-0.02009556,-0.016907457,0.022571621,0.06530656,-0.014272332,0.04645889,0.034995466,0.01360436,0.015998876,-0.027605454,-0.004277582,0.0041578007,-0.016384056,0.04287685,-0.012007747,0.02515408,0.013343422,-0.0078712795,-0.014099795,0.05699919,-0.018311273,0.017895043,-0.047522064,0.025245393,0.022526724,-0.020754121,0.042179167,0.02597462,0.013430837,0.021970307,-0.022788446,0.04585204,-0.009671188,0.021830425,-0.021195598,-0.019957287,0.014911733,0.0033829326,0.03570199,-0.032776464,-0.04587886,-0.040788066,-0.026962416,0.03785972,0.0052511264,0.009240029,0.002108548,-0.050367214,-0.021833276,-0.020423822,-0.0023428483,0.018344566,7.1805186E-4,-0.009151128,-0.008525898,-0.032881115,0.038181007,-0.004474576,-0.00870413,0.05877597,0.011045065,0.05545446,0.017082227,-0.007951486,-0.020610284,0.03853738,-0.0067169815,-0.028779283,0.012378839,0.026396941,-0.010789566,-0.0077716485,0.042475037,0.020592617,0.024044037,-0.00544624,-0.011528662,-0.052226745,0.0019019096,0.004944766,-0.002203637,-8.016919E-4,-0.008682532,-0.047427937,0.0034552484,0.0077561922,0.026160536,0.010673037,-0.0047723725,-0.003153658,0.028441483,0.005742844,-0.0021969834,-0.005067469,-0.057129428,-0.0020400558,-3.0980045E-5,0.0029142513,-0.0022392054,0.03306472,-0.0033310326,0.023086276,0.011393406,-0.013697593,-0.009641814,-0.017585713,-0.030554326,0.029320067,0.017509742,0.055924132,0.014413313,0.023177987,-0.050376356,-0.012025,-0.019984938,0.0139593,-0.01969698,-0.0026652059,0.0042582536,0.02731675,0.038374957,-0.05578571,0.045436323,0.046994846,-0.029965466,-0.057767514,0.037887916,0.015066014,0.017959943,-0.014230044,0.014388431,-0.0075515914,-0.022475516,0.0075730383,-0.048643768,0.014366512,0.025417408,0.010107364,-0.0029551904,0.054054495,-0.025032429,-0.025736865,0.006225458,0.042306095,-0.016109113,-0.0119662285,0.012728084,0.006445173,-0.021555798,0.032244653,0.019892124,0.03542571,-0.012800973,3.9658297E-4,-0.0077747074,-0.02223706,-0.015043983,0.019592756,0.055376787,-0.0039718472,-0.024261108,0.063813984,-0.036938697,0.0026205375,-0.060821407,0.018527454,0.03674886,0.031824525,1.7881466E-4,-0.0066012247,-0.033432804,0.035321675,0.024333624,0.022040084,0.0031807495,-0.058236085,-0.0064737936,0.0011209341,-0.024097694,-0.033697184,0.029614018,0.034205176,-0.020544264,0.014930808,0.025545936,-0.048950825,-0.019865666,-0.027682101,-0.011600805,-0.009590556,-0.045884423,0.027709497,0.071209006,-0.031529635,0.026843477,-0.0035151213,-0.005433982,0.025117537,-0.032250363,0.02616948,-0.0100764185,0.0028429544,0.0043052016,0.014249293,-0.01595688,-0.01659422,-0.008699676,-0.04120617,-0.025284372,-0.015959065,0.011737859,-0.01757277,0.0014891339,0.03984673,0.0052074767,-0.06000956,-0.04097804,0.027840676,-0.029314827,-0.020024264,-0.028499698,-0.0384779,0.01962083,-0.007164331,0.023331665,0.019194264,-2.695856E-4,0.03433943,-0.0387637,0.0011603518,-0.047247503,0.012800796,0.013894196,0.036838718,-0.012591393,-0.011810368,-0.027128417,-0.03112404,0.013717944,0.011226782,-0.046089675,0.012715409,0.037357148,-0.038479153,0.02921122,0.0077943653,-0.023547098,-0.05382219,-0.069662675,-0.017806761,0.026749006,0.0034251446,0.029757934,-0.015870506,0.020087998,-0.0034845816,5.775887E-4,-0.008407274,0.045314383,0.051956616,-0.0237069,-0.039751973,0.039744783,0.0045739226,-0.017061392,0.046478644,-0.09099679,-2.1102902E-4,0.041303847,0.023373859,-0.0016596897,-0.0040682475,-0.018302765,-0.047535557,-0.055984233,-0.018891279,-0.013866281,-0.0014782948,0.029086316,0.014807151,-0.038727127,-0.022218907,-0.017193705,0.015741346,0.04151815,-0.044996306,0.029375192,0.0022105926,-0.027250607,-0.024313355,0.004683244,-0.00385216,0.0022258067,-0.028740427,0.027308261,-0.022890083,-0.0051381853,-0.042261366,0.046831354,0.0057698004,0.025093855,-0.03185331,-0.02349287,0.03440243,-0.016384823,-0.011961399,-0.011873087,-0.026534552,0.0035360847,-0.012534498,-0.02208801,-0.018935226,0.06138417,0.049397454,-0.022819486,-0.030413082,0.04552661,0.034156054,0.024546968,0.042608015,-0.008578865,0.05924882,-0.010204099,0.02215457,0.03412927,-0.028672783,-0.031039184,0.013282049,0.009439725,0.005537316,0.04696413,0.043632902,-0.03023822,0.010667827,-0.0067094914,0.003413694,-0.08407608,0.010719489,0.020985283,0.027358433,0.0071137557,0.018251583,0.014541465,0.004046948,0.030098515,0.03539467,-0.009216268,-0.028103167,0.024445202,-0.016568856,0.033283338,-0.01264247,0.028528178,-0.03155129,-0.019765224,0.016767047,0.016980827,0.10164904,0.054696176,0.0043517104,0.0013014327,0.03086332,-0.007590035,-0.005270025,-0.041017286,-0.013836574,-0.06336855,-0.027728774,-0.013320635,-0.016874485,0.0038210214,-0.019076992,9.901144E-4,0.021156706,-0.014859092,-0.00813577,0.022442222,0.021743946,0.02940002,0.008667835,-0.020544581,-0.0071336892,-0.036095113,0.054265153,0.0042003402,0.048187114,-0.02986133,-0.006854431,0.038512062,-0.06741487,0.012851909,-0.0069284327,0.015243906,0.02207021,0.01938126,0.0073488774,0.008382322,-0.011100417,-0.026063198,0.026547154,-0.004429253,-0.0808801,-0.026153013,-0.012688232,-0.0402041,-0.0027067766,-0.014361223,-0.03931401,-0.052436076,0.0020530634,0.014155535,-0.07075186,-0.054389756,-0.027979884,1.1586052E-4,-0.0052058515,0.043134585,0.052037224,0.01918999,0.031119386,-0.028491035,-0.051800244,-0.027280219,-0.018281396,-0.037900146,0.007450518,0.0042036646,-0.05660362,-0.009672378,0.02818702,-0.026007015,0.024369406,0.07620784,-0.009020105,0.027469195,0.045544848,0.015816033,-0.051395465,-0.016270852,0.065885074,-0.04045108,-0.007730731,0.031353146,0.039631233,-0.03195209,-0.07737712,-0.003349909,-0.018911554,-0.031723864,-0.009075109,-0.05410643,0.0029631373,-0.008878324,0.02269628,-0.0038369608,0.014658238,-0.021759564,0.0019376958,-0.006659021,-0.0073161013,-0.08122819,-0.004541343,0.022661602,0.018118309,0.0022520304,-0.008086678,-0.0046986295,0.0070324005,0.011951127,-0.013391225,-0.007659106,-0.04888342,-0.022496013,0.010834173,-0.0023252175,0.028100157,0.01727188,0.016852845,0.022689994,-0.09019855,0.034223817,-0.04865064,-0.0020565842,-0.0332443,0.048376586,0.0015629309,-0.008958942,9.0631365E-4,0.023377895,0.04551677,0.0020136188,-0.010903605,-0.033567186,-0.01942064,-0.037878882,-0.021951875,0.025638778,-0.05408489,-0.005777262,0.04051589,-0.0034084222,-0.009780516,-8.825166E-4,0.05668289,-0.002949645,-0.0313505,-0.053353768,0.016955905,-0.012360671,-0.024218187,-0.069766186,-0.016360443,-0.017837603,0.012663721,0.0098857405,-0.015194466,-0.044167466,0.02972094,0.04169914,-0.015129973,0.073841445,0.028183412,0.0074334205,-0.016476167,0.007853751,0.012997038,0.029650223,0.04595185,-2.0071708E-5,-0.005261447,0.04839789,0.0299083,-0.039559815,-0.03821839,0.032227222,0.015096971,-0.06317366,0.0017863367,0.027790647,-0.03168819,-0.016819565,-0.056933675,-0.035817042,-0.05362841,-0.011025257,0.030695718,0.010662651,-0.014787611,0.014880665,0.036081105,0.008124355,0.0036191635,-0.0019401817,0.0064344164,-0.011138494,0.00924478,0.0781574,0.009862268,0.053935785,-0.03154396,-0.044805698,-0.0010298886,0.008957458,0.0035048858,0.011385433,0.003607672,-0.012833647,0.012517181,-6.642484E-4,0.0019623172,-0.010202147,-0.0075951153,-0.0069336756,-0.015660109,-0.03525504,4.3876644E-4,0.07481014,-0.010039174,-0.025025718,0.008589793,0.025429657,-0.02154496,0.00734038,-0.039020445,-0.053661432,-0.040995497,0.00452915,-0.042834625,-0.03552712,0.0019918205,0.014928791,0.022194639,0.038888097,-0.028346404,0.022931648,-0.0114285415,0.015538429,3.993131E-4,-0.027055517,7.589272E-4,-0.011747878,-0.024633704,0.009165007,-0.02891681,-0.0066542723,-0.018150037,0.024695605,-0.060111362,0.043125488,0.0037382501,-0.015771922,0.10792527,-0.035682797,-0.03951863,0.0038832792,0.011032729,-0.013116819,0.062154524,1.9887513E-4,0.0078186,-0.007874143,-0.026086597,0.004827265,0.029742274,0.052842464,-0.05190926,-0.006357091,-0.0060109855,-0.004302188,-0.011366509,-0.034435496,0.0028363105,0.031126957,-0.07421286,0.008527268,0.026648328,-0.023937965,-0.04237047,0.016917486,-0.0041913525,0.060490157,-0.0076054814,2.665743E-4,-0.013007637,-0.026071655,0.048630316,-0.006259536,-0.019608574,0.062600724,0.018801238,0.023946086,-0.013687796,0.018587822,-0.012073995,-0.019288884,-0.005053131,0.003051985,0.037703533,0.015079015,0.017783877,-0.06275104,-0.016518876,-0.034578957,-0.049670547,-0.012500884,0.04830423,0.016195728,-0.006521603,0.0025417872,-0.022973936,-0.073319815,0.04054254,-7.7179883E-4,0.018615397,0.022599181,0.032054298,0.051749256,-0.01319279,-0.007532521,0.029141985,0.034202803,-0.04841356,-0.07246381,0.027680503,-0.013946596,-0.01723462,-0.008998614,-0.0085686855,-0.0037986946,-0.014438007,-0.019618802,-0.006364268,0.013418009,-0.003037014,0.038461406,-0.0139608085,0.033363607,0.0070560114,0.013358728,0.05226522,-0.023004021,-0.04143905,0.04477324,0.027230337,0.03325176,0.048696727,0.023986949,0.011755716,-0.010457864,-0.02951691,-0.010099461,0.013282388,0.005251456,0.038454365,-0.0019053572,0.01797131,-1.9302983E-4,0.0023529346,0.0027916413,-7.673433E-4,0.040143594,0.030772042,-0.017333886,-0.001453321,-0.023695633,0.008061547,-0.025570877,1.2733501E-5,0.0057925517,9.351492E-4,-0.0343433,-0.017068215,0.011094675,0.001987796,-0.008087045,0.020091096,-0.024717985,-0.02091263,0.08317119,0.009812459,-0.022387283,0.08057252,-0.005899877,0.035336882,-0.018111039,-0.0155897075,-0.027520077,-0.0680216,0.01612241,0.035074316,0.046442218,-0.0045859665,-0.027812377,0.012525819,0.023323558,-0.047028717,0.0015163134,-0.0015711794,-0.010879842,-0.07070147,-0.023043599,0.014974662,-0.034836985,0.022054654,-0.006763542,-0.0043399236,0.017910456,-0.01972536,-0.004721152,0.05616935,-0.015872132,-0.019832704,0.028655678,0.017929288,0.037988868,0.013610999,-0.010078133,0.006972495,-0.024861887,0.018627133,0.012084233,-0.031492442,0.028433466,-0.020188076,0.006293221,-0.02227983,0.014953742,-0.03297846,-0.036536854,0.018538546,0.0074635874,-0.030316679,0.017396731,-0.017395236,0.033535775,-0.024179302,0.024809713,0.02733403,-0.036405824,0.020401925,-0.047646973,0.047552157,0.013125869,-0.04653423,-0.051295877,-0.043187372,-0.005577736,-0.021946855,-0.035730492,-0.019854141,0.041055042,0.060843766,0.003357954,-0.023573538,-0.029812433,-0.03727052,-0.0052353237,0.034328077,-0.060160678,-9.523148E-4,-0.015086324,-0.0035525197,0.0019893735,0.014956363,-0.0075104404,-0.060211934,0.022334518,-0.0040233782,0.010712659,-0.034931097,0.001574471,0.043426067,0.012241807,0.019939438,-0.018844187,-0.056702666,-0.002975184,-0.022490405,-0.07600801,-0.034576163,-0.017021379,0.010508082,0.017239982,-0.007372915,-0.034822922,0.24908333,0.026192559,0.017880483,-0.031733923,-0.014470006,0.043007646,0.017238196,-0.010572441,0.0469153,-0.03638852,-0.013530183,0.049226858,0.008561256,-0.025580486,0.01141373,0.036039867,-0.0020577135,0.017690068,-0.001376596,-0.041083656,-0.06506223,-0.01967467,-0.041116226,0.015382839,0.0042377035,0.010691644,0.0074566538,0.0072763995,-0.02201287,0.026055409,-0.017834088,-0.029593492,-0.019959893,-0.038132165,-0.014907236,-0.014097004,-0.020324387,0.0015655836,-8.030898E-4,-0.011062469,-0.030487034,0.037884027,-8.0080127E-4,-0.04402616,0.0012842702,0.024023756,0.025258994,0.0146251805,0.007875961,0.02218232,0.03437123,-0.038856518,0.02054051,-0.037222866,0.0015118461,0.009824261,0.040593274,0.020198718,-0.026816018,-0.010851791,0.021225866,0.039496254,0.022150455,-0.007397141,0.0034369763,0.07069975,0.04292984,0.012652698,0.02599537,0.0037104671,0.03276237,-0.037223727,-0.052905038,-0.04844784,0.04874985,-0.004145207,-0.006583949,-0.030932065,0.015789494,0.005640925,-0.049285848,-0.0049084774,-0.045904882,-0.04458146,-0.002972077,-0.0279852,-0.0143531,-0.016221143,0.0021689455,0.10003027,0.04360365,0.005295837,-0.048642546,0.011574086,0.029529868]","c244f59c-e2fc-4e65-9264-e4ff9083e704","0","","The son of Duke Leto Atreides and the Lady Jessica, Paul is the heir of House Atreides,
+an aristocratic family that rules the planet Caladan, the rainy planet, since 10191.","",,,,
+"538",":House:__Entity__:__KGBuilder__","0","","c244f59c-e2fc-4e65-9264-e4ff9083e704:3","","","","",,,,
+"539",":Planet:__Entity__:__KGBuilder__","0","","c244f59c-e2fc-4e65-9264-e4ff9083e704:4","","","","rainy",,,,
+,,,,,,,,,"0","1","MENTIONS",""
+,,,,,,,,,"0","2","MENTIONS",""
+,,,,,,,,,"0","3","MENTIONS",""
+,,,,,,,,,"0","4","MENTIONS",""
+,,,,,,,,,"0","5","MENTIONS",""
+,,,,,,,,,"0","6","MENTIONS",""
+,,,,,,,,,"0","7","MENTIONS",""
+,,,,,,,,,"0","8","MENTIONS",""
+,,,,,,,,,"0","9","MENTIONS",""
+,,,,,,,,,"0","10","MENTIONS",""
+,,,,,,,,,"0","11","MENTIONS",""
+,,,,,,,,,"0","12","MENTIONS",""
+,,,,,,,,,"0","13","MENTIONS",""
+,,,,,,,,,"0","14","MENTIONS",""
+,,,,,,,,,"0","15","MENTIONS",""
+,,,,,,,,,"0","16","MENTIONS",""
+,,,,,,,,,"0","17","MENTIONS",""
+,,,,,,,,,"0","18","MENTIONS",""
+,,,,,,,,,"0","19","MENTIONS",""
+,,,,,,,,,"3","10","REGISTERED_AS",""
+,,,,,,,,,"3","5","HAS_ENGINES",""
+,,,,,,,,,"3","9","YEAR_OF_MANUFACTURE",""
+,,,,,,,,,"3","14","SERIAL_NUMBER",""
+,,,,,,,,,"1","11","OCCURRED_AT",""
+,,,,,,,,,"1","15","TYPE_OF_FLIGHT",""
+,,,,,,,,,"2","4","NUMBER_ON_BOARD",""
+,,,,,,,,,"12","16","NUMBER_ON_BOARD",""
+,,,,,,,,,"1","17","NATURE_OF_DAMAGE",""
+,,,,,,,,,"8","7","HAS_LICENSE",""
+,,,,,,,,,"8","19","AGE",""
+,,,,,,,,,"8","13","FLYING_EXPERIENCE",""
+,,,,,,,,,"8","18","LAST_90_DAYS_FLYING_HOURS",""
+,,,,,,,,,"8","6","LAST_28_DAYS_FLYING_HOURS",""
+,,,,,,,,,"20","21","MENTIONS",""
+,,,,,,,,,"20","11","MENTIONS",""
+,,,,,,,,,"20","22","MENTIONS",""
+,,,,,,,,,"20","23","MENTIONS",""
+,,,,,,,,,"20","24","MENTIONS",""
+,,,,,,,,,"20","25","MENTIONS",""
+,,,,,,,,,"20","26","MENTIONS",""
+,,,,,,,,,"20","27","MENTIONS",""
+,,,,,,,,,"20","28","MENTIONS",""
+,,,,,,,,,"20","29","MENTIONS",""
+,,,,,,,,,"20","30","MENTIONS",""
+,,,,,,,,,"20","31","MENTIONS",""
+,,,,,,,,,"23","28","STARTED_IN",""
+,,,,,,,,,"21","25","ISOLATED_BY",""
+,,,,,,,,,"26","31","FROM_TO",""
+,,,,,,,,,"26","11","DIVERTED_TO",""
+,,,,,,,,,"24","29","TRACED_TO",""
+,,,,,,,,,"29","27","HAD_DIFFERENT_PART_NUMBER_THAN",""
+,,,,,,,,,"22","30","RESULTED_IN",""
+,,,,,,,,,"32","33","MENTIONS",""
+,,,,,,,,,"32","34","MENTIONS",""
+,,,,,,,,,"32","10","MENTIONS",""
+,,,,,,,,,"32","35","MENTIONS",""
+,,,,,,,,,"32","36","MENTIONS",""
+,,,,,,,,,"32","37","MENTIONS",""
+,,,,,,,,,"32","38","MENTIONS",""
+,,,,,,,,,"32","39","MENTIONS",""
+,,,,,,,,,"32","40","MENTIONS",""
+,,,,,,,,,"32","41","MENTIONS",""
+,,,,,,,,,"32","42","MENTIONS",""
+,,,,,,,,,"32","43","MENTIONS",""
+,,,,,,,,,"32","44","MENTIONS",""
+,,,,,,,,,"32","45","MENTIONS",""
+,,,,,,,,,"32","46","MENTIONS",""
+,,,,,,,,,"10","38","STARTS_FLIGHT_FROM",""
+,,,,,,,,,"10","33","FINISHES_FLIGHT_IN",""
+,,,,,,,,,"10","37","MODIFIED_FOR",""
+,,,,,,,,,"10","45","REMOVED",""
+,,,,,,,,,"35","10","ATTACHED_TO",""
+,,,,,,,,,"35","40","CONNECTED_TO",""
+,,,,,,,,,"41","34","SECURED_TO",""
+,,,,,,,,,"41","42","SECURED_TO",""
+,,,,,,,,,"46","41","FILLED_IN",""
+,,,,,,,,,"46","44","TRANSFERRED_TO",""
+,,,,,,,,,"36","43","PROVIDES",""
+,,,,,,,,,"36","39","LOCATED_BEHIND",""
+,,,,,,,,,"47","48","MENTIONS",""
+,,,,,,,,,"47","49","MENTIONS",""
+,,,,,,,,,"47","25","MENTIONS",""
+,,,,,,,,,"47","50","MENTIONS",""
+,,,,,,,,,"47","51","MENTIONS",""
+,,,,,,,,,"47","52","MENTIONS",""
+,,,,,,,,,"47","53","MENTIONS",""
+,,,,,,,,,"47","54","MENTIONS",""
+,,,,,,,,,"47","55","MENTIONS",""
+,,,,,,,,,"47","56","MENTIONS",""
+,,,,,,,,,"47","57","MENTIONS",""
+,,,,,,,,,"47","58","MENTIONS",""
+,,,,,,,,,"47","59","MENTIONS",""
+,,,,,,,,,"58","52","PLANNED_FOR_DATE",""
+,,,,,,,,,"25","51","NOTICED_PROBLEM_WITH",""
+,,,,,,,,,"49","50","SHUT_DOWN_DUE_TO",""
+,,,,,,,,,"59","56","DIAGNOSED_PROBLEM_WITH",""
+,,,,,,,,,"56","59","REPLACED_BY",""
+,,,,,,,,,"54","55","FUNCTIONED_CORRECTLY_AFTER",""
+,,,,,,,,,"48","57","FLYING_FLIGHTS",""
+,,,,,,,,,"25","57","EXPERIENCED_NO_PROBLEMS_DURING",""
+,,,,,,,,,"48","53","LANDED_AT",""
+,,,,,,,,,"60","61","MENTIONS",""
+,,,,,,,,,"60","53","MENTIONS",""
+,,,,,,,,,"60","62","MENTIONS",""
+,,,,,,,,,"60","10","MENTIONS",""
+,,,,,,,,,"60","63","MENTIONS",""
+,,,,,,,,,"60","64","MENTIONS",""
+,,,,,,,,,"60","65","MENTIONS",""
+,,,,,,,,,"60","66","MENTIONS",""
+,,,,,,,,,"60","67","MENTIONS",""
+,,,,,,,,,"10","53","DEPARTED_FROM",""
+,,,,,,,,,"10","64","CLIMBED_TO",""
+,,,,,,,,,"10","67","DESTINATION",""
+,,,,,,,,,"62","66","NOTICED",""
+,,,,,,,,,"62","61","OPENED",""
+,,,,,,,,,"65","63","NOTICED",""
+,,,,,,,,,"68","69","MENTIONS",""
+,,,,,,,,,"68","70","MENTIONS",""
+,,,,,,,,,"68","48","MENTIONS",""
+,,,,,,,,,"68","71","MENTIONS",""
+,,,,,,,,,"68","72","MENTIONS",""
+,,,,,,,,,"68","73","MENTIONS",""
+,,,,,,,,,"68","74","MENTIONS",""
+,,,,,,,,,"68","75","MENTIONS",""
+,,,,,,,,,"68","76","MENTIONS",""
+,,,,,,,,,"68","77","MENTIONS",""
+,,,,,,,,,"68","25","MENTIONS",""
+,,,,,,,,,"68","78","MENTIONS",""
+,,,,,,,,,"68","79","MENTIONS",""
+,,,,,,,,,"68","80","MENTIONS",""
+,,,,,,,,,"68","81","MENTIONS",""
+,,,,,,,,,"68","82","MENTIONS",""
+,,,,,,,,,"72","71","DECLARED_EMERGENCY",""
+,,,,,,,,,"72","81","ASKED_FOR_ASSISTANCE_FROM",""
+,,,,,,,,,"48","76","LOCATED_OVERHEAD",""
+,,,,,,,,,"82","78","STATUS",""
+,,,,,,,,,"79","78","STATUS",""
+,,,,,,,,,"73","75","DISTANCE_FROM_AIRCRAFT",""
+,,,,,,,,,"25","80","DECIDED_NOT_TO_FLY_FOR_DISTANCE_OVER",""
+,,,,,,,,,"69","74","STATUS",""
+,,,,,,,,,"25","77","DETERMINED_WEATHER_NOT_SUITABLE_FOR_APPROACH",""
+,,,,,,,,,"25","70","DECIDED_TO_MAKE_APPROACH_TO",""
+,,,,,,,,,"83","84","MENTIONS",""
+,,,,,,,,,"83","85","MENTIONS",""
+,,,,,,,,,"83","86","MENTIONS",""
+,,,,,,,,,"83","87","MENTIONS",""
+,,,,,,,,,"83","88","MENTIONS",""
+,,,,,,,,,"83","89","MENTIONS",""
+,,,,,,,,,"83","25","MENTIONS",""
+,,,,,,,,,"83","72","MENTIONS",""
+,,,,,,,,,"83","51","MENTIONS",""
+,,,,,,,,,"83","90","MENTIONS",""
+,,,,,,,,,"83","91","MENTIONS",""
+,,,,,,,,,"83","92","MENTIONS",""
+,,,,,,,,,"83","93","MENTIONS",""
+,,,,,,,,,"83","94","MENTIONS",""
+,,,,,,,,,"83","95","MENTIONS",""
+,,,,,,,,,"91","88","SHOWING_DEFLECTION_TO_LEFT",""
+,,,,,,,,,"87","92","SHOWING_DEFLECTION_TO_RIGHT",""
+,,,,,,,,,"95","89","DECIDED_TO_SHUT_DOWN",""
+,,,,,,,,,"93","85","CAUSED_PROBLEM",""
+,,,,,,,,,"51","94","REMAINED_OFF_AFTER_SHUTDOWN",""
+,,,,,,,,,"25","84","SWITCHED_OFF",""
+,,,,,,,,,"72","86","WENT_TO_TURN_OFF",""
+,,,,,,,,,"25","90","DECIDED_TO_SWITCH_OFF",""
+,,,,,,,,,"96","97","MENTIONS",""
+,,,,,,,,,"96","90","MENTIONS",""
+,,,,,,,,,"96","98","MENTIONS",""
+,,,,,,,,,"96","99","MENTIONS",""
+,,,,,,,,,"96","100","MENTIONS",""
+,,,,,,,,,"96","101","MENTIONS",""
+,,,,,,,,,"90","101","IS_SWITCHED_OFF_BY",""
+,,,,,,,,,"100","97","BECOMES_ONLY_SOURCE_OF",""
+,,,,,,,,,"98","99","REMAINS_OFF_DUE_TO",""
+,,,,,,,,,"102","25","MENTIONS",""
+,,,,,,,,,"102","103","MENTIONS",""
+,,,,,,,,,"102","104","MENTIONS",""
+,,,,,,,,,"102","105","MENTIONS",""
+,,,,,,,,,"102","106","MENTIONS",""
+,,,,,,,,,"102","107","MENTIONS",""
+,,,,,,,,,"102","108","MENTIONS",""
+,,,,,,,,,"102","109","MENTIONS",""
+,,,,,,,,,"102","110","MENTIONS",""
+,,,,,,,,,"102","111","MENTIONS",""
+,,,,,,,,,"102","112","MENTIONS",""
+,,,,,,,,,"102","113","MENTIONS",""
+,,,,,,,,,"102","114","MENTIONS",""
+,,,,,,,,,"102","115","MENTIONS",""
+,,,,,,,,,"102","49","MENTIONS",""
+,,,,,,,,,"25","115","THOUGHT",""
+,,,,,,,,,"25","106","NOTICED",""
+,,,,,,,,,"109","112","CAUSED",""
+,,,,,,,,,"25","113","ATTEMPTED",""
+,,,,,,,,,"49","108","CONTINUED_TO_RUN",""
+,,,,,,,,,"103","110","THOUGHT",""
+,,,,,,,,,"103","114","STOPPED_ENGINE_BY",""
+,,,,,,,,,"105","111","ATTENDED",""
+,,,,,,,,,"105","107","DISCONNECTED",""
+,,,,,,,,,"105","104","REMAINING_WITH",""
+,,,,,,,,,"116","117","MENTIONS",""
+,,,,,,,,,"116","118","MENTIONS",""
+,,,,,,,,,"116","119","MENTIONS",""
+,,,,,,,,,"116","120","MENTIONS",""
+,,,,,,,,,"116","61","MENTIONS",""
+,,,,,,,,,"116","121","MENTIONS",""
+,,,,,,,,,"116","122","MENTIONS",""
+,,,,,,,,,"116","123","MENTIONS",""
+,,,,,,,,,"116","124","MENTIONS",""
+,,,,,,,,,"116","125","MENTIONS",""
+,,,,,,,,,"116","126","MENTIONS",""
+,,,,,,,,,"116","127","MENTIONS",""
+,,,,,,,,,"116","128","MENTIONS",""
+,,,,,,,,,"116","129","MENTIONS",""
+,,,,,,,,,"116","130","MENTIONS",""
+,,,,,,,,,"116","131","MENTIONS",""
+,,,,,,,,,"116","48","MENTIONS",""
+,,,,,,,,,"116","132","MENTIONS",""
+,,,,,,,,,"48","122","EQUIPPED_WITH",""
+,,,,,,,,,"131","132","FITTED_WITH",""
+,,,,,,,,,"132","127","SUPPLIES_POWER_TO",""
+,,,,,,,,,"127","129","CONNECTED_THROUGH",""
+,,,,,,,,,"121","130","FEEDS",""
+,,,,,,,,,"121","118","CONNECTED_THROUGH",""
+,,,,,,,,,"130","124","CONNECTED_BY",""
+,,,,,,,,,"120","128","CAN_OPERATE_AS",""
+,,,,,,,,,"61","123","ENABLING_OPERATION",""
+,,,,,,,,,"125","126","ALLOWS_TO_DETERMINE",""
+,,,,,,,,,"117","119","INDICATES",""
+,,,,,,,,,"133","134","MENTIONS",""
+,,,,,,,,,"133","135","MENTIONS",""
+,,,,,,,,,"133","136","MENTIONS",""
+,,,,,,,,,"133","137","MENTIONS",""
+,,,,,,,,,"133","138","MENTIONS",""
+,,,,,,,,,"133","100","MENTIONS",""
+,,,,,,,,,"133","139","MENTIONS",""
+,,,,,,,,,"133","140","MENTIONS",""
+,,,,,,,,,"133","141","MENTIONS",""
+,,,,,,,,,"141","139","CONNECTED_TO",""
+,,,,,,,,,"141","135","CONNECTED_TO",""
+,,,,,,,,,"139","141","CONNECTED_TO",""
+,,,,,,,,,"135","141","CONNECTED_TO",""
+,,,,,,,,,"134","137","CONNECTED_TO",""
+,,,,,,,,,"137","138","CONNECTED_TO",""
+,,,,,,,,,"138","136","CONNECTED_TO",""
+,,,,,,,,,"140","100","CONTAINS",""
+,,,,,,,,,"142","143","MENTIONS",""
+,,,,,,,,,"142","144","MENTIONS",""
+,,,,,,,,,"142","145","MENTIONS",""
+,,,,,,,,,"142","146","MENTIONS",""
+,,,,,,,,,"142","147","MENTIONS",""
+,,,,,,,,,"142","148","MENTIONS",""
+,,,,,,,,,"142","149","MENTIONS",""
+,,,,,,,,,"142","150","MENTIONS",""
+,,,,,,,,,"142","151","MENTIONS",""
+,,,,,,,,,"142","152","MENTIONS",""
+,,,,,,,,,"142","28","MENTIONS",""
+,,,,,,,,,"142","153","MENTIONS",""
+,,,,,,,,,"152","149","PROVIDES_CONNECTION_BETWEEN",""
+,,,,,,,,,"152","147","PROVIDES_PROTECTION_AGAINST",""
+,,,,,,,,,"152","28","LOCATED_WITHIN",""
+,,,,,,,,,"28","153","MOUNTED_IN",""
+,,,,,,,,,"152","146","CONTAINS",""
+,,,,,,,,,"144","143","OPERATES_WHEN_GENERATOR_VOLTAGE_REACHES",""
+,,,,,,,,,"151","150","SENSES_DIRECTION_OF",""
+,,,,,,,,,"145","148","ILLUMINATES_WHEN_MAIN_CONTACT_IS_OPEN_AND_ENGINE_START_SWITCH_IS_AT",""
+,,,,,,,,,"154","155","MENTIONS",""
+,,,,,,,,,"154","156","MENTIONS",""
+,,,,,,,,,"154","157","MENTIONS",""
+,,,,,,,,,"154","158","MENTIONS",""
+,,,,,,,,,"154","159","MENTIONS",""
+,,,,,,,,,"154","160","MENTIONS",""
+,,,,,,,,,"154","161","MENTIONS",""
+,,,,,,,,,"154","162","MENTIONS",""
+,,,,,,,,,"154","163","MENTIONS",""
+,,,,,,,,,"154","164","MENTIONS",""
+,,,,,,,,,"154","165","MENTIONS",""
+,,,,,,,,,"154","166","MENTIONS",""
+,,,,,,,,,"154","167","MENTIONS",""
+,,,,,,,,,"154","168","MENTIONS",""
+,,,,,,,,,"154","169","MENTIONS",""
+,,,,,,,,,"154","170","MENTIONS",""
+,,,,,,,,,"154","171","MENTIONS",""
+,,,,,,,,,"154","172","MENTIONS",""
+,,,,,,,,,"154","173","MENTIONS",""
+,,,,,,,,,"154","174","MENTIONS",""
+,,,,,,,,,"154","175","MENTIONS",""
+,,,,,,,,,"154","176","MENTIONS",""
+,,,,,,,,,"154","54","MENTIONS",""
+,,,,,,,,,"154","177","MENTIONS",""
+,,,,,,,,,"158","170","REACHES",""
+,,,,,,,,,"171","163","CLOSES",""
+,,,,,,,,,"175","167","ENERGISED_BY",""
+,,,,,,,,,"175","161","CONNECTED_ACROSS",""
+,,,,,,,,,"173","172","HAS_VOLTAGE_DIFFERENCE_BETWEEN",""
+,,,,,,,,,"175","176","CLOSES_WHEN_DIFFERENCE_REACHES",""
+,,,,,,,,,"155","160","APPLIES_VOLTAGE_TO",""
+,,,,,,,,,"54","156","CONNECTED_TO",""
+,,,,,,,,,"158","164","DECREASES_BELOW",""
+,,,,,,,,,"177","162","FLOWS_FROM_TO",""
+,,,,,,,,,"157","177","SENSES_CHANGE_IN_DIRECTION_OF",""
+,,,,,,,,,"165","168","OPENS",""
+,,,,,,,,,"169","159","DE-ENERGISED",""
+,,,,,,,,,"166","174","OPEN",""
+,,,,,,,,,"54","156","DISCONNECTED_FROM",""
+,,,,,,,,,"178","179","MENTIONS",""
+,,,,,,,,,"178","180","MENTIONS",""
+,,,,,,,,,"178","181","MENTIONS",""
+,,,,,,,,,"178","23","MENTIONS",""
+,,,,,,,,,"178","182","MENTIONS",""
+,,,,,,,,,"178","183","MENTIONS",""
+,,,,,,,,,"178","184","MENTIONS",""
+,,,,,,,,,"178","185","MENTIONS",""
+,,,,,,,,,"178","186","MENTIONS",""
+,,,,,,,,,"178","187","MENTIONS",""
+,,,,,,,,,"178","188","MENTIONS",""
+,,,,,,,,,"178","189","MENTIONS",""
+,,,,,,,,,"178","190","MENTIONS",""
+,,,,,,,,,"178","191","MENTIONS",""
+,,,,,,,,,"178","192","MENTIONS",""
+,,,,,,,,,"178","193","MENTIONS",""
+,,,,,,,,,"178","194","MENTIONS",""
+,,,,,,,,,"178","28","MENTIONS",""
+,,,,,,,,,"178","195","MENTIONS",""
+,,,,,,,,,"178","196","MENTIONS",""
+,,,,,,,,,"195","181","CONTAINS_PART_NUMBERS_FOR",""
+,,,,,,,,,"195","191","APPROVED_FOR_USE_ON",""
+,,,,,,,,,"194","188","RATED_AT",""
+,,,,,,,,,"196","188","RATED_AT",""
+,,,,,,,,,"190","189","RATED_AT",""
+,,,,,,,,,"186","192","FITTED_IN",""
+,,,,,,,,,"186","184","CONTROLS_OUTPUT_AT",""
+,,,,,,,,,"180","193","ENSURES_EQUAL_LOADING_WITHIN",""
+,,,,,,,,,"179","23","REVEALED",""
+,,,,,,,,,"23","182","CONSUMED",""
+,,,,,,,,,"185","28","BURNT_THROUGH_COVER_OF",""
+,,,,,,,,,"183","187","CAUSED_BLISTERING_IN",""
+,,,,,,,,,"197","198","MENTIONS",""
+,,,,,,,,,"197","199","MENTIONS",""
+,,,,,,,,,"197","200","MENTIONS",""
+,,,,,,,,,"197","201","MENTIONS",""
+,,,,,,,,,"197","202","MENTIONS",""
+,,,,,,,,,"197","203","MENTIONS",""
+,,,,,,,,,"197","204","MENTIONS",""
+,,,,,,,,,"197","205","MENTIONS",""
+,,,,,,,,,"197","206","MENTIONS",""
+,,,,,,,,,"197","207","MENTIONS",""
+,,,,,,,,,"197","208","MENTIONS",""
+,,,,,,,,,"197","209","MENTIONS",""
+,,,,,,,,,"197","210","MENTIONS",""
+,,,,,,,,,"205","207","REMAINED_INTEGRITY",""
+,,,,,,,,,"201","203","NO_SMOKES_DAMAGE",""
+,,,,,,,,,"198","200","TRAPPED_BETWEEN",""
+,,,,,,,,,"202","210","DRAWN_OUT_OF",""
+,,,,,,,,,"204","209","DAMAGED",""
+,,,,,,,,,"208","198","COVERED_WITH",""
+,,,,,,,,,"199","206","NO_EVIDENCE_OUTSIDE_OF",""
+,,,,,,,,,"211","33","MENTIONS",""
+,,,,,,,,,"211","212","MENTIONS",""
+,,,,,,,,,"211","213","MENTIONS",""
+,,,,,,,,,"211","214","MENTIONS",""
+,,,,,,,,,"211","215","MENTIONS",""
+,,,,,,,,,"211","48","MENTIONS",""
+,,,,,,,,,"211","23","MENTIONS",""
+,,,,,,,,,"211","89","MENTIONS",""
+,,,,,,,,,"211","216","MENTIONS",""
+,,,,,,,,,"211","217","MENTIONS",""
+,,,,,,,,,"211","218","MENTIONS",""
+,,,,,,,,,"211","219","MENTIONS",""
+,,,,,,,,,"211","220","MENTIONS",""
+,,,,,,,,,"211","221","MENTIONS",""
+,,,,,,,,,"211","222","MENTIONS",""
+,,,,,,,,,"211","223","MENTIONS",""
+,,,,,,,,,"211","224","MENTIONS",""
+,,,,,,,,,"221","216","VISUALLY_EXAMINED",""
+,,,,,,,,,"220","216","FOUND_TO_BE_IN_CONDITION",""
+,,,,,,,,,"215","89","TRIPPED",""
+,,,,,,,,,"218","217","MOUNTED_NEAR",""
+,,,,,,,,,"214","216","APPEARED_FROM_VISUAL_INSPECTION_TO_BE_IN_CONDITION",""
+,,,,,,,,,"214","224","HAD_VOLTAGE_OF",""
+,,,,,,,,,"48","219","FLIGHT_TO_MAINTENANCE_ORGANISATION",""
+,,,,,,,,,"222","223","ADVISED_AAIB_THAT_WIRING_CONDITION",""
+,,,,,,,,,"222","23","COULD_NOT_FIND_CAUSE_FOR",""
+,,,,,,,,,"212","213","CARRIED_OUT_TO_TEST",""
+,,,,,,,,,"48","33","FLIGHT_TO",""
+,,,,,,,,,"225","226","MENTIONS",""
+,,,,,,,,,"225","227","MENTIONS",""
+,,,,,,,,,"225","228","MENTIONS",""
+,,,,,,,,,"225","229","MENTIONS",""
+,,,,,,,,,"225","230","MENTIONS",""
+,,,,,,,,,"225","231","MENTIONS",""
+,,,,,,,,,"225","232","MENTIONS",""
+,,,,,,,,,"225","233","MENTIONS",""
+,,,,,,,,,"225","234","MENTIONS",""
+,,,,,,,,,"225","235","MENTIONS",""
+,,,,,,,,,"225","236","MENTIONS",""
+,,,,,,,,,"225","237","MENTIONS",""
+,,,,,,,,,"225","238","MENTIONS",""
+,,,,,,,,,"225","188","MENTIONS",""
+,,,,,,,,,"225","189","MENTIONS",""
+,,,,,,,,,"225","239","MENTIONS",""
+,,,,,,,,,"228","234","PROVIDED",""
+,,,,,,,,,"232","233","DETAILING",""
+,,,,,,,,,"227","239","RECORDED",""
+,,,,,,,,,"231","188","RATED_AT",""
+,,,,,,,,,"236","189","RATED_AT",""
+,,,,,,,,,"226","237","INSUFFICIENT_INFORMATION_FOR",""
+,,,,,,,,,"235","230","ISSUED_BY",""
+,,,,,,,,,"235","229","APPLICABLE_TO",""
+,,,,,,,,,"235","238","REQUIRES_INSPECTION_OF",""
+,,,,,,,,,"240","241","MENTIONS",""
+,,,,,,,,,"240","230","MENTIONS",""
+,,,,,,,,,"240","242","MENTIONS",""
+,,,,,,,,,"240","243","MENTIONS",""
+,,,,,,,,,"240","244","MENTIONS",""
+,,,,,,,,,"240","245","MENTIONS",""
+,,,,,,,,,"240","246","MENTIONS",""
+,,,,,,,,,"240","247","MENTIONS",""
+,,,,,,,,,"240","248","MENTIONS",""
+,,,,,,,,,"240","249","MENTIONS",""
+,,,,,,,,,"240","250","MENTIONS",""
+,,,,,,,,,"240","251","MENTIONS",""
+,,,,,,,,,"245","230","ISSUED_BY",""
+,,,,,,,,,"245","241","BECAME_EFFECTIVE_ON",""
+,,,,,,,,,"245","242","APPLICABLE_TO",""
+,,,,,,,,,"247","251","MAY_CAUSE",""
+,,,,,,,,,"246","251","INSTALL_TO_PRECLUDE",""
+,,,,,,,,,"250","246","INSTALL_IN_ACCORDANCE_WITH",""
+,,,,,,,,,"243","248","ISSUED_BY",""
+,,,,,,,,,"243","249","BECAME_EFFECTIVE_ON",""
+,,,,,,,,,"243","244","REQUIRED",""
+,,,,,,,,,"252","253","MENTIONS",""
+,,,,,,,,,"252","254","MENTIONS",""
+,,,,,,,,,"252","255","MENTIONS",""
+,,,,,,,,,"252","256","MENTIONS",""
+,,,,,,,,,"252","257","MENTIONS",""
+,,,,,,,,,"252","258","MENTIONS",""
+,,,,,,,,,"252","259","MENTIONS",""
+,,,,,,,,,"252","260","MENTIONS",""
+,,,,,,,,,"252","261","MENTIONS",""
+,,,,,,,,,"252","28","MENTIONS",""
+,,,,,,,,,"252","262","MENTIONS",""
+,,,,,,,,,"252","263","MENTIONS",""
+,,,,,,,,,"252","152","MENTIONS",""
+,,,,,,,,,"252","264","MENTIONS",""
+,,,,,,,,,"252","265","MENTIONS",""
+,,,,,,,,,"252","266","MENTIONS",""
+,,,,,,,,,"252","267","MENTIONS",""
+,,,,,,,,,"257","263","ISSUED_ON",""
+,,,,,,,,,"257","253","REVISED_ON",""
+,,,,,,,,,"257","262","REQUIRES_REMOVAL_AND_INSPECTION_OF",""
+,,,,,,,,,"257","259","INSPECTION_INTERVAL",""
+,,,,,,,,,"257","260","INSPECTION_REQUIREMENT",""
+,,,,,,,,,"254","256","ISSUED_ON",""
+,,,,,,,,,"254","266","REVISED_ON",""
+,,,,,,,,,"254","152","INTRODUCES_HEAT_SHIELDING_AROUND",""
+,,,,,,,,,"254","258","REQUIRES_REROUTING_OF",""
+,,,,,,,,,"265","267","INTRODUCED_NEW_RCR",""
+,,,,,,,,,"255","261","APPROVED_IN",""
+,,,,,,,,,"255","264","REQUIRES_REROUTING_OF",""
+,,,,,,,,,"255","28","INTRODUCES_FIRE_RESISTANT_PANELS_IN",""
+,,,,,,,,,"268","269","MENTIONS",""
+,,,,,,,,,"268","234","MENTIONS",""
+,,,,,,,,,"268","270","MENTIONS",""
+,,,,,,,,,"268","152","MENTIONS",""
+,,,,,,,,,"268","271","MENTIONS",""
+,,,,,,,,,"268","272","MENTIONS",""
+,,,,,,,,,"268","273","MENTIONS",""
+,,,,,,,,,"268","274","MENTIONS",""
+,,,,,,,,,"268","275","MENTIONS",""
+,,,,,,,,,"275","270","REWIRED_COMPLIANT_WITH",""
+,,,,,,,,,"271","272","REMOVED_AT",""
+,,,,,,,,,"271","234","EXAMINED_BY",""
+,,,,,,,,,"271","269","TESTED_BY",""
+,,,,,,,,,"152","274","IDENTIFIED_AS",""
+,,,,,,,,,"152","273","MET_REQUIREMENTS_EXCEPT_FOR",""
+,,,,,,,,,"276","277","MENTIONS",""
+,,,,,,,,,"276","278","MENTIONS",""
+,,,,,,,,,"276","279","MENTIONS",""
+,,,,,,,,,"276","280","MENTIONS",""
+,,,,,,,,,"276","281","MENTIONS",""
+,,,,,,,,,"276","282","MENTIONS",""
+,,,,,,,,,"276","283","MENTIONS",""
+,,,,,,,,,"276","284","MENTIONS",""
+,,,,,,,,,"276","285","MENTIONS",""
+,,,,,,,,,"276","152","MENTIONS",""
+,,,,,,,,,"276","171","MENTIONS",""
+,,,,,,,,,"276","286","MENTIONS",""
+,,,,,,,,,"276","287","MENTIONS",""
+,,,,,,,,,"276","288","MENTIONS",""
+,,,,,,,,,"276","289","MENTIONS",""
+,,,,,,,,,"276","290","MENTIONS",""
+,,,,,,,,,"276","291","MENTIONS",""
+,,,,,,,,,"171","288","CLOSED_AT_VOLTAGE",""
+,,,,,,,,,"171","290","OPENED_AT_VOLTAGE",""
+,,,,,,,,,"171","278","SPECIFIED_LIMITS_FOR_CLOSING",""
+,,,,,,,,,"171","280","SPECIFIED_LIMITS_FOR_OPENING",""
+,,,,,,,,,"152","283","REMOVED_FROM_CONTAINER",""
+,,,,,,,,,"171","152","OPERATED_BY_HAND_BEFORE_RETESTED",""
+,,,,,,,,,"171","291","CLOSING_VOLTAGE_DURING_SECOND_TEST",""
+,,,,,,,,,"171","277","OPENING_VOLTAGE_DURING_SECOND_TEST",""
+,,,,,,,,,"279","287","MEASURED_VOLTAGE_DROP",""
+,,,,,,,,,"279","281","CALCULATED_RESISTANCE",""
+,,,,,,,,,"284","282","SPECIFIED_VOLTAGE_DROP_LIMIT",""
+,,,,,,,,,"284","286","SPECIFIED_MAX_RESISTANCE",""
+,,,,,,,,,"289","285","HIGHER_THAN_SPECIFIED_LIMIT",""
+,,,,,,,,,"292","152","MENTIONS",""
+,,,,,,,,,"292","293","MENTIONS",""
+,,,,,,,,,"292","294","MENTIONS",""
+,,,,,,,,,"292","295","MENTIONS",""
+,,,,,,,,,"292","296","MENTIONS",""
+,,,,,,,,,"292","297","MENTIONS",""
+,,,,,,,,,"292","298","MENTIONS",""
+,,,,,,,,,"292","299","MENTIONS",""
+,,,,,,,,,"292","300","MENTIONS",""
+,,,,,,,,,"292","204","MENTIONS",""
+,,,,,,,,,"292","185","MENTIONS",""
+,,,,,,,,,"152","294","HAS_CHARACTERISTIC",""
+,,,,,,,,,"295","204","DEGRADED_BY",""
+,,,,,,,,,"293","296","HAS_CHARACTERISTIC",""
+,,,,,,,,,"297","300","FORMS_CONNECTION_AT",""
+,,,,,,,,,"152","185","IS_SOURCE_OF",""
+,,,,,,,,,"299","298","DESTROYED",""
+,,,,,,,,,"301","302","MENTIONS",""
+,,,,,,,,,"301","303","MENTIONS",""
+,,,,,,,,,"301","304","MENTIONS",""
+,,,,,,,,,"301","305","MENTIONS",""
+,,,,,,,,,"301","296","MENTIONS",""
+,,,,,,,,,"301","182","MENTIONS",""
+,,,,,,,,,"301","306","MENTIONS",""
+,,,,,,,,,"301","307","MENTIONS",""
+,,,,,,,,,"301","308","MENTIONS",""
+,,,,,,,,,"301","309","MENTIONS",""
+,,,,,,,,,"301","310","MENTIONS",""
+,,,,,,,,,"301","311","MENTIONS",""
+,,,,,,,,,"301","312","MENTIONS",""
+,,,,,,,,,"312","303","HAS_CONTACT_FACE",""
+,,,,,,,,,"305","296","HAS_CHARACTERISTIC",""
+,,,,,,,,,"311","304","SIMILAR_TO",""
+,,,,,,,,,"306","309","IDENTICAL_TO",""
+,,,,,,,,,"308","310","IDENTIFIED_AS",""
+,,,,,,,,,"307","310","IDENTIFIES",""
+,,,,,,,,,"182","302","IDENTIFIED_AS",""
+,,,,,,,,,"313","314","MENTIONS",""
+,,,,,,,,,"313","315","MENTIONS",""
+,,,,,,,,,"313","316","MENTIONS",""
+,,,,,,,,,"313","317","MENTIONS",""
+,,,,,,,,,"313","318","MENTIONS",""
+,,,,,,,,,"313","182","MENTIONS",""
+,,,,,,,,,"313","319","MENTIONS",""
+,,,,,,,,,"313","320","MENTIONS",""
+,,,,,,,,,"313","321","MENTIONS",""
+,,,,,,,,,"313","322","MENTIONS",""
+,,,,,,,,,"313","323","MENTIONS",""
+,,,,,,,,,"313","324","MENTIONS",""
+,,,,,,,,,"313","325","MENTIONS",""
+,,,,,,,,,"313","326","MENTIONS",""
+,,,,,,,,,"313","327","MENTIONS",""
+,,,,,,,,,"313","204","MENTIONS",""
+,,,,,,,,,"317","182","POSITIONED_AROUND",""
+,,,,,,,,,"324","327","RESULT_OF",""
+,,,,,,,,,"321","318","MEASURED_AS",""
+,,,,,,,,,"320","314","COMPARED_TO",""
+,,,,,,,,,"326","204","DAMAGED_BY",""
+,,,,,,,,,"325","319","MELTED_DUE_TO",""
+,,,,,,,,,"322","316","MELTED_AT",""
+,,,,,,,,,"315","323","WOULD_HAVE_SHORTED_ON",""
+,,,,,,,,,"328","329","MENTIONS",""
+,,,,,,,,,"328","330","MENTIONS",""
+,,,,,,,,,"328","331","MENTIONS",""
+,,,,,,,,,"328","332","MENTIONS",""
+,,,,,,,,,"328","333","MENTIONS",""
+,,,,,,,,,"328","334","MENTIONS",""
+,,,,,,,,,"328","335","MENTIONS",""
+,,,,,,,,,"328","336","MENTIONS",""
+,,,,,,,,,"328","337","MENTIONS",""
+,,,,,,,,,"328","338","MENTIONS",""
+,,,,,,,,,"328","339","MENTIONS",""
+,,,,,,,,,"337","333","DEPENDENT_ON",""
+,,,,,,,,,"337","336","DOES_NOT_CONFORM_TO",""
+,,,,,,,,,"335","330","CLOSEST_TO",""
+,,,,,,,,,"334","329","EXAMINED",""
+,,,,,,,,,"338","332","OPINION",""
+,,,,,,,,,"338","331","NO_LONGER_HOLDS",""
+,,,,,,,,,"338","339","UNABLE_TO_DETERMINE",""
+,,,,,,,,,"340","341","MENTIONS",""
+,,,,,,,,,"340","342","MENTIONS",""
+,,,,,,,,,"340","308","MENTIONS",""
+,,,,,,,,,"340","343","MENTIONS",""
+,,,,,,,,,"340","344","MENTIONS",""
+,,,,,,,,,"340","345","MENTIONS",""
+,,,,,,,,,"340","181","MENTIONS",""
+,,,,,,,,,"340","272","MENTIONS",""
+,,,,,,,,,"340","346","MENTIONS",""
+,,,,,,,,,"340","347","MENTIONS",""
+,,,,,,,,,"347","343","UNAWARE_OF",""
+,,,,,,,,,"347","345","UNAWARE_OF",""
+,,,,,,,,,"347","346","UNAWARE_OF",""
+,,,,,,,,,"347","341","ADVISED_TO_DISCARD",""
+,,,,,,,,,"181","342","FITTED_TO",""
+,,,,,,,,,"308","272","REMOVED_AT",""
+,,,,,,,,,"181","344","FLYING_HOURS_BEFORE_ACCIDENT",""
+,,,,,,,,,"348","349","MENTIONS",""
+,,,,,,,,,"348","308","MENTIONS",""
+,,,,,,,,,"348","350","MENTIONS",""
+,,,,,,,,,"348","351","MENTIONS",""
+,,,,,,,,,"348","182","MENTIONS",""
+,,,,,,,,,"348","352","MENTIONS",""
+,,,,,,,,,"348","272","MENTIONS",""
+,,,,,,,,,"348","188","MENTIONS",""
+,,,,,,,,,"348","189","MENTIONS",""
+,,,,,,,,,"348","353","MENTIONS",""
+,,,,,,,,,"348","354","MENTIONS",""
+,,,,,,,,,"348","355","MENTIONS",""
+,,,,,,,,,"182","188","RATED_AT",""
+,,,,,,,,,"182","354","FITTED_TO_AIRCRAFT_IN",""
+,,,,,,,,,"182","353","FLYING_HOURS_PRIOR_TO_ACCIDENT",""
+,,,,,,,,,"182","351","OVERHAULED_I.A.W.",""
+,,,,,,,,,"182","349","CONTACTS_CONDITION",""
+,,,,,,,,,"182","355","ACTION_RECORDED",""
+,,,,,,,,,"308","350","FITTED_AT",""
+,,,,,,,,,"308","189","RATED_AT",""
+,,,,,,,,,"308","352","OVERHAULED_AND_TESTED_I.A.W.",""
+,,,,,,,,,"356","152","MENTIONS",""
+,,,,,,,,,"356","357","MENTIONS",""
+,,,,,,,,,"356","358","MENTIONS",""
+,,,,,,,,,"356","359","MENTIONS",""
+,,,,,,,,,"356","360","MENTIONS",""
+,,,,,,,,,"356","351","MENTIONS",""
+,,,,,,,,,"356","361","MENTIONS",""
+,,,,,,,,,"356","362","MENTIONS",""
+,,,,,,,,,"356","272","MENTIONS",""
+,,,,,,,,,"356","188","MENTIONS",""
+,,,,,,,,,"356","363","MENTIONS",""
+,,,,,,,,,"356","349","MENTIONS",""
+,,,,,,,,,"356","364","MENTIONS",""
+,,,,,,,,,"152","272","REMOVED_AT",""
+,,,,,,,,,"361","188","RATED_AT",""
+,,,,,,,,,"361","357","FITTED_TO_AIRCRAFT_ON",""
+,,,,,,,,,"361","363","FLIGHT_HOURS_BEFORE_REMOVAL",""
+,,,,,,,,,"362","358","DATED_ON",""
+,,,,,,,,,"362","351","RECORDED_OVERHAUL_I.A.W.",""
+,,,,,,,,,"359","349","RECORDED_CONTACTS_CONDITION",""
+,,,,,,,,,"364","360","RECORDED_ACTION_OVERHAUL_I.A.W.",""
+,,,,,,,,,"365","366","MENTIONS",""
+,,,,,,,,,"365","367","MENTIONS",""
+,,,,,,,,,"365","368","MENTIONS",""
+,,,,,,,,,"365","369","MENTIONS",""
+,,,,,,,,,"365","370","MENTIONS",""
+,,,,,,,,,"365","362","MENTIONS",""
+,,,,,,,,,"365","371","MENTIONS",""
+,,,,,,,,,"365","372","MENTIONS",""
+,,,,,,,,,"365","373","MENTIONS",""
+,,,,,,,,,"365","222","MENTIONS",""
+,,,,,,,,,"365","374","MENTIONS",""
+,,,,,,,,,"222","374","PROVIDED_DOCUMENT_TO",""
+,,,,,,,,,"370","362","REFERENCED_IN",""
+,,,,,,,,,"368","371","HAD_TITLE",""
+,,,,,,,,,"373","367","ANNOTATED_AS",""
+,,,,,,,,,"373","366","HAD_TITLE",""
+,,,,,,,,,"370","372","PROVIDED_INFORMATION_ON",""
+,,,,,,,,,"370","369","DID_NOT_CONTAIN_INFORMATION_FOR",""
+,,,,,,,,,"375","191","MENTIONS",""
+,,,,,,,,,"375","23","MENTIONS",""
+,,,,,,,,,"375","28","MENTIONS",""
+,,,,,,,,,"375","376","MENTIONS",""
+,,,,,,,,,"375","377","MENTIONS",""
+,,,,,,,,,"375","378","MENTIONS",""
+,,,,,,,,,"375","379","MENTIONS",""
+,,,,,,,,,"375","380","MENTIONS",""
+,,,,,,,,,"375","381","MENTIONS",""
+,,,,,,,,,"375","382","MENTIONS",""
+,,,,,,,,,"375","383","MENTIONS",""
+,,,,,,,,,"375","182","MENTIONS",""
+,,,,,,,,,"191","376","HAS_INSPECTION_SCHEDULE",""
+,,,,,,,,,"191","380","REQUIRES_CHECK",""
+,,,,,,,,,"378","382","CALLS_FOR_EXAMINATION",""
+,,,,,,,,,"378","377","CALLS_FOR_REMOVAL_AND_TESTING",""
+,,,,,,,,,"381","379","NO_REQUIREMENT_FOR_OVERHAUL",""
+,,,,,,,,,"23","182","STARTED_IN",""
+,,,,,,,,,"383","28","DID_NOT_SPREAD_OUTSIDE",""
+,,,,,,,,,"384","385","MENTIONS",""
+,,,,,,,,,"384","386","MENTIONS",""
+,,,,,,,,,"384","387","MENTIONS",""
+,,,,,,,,,"384","25","MENTIONS",""
+,,,,,,,,,"384","89","MENTIONS",""
+,,,,,,,,,"384","388","MENTIONS",""
+,,,,,,,,,"384","150","MENTIONS",""
+,,,,,,,,,"384","23","MENTIONS",""
+,,,,,,,,,"384","90","MENTIONS",""
+,,,,,,,,,"384","389","MENTIONS",""
+,,,,,,,,,"384","390","MENTIONS",""
+,,,,,,,,,"384","391","MENTIONS",""
+,,,,,,,,,"25","390","OBSERVED",""
+,,,,,,,,,"390","391","CAUSED_BY",""
+,,,,,,,,,"90","388","ON-LINE",""
+,,,,,,,,,"385","386","MAY_HAVE_CAUSED",""
+,,,,,,,,,"25","387","NOTICED",""
+,,,,,,,,,"89","389","PROVIDING_POWER_TO",""
+,,,,,,,,,"150","23","CAUSED_AND_SUSTAINED",""
+,,,,,,,,,"392","25","MENTIONS",""
+,,,,,,,,,"392","393","MENTIONS",""
+,,,,,,,,,"392","61","MENTIONS",""
+,,,,,,,,,"392","394","MENTIONS",""
+,,,,,,,,,"392","214","MENTIONS",""
+,,,,,,,,,"392","395","MENTIONS",""
+,,,,,,,,,"392","396","MENTIONS",""
+,,,,,,,,,"392","221","MENTIONS",""
+,,,,,,,,,"392","49","MENTIONS",""
+,,,,,,,,,"392","397","MENTIONS",""
+,,,,,,,,,"392","398","MENTIONS",""
+,,,,,,,,,"25","221","PERFORMED_ACTION_ON",""
+,,,,,,,,,"25","61","PERFORMED_ACTION_ON",""
+,,,,,,,,,"49","397","CONTINUED_TO_TURN_AT",""
+,,,,,,,,,"214","395","PROVIDING_POWER_TO",""
+,,,,,,,,,"61","393","POSITION_OF",""
+,,,,,,,,,"396","393","POSITION_OF",""
+,,,,,,,,,"398","394","OCCURRED_BEFORE_ACTION_BY_CREW",""
+,,,,,,,,,"399","400","MENTIONS",""
+,,,,,,,,,"399","182","MENTIONS",""
+,,,,,,,,,"399","306","MENTIONS",""
+,,,,,,,,,"399","401","MENTIONS",""
+,,,,,,,,,"399","402","MENTIONS",""
+,,,,,,,,,"399","403","MENTIONS",""
+,,,,,,,,,"399","185","MENTIONS",""
+,,,,,,,,,"306","182","PART_OF",""
+,,,,,,,,,"306","402","EXPERIENCED_BEHAVIOR",""
+,,,,,,,,,"403","400","CHECKED_FOR_FAULTS",""
+,,,,,,,,,"185","401","POSSIBLE_CAUSE",""
+,,,,,,,,,"404","230","MENTIONS",""
+,,,,,,,,,"404","405","MENTIONS",""
+,,,,,,,,,"404","406","MENTIONS",""
+,,,,,,,,,"404","407","MENTIONS",""
+,,,,,,,,,"404","408","MENTIONS",""
+,,,,,,,,,"404","409","MENTIONS",""
+,,,,,,,,,"404","410","MENTIONS",""
+,,,,,,,,,"404","411","MENTIONS",""
+,,,,,,,,,"230","406","ISSUED_AD",""
+,,,,,,,,,"410","405","BREACHED_BY",""
+,,,,,,,,,"411","407","SUSTAINED_DAMAGE_FROM",""
+,,,,,,,,,"409","230","MADE_TO",""
+,,,,,,,,,"410","408","FITS_AROUND",""
+,,,,,,,,,"412","413","MENTIONS",""
+,,,,,,,,,"412","310","MENTIONS",""
+,,,,,,,,,"412","414","MENTIONS",""
+,,,,,,,,,"412","230","MENTIONS",""
+,,,,,,,,,"412","182","MENTIONS",""
+,,,,,,,,,"412","415","MENTIONS",""
+,,,,,,,,,"412","416","MENTIONS",""
+,,,,,,,,,"412","417","MENTIONS",""
+,,,,,,,,,"182","310","IDENTIFIED_AS",""
+,,,,,,,,,"415","417","REMOVED_BEFORE",""
+,,,,,,,,,"416","414","NOT_APPROVED_FOR_USE_ON",""
+,,,,,,,,,"230","413","RECOMMENDED_TO_ENSURE",""
+,,,,,,,,,"418","419","MENTIONS",""
+,,,,,,,,,"418","420","MENTIONS",""
+,,,,,,,,,"418","421","MENTIONS",""
+,,,,,,,,,"418","422","MENTIONS",""
+,,,,,,,,,"418","423","MENTIONS",""
+,,,,,,,,,"418","424","MENTIONS",""
+,,,,,,,,,"418","425","MENTIONS",""
+,,,,,,,,,"418","181","MENTIONS",""
+,,,,,,,,,"418","426","MENTIONS",""
+,,,,,,,,,"418","427","MENTIONS",""
+,,,,,,,,,"418","428","MENTIONS",""
+,,,,,,,,,"418","189","MENTIONS",""
+,,,,,,,,,"418","429","MENTIONS",""
+,,,,,,,,,"418","430","MENTIONS",""
+,,,,,,,,,"181","426","EXPERIENCED_FAILURES_DUE_TO",""
+,,,,,,,,,"428","430","MOST_LIKELY_OCCURRED_ON",""
+,,,,,,,,,"425","189","RATED_AT",""
+,,,,,,,,,"425","427","HAS_IMPROVED_CONTACT_DESIGN",""
+,,,,,,,,,"421","422","NO_REQUIREMENT_TO_REPLACE_UNLESS",""
+,,,,,,,,,"419","420","MOSTLY_OCCURRED_WITH",""
+,,,,,,,,,"429","424","RECOMMENDS_REPLACEMENT_OF",""
+,,,,,,,,,"429","423","RECOMMENDS_REPLACEMENT_WITH",""
+,,,,,,,,,"431","432","MENTIONS",""
+,,,,,,,,,"431","308","MENTIONS",""
+,,,,,,,,,"431","433","MENTIONS",""
+,,,,,,,,,"431","434","MENTIONS",""
+,,,,,,,,,"431","182","MENTIONS",""
+,,,,,,,,,"431","435","MENTIONS",""
+,,,,,,,,,"431","436","MENTIONS",""
+,,,,,,,,,"431","437","MENTIONS",""
+,,,,,,,,,"431","438","MENTIONS",""
+,,,,,,,,,"431","439","MENTIONS",""
+,,,,,,,,,"431","440","MENTIONS",""
+,,,,,,,,,"431","416","MENTIONS",""
+,,,,,,,,,"431","441","MENTIONS",""
+,,,,,,,,,"431","442","MENTIONS",""
+,,,,,,,,,"431","443","MENTIONS",""
+,,,,,,,,,"416","434","RECORDED_IN",""
+,,,,,,,,,"416","438","OVERHAULED_BY",""
+,,,,,,,,,"416","443","TESTED_IN_ACCORDANCE_WITH",""
+,,,,,,,,,"436","439","REPLACED_IF_FAILED",""
+,,,,,,,,,"440","441","CONSISTENT_WITH",""
+,,,,,,,,,"435","442","REQUIRED_TO_BE_BENCH_TESTED_EVERY",""
+,,,,,,,,,"182","432","FLIGHT_HOURS_SINCE_LAST_TEST",""
+,,,,,,,,,"308","437","SERIAL_NUMBER",""
+,,,,,,,,,"308","433","FLIGHT_HOURS_SINCE_LAST_TEST",""
+,,,,,,,,,"444","445","MENTIONS",""
+,,,,,,,,,"444","446","MENTIONS",""
+,,,,,,,,,"444","447","MENTIONS",""
+,,,,,,,,,"444","448","MENTIONS",""
+,,,,,,,,,"444","449","MENTIONS",""
+,,,,,,,,,"444","450","MENTIONS",""
+,,,,,,,,,"444","230","MENTIONS",""
+,,,,,,,,,"444","451","MENTIONS",""
+,,,,,,,,,"444","452","MENTIONS",""
+,,,,,,,,,"444","453","MENTIONS",""
+,,,,,,,,,"444","454","MENTIONS",""
+,,,,,,,,,"444","455","MENTIONS",""
+,,,,,,,,,"444","456","MENTIONS",""
+,,,,,,,,,"447","449","HAS_CONDITION",""
+,,,,,,,,,"447","451","REQUIRES_TEST_FOR_REPLACEMENT",""
+,,,,,,,,,"448","446","PREVENTS",""
+,,,,,,,,,"448","452","ESTABLISHED_BY_MEASURING",""
+,,,,,,,,,"455","456","CHECKED_DURING",""
+,,,,,,,,,"450","453","COULD_PASS",""
+,,,,,,,,,"450","445","AUTHORIZED_TO_FLY_FOR",""
+,,,,,,,,,"454","230","MADE_TO",""
+,,,,,,,,,"457","458","MENTIONS",""
+,,,,,,,,,"457","459","MENTIONS",""
+,,,,,,,,,"457","460","MENTIONS",""
+,,,,,,,,,"457","230","MENTIONS",""
+,,,,,,,,,"457","461","MENTIONS",""
+,,,,,,,,,"457","462","MENTIONS",""
+,,,,,,,,,"457","463","MENTIONS",""
+,,,,,,,,,"457","464","MENTIONS",""
+,,,,,,,,,"457","351","MENTIONS",""
+,,,,,,,,,"457","372","MENTIONS",""
+,,,,,,,,,"457","465","MENTIONS",""
+,,,,,,,,,"457","466","MENTIONS",""
+,,,,,,,,,"457","467","MENTIONS",""
+,,,,,,,,,"457","347","MENTIONS",""
+,,,,,,,,,"457","468","MENTIONS",""
+,,,,,,,,,"230","467","RECOMMENDED_TO_REVIEW",""
+,,,,,,,,,"468","466","FITTED_TO",""
+,,,,,,,,,"460","458","HAS_SERIAL_NUMBERS",""
+,,,,,,,,,"462","351","STATED_OVERHAULED_I.A.W",""
+,,,,,,,,,"347","461","ADVISED_NOT_PRODUCED_MANUAL_FOR",""
+,,,,,,,,,"463","459","ANNOTATED_WITH",""
+,,,,,,,,,"463","372","CONTAINED_INFORMATION_ON",""
+,,,,,,,,,"464","465","MADE_TO",""
+,,,,,,,,,"469","470","MENTIONS",""
+,,,,,,,,,"469","471","MENTIONS",""
+,,,,,,,,,"469","472","MENTIONS",""
+,,,,,,,,,"469","230","MENTIONS",""
+,,,,,,,,,"469","473","MENTIONS",""
+,,,,,,,,,"469","474","MENTIONS",""
+,,,,,,,,,"230","471","CONDUCT_AUDIT_OF",""
+,,,,,,,,,"472","474","ENSURE_ACCURACY_OF",""
+,,,,,,,,,"470","473","REFLECTS",""
+,,,,,,,,,"475","476","MENTIONS",""
+,,,,,,,,,"475","477","MENTIONS",""
+,,,,,,,,,"475","478","MENTIONS",""
+,,,,,,,,,"475","479","MENTIONS",""
+,,,,,,,,,"475","480","MENTIONS",""
+,,,,,,,,,"475","481","MENTIONS",""
+,,,,,,,,,"475","23","MENTIONS",""
+,,,,,,,,,"475","482","MENTIONS",""
+,,,,,,,,,"475","483","MENTIONS",""
+,,,,,,,,,"475","484","MENTIONS",""
+,,,,,,,,,"475","485","MENTIONS",""
+,,,,,,,,,"475","486","MENTIONS",""
+,,,,,,,,,"475","202","MENTIONS",""
+,,,,,,,,,"475","487","MENTIONS",""
+,,,,,,,,,"475","488","MENTIONS",""
+,,,,,,,,,"475","489","MENTIONS",""
+,,,,,,,,,"475","490","MENTIONS",""
+,,,,,,,,,"475","491","MENTIONS",""
+,,,,,,,,,"475","492","MENTIONS",""
+,,,,,,,,,"475","493","MENTIONS",""
+,,,,,,,,,"475","494","MENTIONS",""
+,,,,,,,,,"475","495","MENTIONS",""
+,,,,,,,,,"475","496","MENTIONS",""
+,,,,,,,,,"475","497","MENTIONS",""
+,,,,,,,,,"475","498","MENTIONS",""
+,,,,,,,,,"475","499","MENTIONS",""
+,,,,,,,,,"475","48","MENTIONS",""
+,,,,,,,,,"475","500","MENTIONS",""
+,,,,,,,,,"475","501","MENTIONS",""
+,,,,,,,,,"475","502","MENTIONS",""
+,,,,,,,,,"477","23","BELIEVED_IN",""
+,,,,,,,,,"477","481","UNDERTOOK_ACTION",""
+,,,,,,,,,"501","487","HIT",""
+,,,,,,,,,"48","488","TURNED_OVER_ONTO",""
+,,,,,,,,,"477","478","UNINJURED",""
+,,,,,,,,,"482","478","UNINJURED",""
+,,,,,,,,,"486","502","FOUND",""
+,,,,,,,,,"477","500","CARRIED_OUT",""
+,,,,,,,,,"492","478","HAD_SUFFICIENT_OIL_IN",""
+,,,,,,,,,"477","491","DEPARTED_FROM",""
+,,,,,,,,,"477","498","NOTICED",""
+,,,,,,,,,"477","483","REPORTED",""
+,,,,,,,,,"477","484","HEARD_CHANGE_IN",""
+,,,,,,,,,"493","478","GLOWING_BRIGHTLY",""
+,,,,,,,,,"477","480","DECIDED_TO_MAKE",""
+,,,,,,,,,"202","478","APPEARED_TO_STOP",""
+,,,,,,,,,"477","495","MADE_MAYDAY_CALL_TO",""
+,,,,,,,,,"477","490","CONSULTED",""
+,,,,,,,,,"476","478","LEFT_ON_BY_PILOT",""
+,,,,,,,,,"477","476","TURNED_OFF",""
+,,,,,,,,,"494","499","BENT_BACK_AGAINST",""
+,,,,,,,,,"497","478","WERE_BUCKLED_AND_DISTORTED",""
+,,,,,,,,,"479","478","WAS_CRACKED",""
+,,,,,,,,,"496","478","WAS_BENT",""
+,,,,,,,,,"492","478","SUFFERED_SHOCK_LOAD",""
+,,,,,,,,,"485","478","SUFFERED_IMPACT_DAMAGE",""
+,,,,,,,,,"489","478","FAILED",""
+,,,,,,,,,"503","504","MENTIONS",""
+,,,,,,,,,"503","505","MENTIONS",""
+,,,,,,,,,"503","21","MENTIONS",""
+,,,,,,,,,"503","506","MENTIONS",""
+,,,,,,,,,"503","507","MENTIONS",""
+,,,,,,,,,"503","508","MENTIONS",""
+,,,,,,,,,"503","509","MENTIONS",""
+,,,,,,,,,"503","502","MENTIONS",""
+,,,,,,,,,"503","510","MENTIONS",""
+,,,,,,,,,"503","511","MENTIONS",""
+,,,,,,,,,"503","48","MENTIONS",""
+,,,,,,,,,"503","512","MENTIONS",""
+,,,,,,,,,"503","513","MENTIONS",""
+,,,,,,,,,"503","514","MENTIONS",""
+,,,,,,,,,"503","515","MENTIONS",""
+,,,,,,,,,"507","508","CAUSES",""
+,,,,,,,,,"508","512","CAUSES",""
+,,,,,,,,,"514","504","FOUND_IN_POSITION",""
+,,,,,,,,,"505","48","FITTED_TO",""
+,,,,,,,,,"21","513","OPERATED_FOR_DURATION",""
+,,,,,,,,,"21","515","FOUND_TO_OPERATE_NORMALLY",""
+,,,,,,,,,"510","511","FOUND_TO_BE",""
+,,,,,,,,,"510","509","NO_INDICATION_OF",""
+,,,,,,,,,"506","502","CAUSED_BY",""
+,,,,,,,,,"516","517","MENTIONS",""
+,,,,,,,,,"516","518","MENTIONS",""
+,,,,,,,,,"516","519","MENTIONS",""
+,,,,,,,,,"516","520","MENTIONS",""
+,,,,,,,,,"516","521","MENTIONS",""
+,,,,,,,,,"516","522","MENTIONS",""
+,,,,,,,,,"519","520","RODE",""
+,,,,,,,,,"522","518","TOOK_PLACE_OVER",""
+,,,,,,,,,"521","517","RUNS_THROUGH",""
+,,,,,,,,,"521","522","FLOODED_AS_A_RESULT_OF",""
+,,,,,,,,,"523","524","MENTIONS",""
+,,,,,,,,,"523","519","MENTIONS",""
+,,,,,,,,,"523","525","MENTIONS",""
+,,,,,,,,,"523","526","MENTIONS",""
+,,,,,,,,,"523","527","MENTIONS",""
+,,,,,,,,,"523","517","MENTIONS",""
+,,,,,,,,,"519","517","LIVES_IN",""
+,,,,,,,,,"519","527","ENJOYS",""
+,,,,,,,,,"519","525","PREFERS",""
+,,,,,,,,,"519","526","WILL_RIDE_IN",""
+,,,,,,,,,"519","524","RODE_TO",""
+,,,,,,,,,"531","532","HEIR_OF",""
+,,,,,,,,,"532","533","RULES","10191"
+,,,,,,,,,"529","528","FROM_CHUNK",""
+,,,,,,,,,"530","528","FROM_CHUNK",""
+,,,,,,,,,"531","528","FROM_CHUNK",""
+,,,,,,,,,"532","528","FROM_CHUNK",""
+,,,,,,,,,"533","528","FROM_CHUNK",""
+,,,,,,,,,"538","539","RULES","10191"
+,,,,,,,,,"538","534","FROM_CHUNK",""
+,,,,,,,,,"539","534","FROM_CHUNK",""
+,,,,,,,,,"529","534","FROM_CHUNK",""
+,,,,,,,,,"529","538","HEIR_OF",""
+,,,,,,,,,"530","534","FROM_CHUNK",""
+,,,,,,,,,"530","531","PARENT_OF",""
+,,,,,,,,,"529","531","PARENT_OF",""
+,,,,,,,,,"531","534","FROM_CHUNK",""
+,,,,,,,,,"531","538","HEIR_OF",""
