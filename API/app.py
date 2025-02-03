@@ -1,146 +1,264 @@
 import os
-import subprocess
-from tempfile import NamedTemporaryFile
-from fastapi import FastAPI, HTTPException, File, UploadFile, Body, Query
-from langchain_community.document_loaders import TextLoader
-from langchain.schema import Document
+import logging
+import uuid  # For generating unique queryIds
+from fastapi import FastAPI, HTTPException, File, UploadFile
+from pydantic import BaseModel
+from neo4j import GraphDatabase
 from langchain_community.graphs import Neo4jGraph
 from langchain_community.vectorstores import Neo4jVector
-from langchain_experimental.graph_transformers import LLMGraphTransformer
-from langchain.chains import GraphCypherQAChain
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from neo4j import GraphDatabase
-import logging
-from process_document import process_document
-from langchain_ollama.llms import OllamaLLM
-from langchain.prompts import PromptTemplate
-from neo4j import GraphDatabase
-import pandas as pd
-from pydantic import BaseModel
+from sentence_transformers import SentenceTransformer
 
-# environment settings
+from helpers.process_document import process_document  # Existing function
+from helpers.chunk_text import chunk_text
+
+# Define SentenceTransformer Model
+embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+
+
+# Create a Wrapper Class for SentenceTransformer Embeddings
+class SentenceTransformerEmbeddings:
+    """
+    Wrapper for SentenceTransformer to work with Neo4jVector.
+    """
+
+    def __init__(self, model):
+        self.model = model
+
+    def embed_query(self, text):
+        """
+        Generate an embedding for a single query string.
+        """
+        return self.model.encode(text, convert_to_numpy=True).tolist()
+
+    def embed_documents(self, texts):
+        """
+        Generate embeddings for multiple documents.
+        """
+        return self.model.encode(texts, convert_to_numpy=True).tolist()
+
+
+# Environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = "TestPassword"
 
-# ollama settings
-llm = OllamaLLM(base_url="http://ollama-container:11434", model="phi4", temperature=0)
-llm_transformer = LLMGraphTransformer(llm=llm)
-
-# chunk settings
+# Chunking settings
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
 
-# Neo4j settings
+# Initialise FastAPI app
+app = FastAPI()
+
+# Initialise Neo4j driver
 graph_driver = Neo4jGraph(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
 
-graph_driver.refresh_schema()
+# Initialise SentenceTransformer Embeddings Wrapper
+embedding_function = SentenceTransformerEmbeddings(embedding_model)
+
+# Initialise Vector Storage within Neo4j
+vector_store = Neo4jVector(
+    url=NEO4J_URI,
+    username=NEO4J_USER,
+    password=NEO4J_PASSWORD,
+    embedding=embedding_function,
+)
 
 
-# Define a Pydantic model for the request body
+# Define Pydantic models
 class QueryRequest(BaseModel):
     query: str
 
 
-# Cypher query connector
-cypher_chain = GraphCypherQAChain.from_llm(
-    cypher_llm=llm,
-    qa_llm=llm,
-    graph=graph_driver,
-    verbose=True,
-    allow_dangerous_requests=True,
-)
+class RatingRequest(BaseModel):
+    queryId: str
+    chunkId: int
+    score: int
 
 
-# initialise FastAPI
-app = FastAPI()
-
-
-# Test Service running endpoint
 @app.get("/")
 def read_root():
-    return {"message": "Service is running."}
+    return {"message": "KG-RAG Service is running."}
 
 
-# upload document, process and transform to knowledge graph data
+# 1️⃣ Upload & Process Document
 @app.post("/documents")
 async def post_documents(file: UploadFile = File(...)):
-    # check for file
+    """
+    Uploads a PDF file, extracts text, stores chunked text with vectors in Neo4j.
+    """
     if not file:
         raise HTTPException(status_code=400, detail="File is required")
 
-    # check for supported file type
-    allowed_extenssions = {"pdf"}
+    # Validate file type (PDF only)
+    allowed_extensions = {"pdf"}
     file_extension = file.filename.split(".")[-1].lower()
-    if file_extension not in allowed_extenssions:
+    if file_extension not in allowed_extensions:
         raise HTTPException(status_code=400, detail="Unsupported file type")
 
-    # reset file pointer for processing
-    file.file.seek(0)
+    # Read file content
+    file_content = await file.read()
+    if not file_content:
+        raise HTTPException(status_code=400, detail="File is empty or unreadable")
 
-    # process the file to extract text for neo4j insertion
     try:
-        file_content = file.file.read()
-        if not file_content:
-            raise HTTPException(status_code=400, detail="File is empty or unreadable")
-
+        # Extract text from PDF
         processed_data = process_document(file_content, file_extension)
         if not processed_data or "text" not in processed_data:
             raise HTTPException(
-                status_code=500, detail="Error processing file: no content extracted"
+                status_code=500, detail="Error processing PDF: no content extracted"
             )
 
         processed_text = processed_data["text"]
 
-        # create Document Object directly for test text
-        docs = [Document(page_content=processed_text)]
-
-        # split text into chunks
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP
+        # Chunk the processed text
+        chunks = chunk_text(
+            processed_text, chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP
         )
 
-        documents = text_splitter.split_documents(documents=docs)
-
-        graph_documents = llm_transformer.convert_to_graph_documents(documents)
-        graph_driver.add_graph_documents(
-            graph_documents, baseEntityLabel=True, include_source=True
-        )
+        # Store in Neo4j with embedded vectors
+        with GraphDatabase.driver(
+            NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD)
+        ) as driver:
+            with driver.session() as session:
+                for i, chunk in enumerate(chunks):
+                    embedding_vector = embedding_function.embed_query(chunk)
+                    session.run(
+                        """
+                        CREATE (c:Chunk {
+                            chunk_id: $chunk_id,
+                            text: $text,
+                            vector: $vector
+                        })
+                        """,
+                        chunk_id=i,
+                        text=chunk,
+                        vector=embedding_vector,
+                    )
+                    # Create sequential relationships
+                    if i > 0:
+                        session.run(
+                            """
+                            MATCH (c1:Chunk {chunk_id: $chunk1}),
+                                  (c2:Chunk {chunk_id: $chunk2})
+                            CREATE (c1)-[:NEXT]->(c2)
+                            """,
+                            chunk1=i - 1,
+                            chunk2=i,
+                        )
 
         return {
-            "status": 200,
-            "message": f"Document '{file.filename}' succesfully processed and added to Neo4j.",
-            "graph_documents_count": len(graph_documents),
-            "graph_documents": graph_documents,
+            "message": f"Document '{file.filename}' processed and stored in Neo4j.",
+            "total_chunks": len(chunks),
         }
+
     except Exception as e:
+        logging.error(f"Error processing PDF: {e}")
         raise HTTPException(
-            status_code=500, detail={f"An internal error occured duing processing: {e}"}
+            status_code=500, detail=f"Internal error during processing: {e}"
         )
 
 
+# 2️⃣ Query Neo4j with Vector Search
 @app.post("/query")
-async def query_graph_with_cypher(request: QueryRequest):
+async def query_graph_with_vector_search(request: QueryRequest):
     """
-    Endpoint to query the Neo4j database using GraphCypherQAChain with Ollama.
+    Perform a vector similarity search in Neo4j.
     """
     try:
-        # Extract the query from the request
-        query = request.query
+        # Create a unique queryId for reference
+        query_id = str(uuid.uuid4())
 
-        # Run the query through the chain
-        response = cypher_chain.invoke(query)
+        # Generate embedding
+        query_embedding = embedding_function.embed_query(request.query)
+
+        with GraphDatabase.driver(
+            NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD)
+        ) as driver:
+            with driver.session() as session:
+                # Create a Query node to store the query text for future reference
+                session.run(
+                    """
+                    CREATE (q:Query {
+                        queryId: $queryId,
+                        text: $queryText
+                    })
+                    """,
+                    queryId=query_id,
+                    queryText=request.query,
+                )
+
+                # Vector similarity search
+                result = session.run(
+                    """
+                    MATCH (c:Chunk)
+                    WITH c, gds.similarity.cosine($vector, c.vector) AS similarity
+                    RETURN c.chunk_id AS chunk_id, c.text AS chunk_text, similarity
+                    ORDER BY similarity DESC
+                    LIMIT 3
+                    """,
+                    vector=query_embedding,
+                )
+
+                # Convert records to a list
+                chunks = [
+                    {
+                        "chunk_id": record["chunk_id"],
+                        "text": record["chunk_text"],
+                        "similarity": record["similarity"],
+                    }
+                    for record in result
+                ]
 
         return {
-            "status": 200,
-            "query": query,
-            "results": response,
+            "queryId": query_id,  # Return the queryId for use in ratings
+            "query": request.query,
+            "results": chunks,
         }
 
     except Exception as e:
-        logging.error(f"Error querying Neo4j with GraphCypherQAChain: {e}")
+        logging.error(f"Error querying Neo4J: {e}")
         raise HTTPException(
-            status_code=500,
-            detail=f"An error occurred while querying the database: {e}",
+            status_code=500, detail=f"An error occurred while querying Neo4j: {e}"
         )
-        
+
+
+# 3️⃣ Rate a Query Result
+@app.post("/rate")
+def rate_query_result(rating_req: RatingRequest):
+    """
+    Stores a user's rating (1-5) for a chunk in response to a specific query.
+    """
+    # Validate the rating
+    if not (1 <= rating_req.score <= 5):
+        raise HTTPException(status_code=400, detail="Score must be between 1 and 5.")
+
+    try:
+        with GraphDatabase.driver(
+            NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD)
+        ) as driver:
+            with driver.session() as session:
+                # Create a relationship from the Query node to the Chunk node
+                session.run(
+                    """
+                    MATCH (q:Query {queryId: $queryId}),
+                          (c:Chunk {chunk_id: $chunkId})
+                    MERGE (q)-[r:RATED]->(c)
+                    SET r.score = $score
+                    """,
+                    queryId=rating_req.queryId,
+                    chunkId=rating_req.chunkId,
+                    score=rating_req.score,
+                )
+
+        return {
+            "message": "Rating saved successfully.",
+            "queryId": rating_req.queryId,
+            "chunkId": rating_req.chunkId,
+            "score": rating_req.score,
+        }
+
+    except Exception as e:
+        logging.error(f"Error storing rating: {e}")
+        raise HTTPException(
+            status_code=500, detail=f"An error occurred while storing the rating: {e}"
+        )
