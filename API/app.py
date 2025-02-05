@@ -24,7 +24,8 @@ NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = "TestPassword"
 
 # ollama settings
-llm = OllamaLLM(base_url="http://ollama-container:11434", model="phi4", temperature=0)
+llm_port = os.getenv("OLLAMA_PORT_I", "11434")
+llm = OllamaLLM(base_url="http://ollama-container:{}".format(llm_port), model="phi4", temperature=0)
 llm_transformer = LLMGraphTransformer(llm=llm)
 
 # chunk settings
