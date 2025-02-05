@@ -25,8 +25,9 @@ NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = "TestPassword"
 
 # ollama settings
+llm_model="phi4"
 llm_port = os.getenv("OLLAMA_PORT_I", "11434")
-llm = OllamaLLM(base_url="http://ollama-container:{}".format(llm_port), model="phi4", temperature=0)
+llm = OllamaLLM(base_url="http://ollama-container:{}".format(llm_port), model=llm_model, temperature=0)
 llm_transformer = LLMGraphTransformer(llm=llm)
 
 # chunk settings
@@ -163,7 +164,8 @@ async def query_sample_data(request: QueryRequest):
         return {
             "status": 200,
             "query": query,
-            "results": response,
+            "node_graph": response,
+            "llm_response": f"Hello,  I am a useful llm and I have given you some great data, using model {llm_model}"
         }
 
     except Exception as e:
