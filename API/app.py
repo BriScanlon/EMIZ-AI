@@ -363,3 +363,20 @@ async def get_chat_history(chat_name: str):
         logging.error(f"Error retrieving chat history: {e}")
         raise HTTPException(status_code=500, detail="Error retrieving chat history.")
 
+@app.delete("/chat/{chat_name}")
+async def delete_chat(chat_name: str):
+    """
+    Deletes a chat history file by name.
+    """
+    chat_file = os.path.join(CHAT_LOGS_DIR, f"{chat_name}.json")
+
+    # Check if chat history exists
+    if not os.path.exists(chat_file):
+        raise HTTPException(status_code=404, detail="Chat history not found.")
+
+    try:
+        os.remove(chat_file)
+        return {"message": f"Chat '{chat_name}' has been deleted."}
+    except Exception as e:
+        logging.error(f"Error deleting chat history: {e}")
+        raise HTTPException(status_code=500, detail="Error deleting chat history.")
