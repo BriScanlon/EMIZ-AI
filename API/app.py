@@ -327,3 +327,18 @@ def save_chat_log(chat_name: str, query: str, response: dict):
     chat_history.append(log_entry)
     with open(chat_file, "w", encoding="utf-8") as file:
         json.dump(chat_history, file, indent=4)
+
+@app.get("/chats")
+async def get_chats():
+    """
+    Retrieves a list of all stored chat sessions.
+    """
+    try:
+        # List all files in the ChatLogs directory
+        chat_files = [
+            f.replace(".json", "") for f in os.listdir(CHAT_LOGS_DIR) if f.endswith(".json")
+        ]
+        return {"chats": chat_files}
+    except Exception as e:
+        logging.error(f"Error retrieving chat list: {e}")
+        raise HTTPException(status_code=500, detail="Error retrieving chat list.")
