@@ -58,10 +58,12 @@ services:
       - "${OLLAMA_PORT_E:-11434}:${OLLAMA_PORT_I:-11434}"
     volumes:
       - ./ollama:/var/lib/ollama
+      - c:/ollama_models:/root/.ollama
     runtime: nvidia # Enable NVIDIA runtime for GPU access
     environment:
       - NVIDIA_VISIBLE_DEVICES=all # Expose all GPUs
       - NVIDIA_DRIVER_CAPABILITIES=all # Grant all driver capabilities
+    command: /bin/sh -c "ollama pull phi4
     restart: unless-stopped
 
 networks:
