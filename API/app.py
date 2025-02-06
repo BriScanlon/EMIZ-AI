@@ -1,6 +1,8 @@
 import os
 import subprocess
+import json
 from tempfile import NamedTemporaryFile
+from datetime import datetime
 from fastapi import FastAPI, HTTPException, File, UploadFile, Body, Query
 from langchain_community.document_loaders import TextLoader
 from langchain.schema import Document
@@ -59,6 +61,9 @@ cypher_chain = GraphCypherQAChain.from_llm(
     allow_dangerous_requests=True,
 )
 
+# Ensure ChatLogs folder exists
+CHAT_LOGS_DIR = "ChatLogs"
+os.makedirs(CHAT_LOGS_DIR, exist_ok=True)
 
 # initialise FastAPI
 app = FastAPI()
@@ -165,52 +170,64 @@ async def query_graph_with_cypher(request: QueryRequest):
     """
     Endpoint to query the Neo4j database using GraphCypherQAChain with Ollama.
     """
-    # Variables the query from the request
     query = request.query
     chat_name = request.chat_name
     system_prompt = request.system_prompt
     debug_test = request.debug_test
-    
-    # Check if debug_test is enabled and return the canned response if true
+
+    # Check for empty query
+    if not query or query.strip() == "":
+        msg = "Query string is empty or missing"
+        logging.warning(msg)
+        raise HTTPException(status_code=418, detail=msg)
+
+    # Generate chat name if empty
+    if not chat_name or chat_name.strip() == "":
+        chat_name = query[:12].replace(" ", "_")
+        logging.info(f"Chat name is empty, generating new one: {chat_name}")
+
+    # Use default system prompt if empty
+    if not system_prompt or system_prompt.strip() == "":
+        system_prompt = "You are a helpful AI assistant."
+
+    # Debug mode: Return canned response
     if debug_test:
-        logging.info("Debug test enabled. Returning canned response.")
-        return {
+        logging.info("Debug test enabled, returning canned response.")
+        response_data = {
             "status": 200,
             "query": query,
             "chat_name": "Canned response",
-            "debug_test": True,
-            "results": canned_response(),
+            "system_prompt": system_prompt,
+            "results": [
+                {
+                    "message": "This is a canned response."
+                }
+            ]
         }
-    
-    # Safety check for empty query
-    if query is None or query.strip() == "":
-        msg = f"Query string is empty or missing"
-        logging.warning(msg)
-        raise HTTPException(
-            status_code=418,
-            detail=msg,
-        )
-    
-    # Generate chat name if empty
-    if chat_name is None or chat_name.strip() == "":
-        chat_name = query[:12].replace(" ", "_")#
-        msg = f"Chat name is empty, generating new one: {chat_name}"
-        logging.info(msg)
-        
-    # Use default system rompt if empty
-    if system_prompt is None or system_prompt.strip() == "":
-        system_prompt = "You are a helpful AI assistant."
-    
+        save_chat_log(chat_name, query, response_data)  # Store chat log
+        return response_data
+
     try:
-        # Run the query through the chain
-        #response = cypher_chain.invoke(query)
+        # Placeholder query response
         response = "TODO: placeholder response."
-        
-        return {
+
+        # Structure the response correctly
+        response_data = {
             "status": 200,
             "query": query,
-            "results": response,
+            "chat_name": chat_name,
+            "system_prompt": system_prompt,
+            "results": [
+                {
+                    "message": response  # Wrapping response in a list
+                }
+            ]
         }
+
+        # Save chat history in the correct format
+        save_chat_log(chat_name, query, response_data)
+
+        return response_data
 
     except Exception as e:
         logging.error(f"Error querying Neo4j with GraphCypherQAChain: {e}")
@@ -270,3 +287,43 @@ def canned_response():
         responses.append(response)
 
     return responses
+
+def save_chat_log(chat_name: str, query: str, response: dict):
+    """Append a structured entry to the chat log file, maintaining history."""
+    chat_file = os.path.join(CHAT_LOGS_DIR, f"{chat_name}.json")
+
+    # Ensure `results` is always formatted as a list with a message
+    formatted_response = {
+        "status": response["status"],
+        "query": response["query"],
+        "chat_name": response["chat_name"],
+        "system_prompt": response["system_prompt"],
+        "results": [
+            {
+                "message": response["results"]  # Wrapping message inside a list
+            }
+        ]
+    }
+
+    # Create the structured log entry
+    log_entry = {
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "response": formatted_response
+    }
+
+    # Load existing chat history if it exists
+    if os.path.exists(chat_file):
+        with open(chat_file, "r", encoding="utf-8") as file:
+            try:
+                chat_history = json.load(file)
+                if not isinstance(chat_history, list):  # Safety check
+                    chat_history = []
+            except json.JSONDecodeError:
+                chat_history = []  # If file is corrupted, start fresh
+    else:
+        chat_history = []
+
+    # Append new entry and save
+    chat_history.append(log_entry)
+    with open(chat_file, "w", encoding="utf-8") as file:
+        json.dump(chat_history, file, indent=4)
