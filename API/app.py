@@ -292,23 +292,10 @@ def save_chat_log(chat_name: str, query: str, response: dict):
     """Append a structured entry to the chat log file, maintaining history."""
     chat_file = os.path.join(CHAT_LOGS_DIR, f"{chat_name}.json")
 
-    # Ensure `results` is always formatted as a list with a message
-    formatted_response = {
-        "status": response["status"],
-        "query": response["query"],
-        "chat_name": response["chat_name"],
-        "system_prompt": response["system_prompt"],
-        "results": [
-            {
-                "message": response["results"]  # Wrapping message inside a list
-            }
-        ]
-    }
-
     # Create the structured log entry
     log_entry = {
         "timestamp": datetime.utcnow().isoformat() + "Z",
-        "response": formatted_response
+        "response": response
     }
 
     # Load existing chat history if it exists
@@ -342,3 +329,40 @@ async def get_chats():
     except Exception as e:
         logging.error(f"Error retrieving chat list: {e}")
         raise HTTPException(status_code=500, detail="Error retrieving chat list.")
+    
+@app.get("/chat_history/{chat_name}")
+async def get_chat_history(chat_name: str):
+    """
+    Retrieves chat history for a given chat name.
+    Returns only the results from each response in an array.
+    """
+    chat_file = os.path.join(CHAT_LOGS_DIR, f"{chat_name}.json")
+
+    # Check if chat history exists
+    if not os.path.exists(chat_file):
+        raise HTTPException(status_code=404, detail="Chat history not found.")
+
+    try:
+        # Load chat history
+        with open(chat_file, "r", encoding="utf-8") as file:
+            chat_history = json.load(file)
+
+        # Extract responses sorted by timestamp
+        sorted_responses = sorted(chat_history, key=lambda x: x["timestamp"])
+
+        # Prepare response format with only `response["results"]`
+        formatted_history = {
+            "status": 200,
+            "chat_name": chat_name,
+            "results": [result for entry in sorted_responses for result in entry["response"]["results"]]
+        }
+
+        return formatted_history
+
+    except json.JSONDecodeError:
+        logging.error(f"Chat history JSON is corrupted: {chat_name}")
+        raise HTTPException(status_code=500, detail="Chat history file is corrupted.")
+    except Exception as e:
+        logging.error(f"Error retrieving chat history: {e}")
+        raise HTTPException(status_code=500, detail="Error retrieving chat history.")
+
