@@ -348,7 +348,8 @@ async def get_chat_history(chat_name: str):
             chat_history = json.load(file)
 
         # Extract responses sorted by timestamp
-        sorted_responses = sorted(chat_history, key=lambda x: x["timestamp"])
+        sorted_responses = sorted(chat_history, key=lambda x: x["timestamp"], reverse=True)
+
 
         # Prepare response format with only `response["results"]`
         formatted_history = {
