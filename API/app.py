@@ -198,11 +198,7 @@ async def query_graph_with_cypher(request: QueryRequest):
             "query": query,
             "chat_name": "Canned response",
             "system_prompt": system_prompt,
-            "results": [
-                {
-                    "message": "This is a canned response."
-                }
-            ]
+            "results": canned_response()
         }
         save_chat_log(chat_name, query, response_data)  # Store chat log
         return response_data
@@ -219,7 +215,7 @@ async def query_graph_with_cypher(request: QueryRequest):
             "system_prompt": system_prompt,
             "results": [
                 {
-                    "message": response  # Wrapping response in a list
+                    "message": response 
                 }
             ]
         }
