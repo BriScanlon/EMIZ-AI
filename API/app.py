@@ -1,8 +1,10 @@
 import os
 import logging
+import json
 import uuid  # For generating unique queryIds
 from fastapi import FastAPI, HTTPException, File, UploadFile
 from pydantic import BaseModel
+
 from neo4j import GraphDatabase
 from langchain_community.graphs import Neo4jGraph
 from langchain_community.vectorstores import Neo4jVector
@@ -20,6 +22,8 @@ class SentenceTransformerEmbeddings:
     """
     Wrapper for SentenceTransformer to work with Neo4jVector.
     """
+   
+
 
     def __init__(self, model):
         self.model = model
@@ -42,7 +46,16 @@ NEO4J_URI = "bolt://neo4j-db-container"
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = "TestPassword"
 
-# Chunking settings
+
+
+# ollama settings
+llm_model="phi4"
+llm_port = os.getenv("OLLAMA_PORT_I", "11434")
+llm = OllamaLLM(base_url="http://ollama-container:{}".format(llm_port), model=llm_model, temperature=0)
+llm_transformer = LLMGraphTransformer(llm=llm)
+
+# chunk settings
+
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
 
@@ -157,8 +170,61 @@ async def post_documents(file: UploadFile = File(...)):
             status_code=500, detail=f"Internal error during processing: {e}"
         )
 
+@app.post("/query_sample")
+async def query_sample_data(request: QueryRequest):
+    """
+    Endpoint which will give a hard coded response to for testing.
+    """
+    try:
+        # Extract the query from the request - We are only doing this to test a request has been sent in teh correct format
+        query = request.query
 
-# 2️⃣ Query Neo4j with Vector Search
+        # Run the query through the chain
+        response = {
+            "nodes": [
+                {"id": "1", "name": "DHC-8-402 Dash 8, G-JEDI", "category": "Aircraft"},
+                {"id": "2", "name": "AC Electrical System", "category": "System"},
+                {"id": "3", "name": "Wiring Loom", "category": "Component"},
+                {"id": "4", "name": "Chafing due to blind rivet", "category": "FailureMode"},
+                {"id": "5", "name": "AC bus and generator warnings", "category": "Symptom"},
+                {"id": "6", "name": "Replace blind rivets with solid rivets", "category": "Resolution"},
+                {"id": "7", "name": "Incident: AC System Failure", "category": "Incident"},
+            ],
+            "links": [
+                {"source": "1", "target": "7", "label": "OCCURRED_ON"},
+                {"source": "2", "target": "3", "label": "PART_OF"},
+                {"source": "4", "target": "2", "label": "AFFECTS"},
+                {"source": "4", "target": "5", "label": "LEADS_TO"},
+                {"source": "4", "target": "6", "label": "RESOLVED_BY"},
+            ],
+            "categories": [
+                {"name": "Aircraft"},
+                {"name": "System"},
+                {"name": "Component"},
+                {"name": "FailureMode"},
+                {"name": "Symptom"},
+                {"name": "Resolution"},
+                {"name": "Incident"},
+            ],
+        }
+
+
+        return {
+            "status": 200,
+            "query": query,
+            "node_graph": response,
+            "llm_response": f"Hello,  I am a useful llm and I have given you some great data, using model {llm_model}"
+        }
+
+    except Exception as e:
+        logging.error(f"Error querying Neo4j with GraphCypherQAChain: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"An error occurred while querying the database: {e}",
+        )
+        
+
+
 @app.post("/query")
 async def query_graph_with_vector_search(request: QueryRequest):
     """
