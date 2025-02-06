@@ -18,7 +18,7 @@ from langchain.prompts import PromptTemplate
 from neo4j import GraphDatabase
 from sentence_transformers import SentenceTransformer
 import pandas as pd
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 # environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
@@ -26,7 +26,9 @@ NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = "TestPassword"
 
 # ollama settings
-llm = OllamaLLM(base_url="http://ollama-container:11434", model="phi4", temperature=0)
+llm_model="phi4"
+llm_port = os.getenv("OLLAMA_PORT_I", "11434")
+llm = OllamaLLM(base_url="http://ollama-container:{}".format(llm_port), model=llm_model, temperature=0)
 llm_transformer = LLMGraphTransformer(llm=llm)
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
@@ -44,7 +46,8 @@ graph_driver.refresh_schema()
 # Define a Pydantic model for the request body
 class QueryRequest(BaseModel):
     query: str
-
+    system_prompty: str = Field(None, description="System prompt to use, overrides the default one.")
+    chat_name: str = Field(None, description="Chat session identifier.")
 
 # Cypher query connector
 cypher_chain = GraphCypherQAChain.from_llm(
@@ -163,10 +166,30 @@ async def query_graph_with_cypher(request: QueryRequest):
     """
     Endpoint to query the Neo4j database using GraphCypherQAChain with Ollama.
     """
+    # Variables the query from the request
+    query = request.query
+    chat_name = request.chat_name
+    system_prompt = request.system_prompt
+    
+    # Safety check for empty query
+    if query is None or query.strip() == "":
+        msg = f"Query string is empty or missing"
+        raise HTTPException(
+            status_code=418,
+            detail=f"msg",
+        )
+    
+    # Generate chat name if empty
+    if chat_name is None or chat_name.strip() == "":
+        chat_name = query[:12].replace(" ", "_")#
+        msg = f"Chat name is empty, generating new one: {chat_name}"
+        logging.info(msg)
+        
+    # Generate chat name if empty
+    if system_prompt is None or system_prompt.strip() == "":
+        system_prompt = "You are a helpful AI assistant."
+    
     try:
-        # Extract the query from the request
-        query = request.query
-
         # Run the query through the chain
         response = cypher_chain.invoke(query)
 
