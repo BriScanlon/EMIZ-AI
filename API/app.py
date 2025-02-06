@@ -46,8 +46,9 @@ graph_driver.refresh_schema()
 # Define a Pydantic model for the request body
 class QueryRequest(BaseModel):
     query: str
-    system_prompty: str = Field(None, description="System prompt to use, overrides the default one.")
-    chat_name: str = Field(None, description="Chat session identifier.")
+    system_prompt: str = Field(None, description = "System prompt to use, overrides the default one.")
+    chat_name: str = Field(None, description = "Chat session identifier.")
+    debug_test: bool = Field(False, description = "If you set this to true making a request you will get a canned response back")
 
 # Cypher query connector
 cypher_chain = GraphCypherQAChain.from_llm(
@@ -67,7 +68,6 @@ app = FastAPI()
 @app.get("/")
 def read_root():
     return {"message": "Service is running."}
-
 
 # upload document, process and transform to knowledge graph data
 @app.post("/documents")
@@ -160,7 +160,6 @@ async def post_documents(file: UploadFile = File(...)):
             status_code=500, detail=f"Internal error during processing: {e}"
         )
 
-
 @app.post("/query")
 async def query_graph_with_cypher(request: QueryRequest):
     """
@@ -170,13 +169,26 @@ async def query_graph_with_cypher(request: QueryRequest):
     query = request.query
     chat_name = request.chat_name
     system_prompt = request.system_prompt
+    debug_test = request.debug_test
+    
+    # Check if debug_test is enabled and return the canned response if true
+    if debug_test:
+        logging.info("Debug test enabled. Returning canned response.")
+        return {
+            "status": 200,
+            "query": query,
+            "chat_name": "Canned response",
+            "debug_test": True,
+            "results": canned_response(),
+        }
     
     # Safety check for empty query
     if query is None or query.strip() == "":
         msg = f"Query string is empty or missing"
+        logging.warning(msg)
         raise HTTPException(
             status_code=418,
-            detail=f"msg",
+            detail=msg,
         )
     
     # Generate chat name if empty
@@ -185,14 +197,15 @@ async def query_graph_with_cypher(request: QueryRequest):
         msg = f"Chat name is empty, generating new one: {chat_name}"
         logging.info(msg)
         
-    # Generate chat name if empty
+    # Use default system rompt if empty
     if system_prompt is None or system_prompt.strip() == "":
         system_prompt = "You are a helpful AI assistant."
     
     try:
         # Run the query through the chain
-        response = cypher_chain.invoke(query)
-
+        #response = cypher_chain.invoke(query)
+        response = "TODO: placeholder response."
+        
         return {
             "status": 200,
             "query": query,
@@ -205,3 +218,55 @@ async def query_graph_with_cypher(request: QueryRequest):
             status_code=500,
             detail=f"An error occurred while querying the database: {e}",
         )
+
+def canned_response():
+    nodes = [
+        {"id": "1", "name": "DHC-8-402 Dash 8, G-JEDI", "category": "Aircraft"},
+        {"id": "2", "name": "AC Electrical System", "category": "System"},
+        {"id": "3", "name": "Wiring Loom", "category": "Component"},
+        {"id": "4", "name": "Chafing due to blind rivet", "category": "FailureMode"},
+        {"id": "5", "name": "AC bus and generator warnings", "category": "Symptom"},
+        {"id": "6", "name": "Replace blind rivets with solid rivets", "category": "Resolution"},
+        {"id": "7", "name": "Incident: AC System Failure", "category": "Incident"},
+    ]
+    links = [
+        {"source": "1", "target": "7", "label": "OCCURRED_ON"},
+        {"source": "2", "target": "3", "label": "PART_OF"},
+        {"source": "4", "target": "2", "label": "AFFECTS"},
+        {"source": "4", "target": "5", "label": "LEADS_TO"},
+        {"source": "4", "target": "6", "label": "RESOLVED_BY"},
+    ]
+    categories = [
+        {"name": "Aircraft"},
+        {"name": "System"},
+        {"name": "Component"},
+        {"name": "FailureMode"},
+        {"name": "Symptom"},
+        {"name": "Resolution"},
+        {"name": "Incident"},
+    ]
+
+    messages = [
+        "Hello! I'm a friendly AI, here's a node graph for you.",
+        "Hey! This message has no graph, just checking in!",
+        "Here’s another graph! Let me know what you think.",
+        "Hope you're enjoying this! No graph this time.",
+        "Here's a final graph to wrap things up!"
+    ]
+
+    responses = []
+
+    for i, msg in enumerate(messages):
+        response = {"message": msg}
+        
+        # Only add a graph if `i` is even
+        if i % 2 == 0:
+            response["graph"] = {
+                "nodes": nodes,
+                "links": links,
+                "categories": categories,
+            }
+        
+        responses.append(response)
+
+    return responses
