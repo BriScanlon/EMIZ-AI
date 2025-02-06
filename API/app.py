@@ -17,6 +17,7 @@ from langchain.prompts import PromptTemplate
 from neo4j import GraphDatabase
 import pandas as pd
 from pydantic import BaseModel
+import json
 
 # environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
@@ -24,7 +25,9 @@ NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = "TestPassword"
 
 # ollama settings
-llm = OllamaLLM(base_url="http://ollama-container:11434", model="phi4", temperature=0)
+llm_model="phi4"
+llm_port = os.getenv("OLLAMA_PORT_I", "11434")
+llm = OllamaLLM(base_url="http://ollama-container:{}".format(llm_port), model=llm_model, temperature=0)
 llm_transformer = LLMGraphTransformer(llm=llm)
 
 # chunk settings
@@ -117,6 +120,61 @@ async def post_documents(file: UploadFile = File(...)):
         raise HTTPException(
             status_code=500, detail={f"An internal error occured duing processing: {e}"}
         )
+
+
+@app.post("/query_sample")
+async def query_sample_data(request: QueryRequest):
+    """
+    Endpoint which will give a hard coded response to for testing.
+    """
+    try:
+        # Extract the query from the request - We are only doing this to test a request has been sent in teh correct format
+        query = request.query
+
+        # Run the query through the chain
+        response = {
+            "nodes": [
+                {"id": "1", "name": "DHC-8-402 Dash 8, G-JEDI", "category": "Aircraft"},
+                {"id": "2", "name": "AC Electrical System", "category": "System"},
+                {"id": "3", "name": "Wiring Loom", "category": "Component"},
+                {"id": "4", "name": "Chafing due to blind rivet", "category": "FailureMode"},
+                {"id": "5", "name": "AC bus and generator warnings", "category": "Symptom"},
+                {"id": "6", "name": "Replace blind rivets with solid rivets", "category": "Resolution"},
+                {"id": "7", "name": "Incident: AC System Failure", "category": "Incident"},
+            ],
+            "links": [
+                {"source": "1", "target": "7", "label": "OCCURRED_ON"},
+                {"source": "2", "target": "3", "label": "PART_OF"},
+                {"source": "4", "target": "2", "label": "AFFECTS"},
+                {"source": "4", "target": "5", "label": "LEADS_TO"},
+                {"source": "4", "target": "6", "label": "RESOLVED_BY"},
+            ],
+            "categories": [
+                {"name": "Aircraft"},
+                {"name": "System"},
+                {"name": "Component"},
+                {"name": "FailureMode"},
+                {"name": "Symptom"},
+                {"name": "Resolution"},
+                {"name": "Incident"},
+            ],
+        }
+
+
+        return {
+            "status": 200,
+            "query": query,
+            "node_graph": response,
+            "llm_response": f"Hello,  I am a useful llm and I have given you some great data, using model {llm_model}"
+        }
+
+    except Exception as e:
+        logging.error(f"Error querying Neo4j with GraphCypherQAChain: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"An error occurred while querying the database: {e}",
+        )
+        
 
 
 @app.post("/query")
