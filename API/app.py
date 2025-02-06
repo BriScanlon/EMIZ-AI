@@ -12,9 +12,11 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from neo4j import GraphDatabase
 import logging
 from helpers.process_document import process_document
+from helpers.chunk_text import chunk_text
 from langchain_ollama.llms import OllamaLLM
 from langchain.prompts import PromptTemplate
 from neo4j import GraphDatabase
+from sentence_transformers import SentenceTransformer
 import pandas as pd
 from pydantic import BaseModel
 
@@ -26,6 +28,8 @@ NEO4J_PASSWORD = "TestPassword"
 # ollama settings
 llm = OllamaLLM(base_url="http://ollama-container:11434", model="phi4", temperature=0)
 llm_transformer = LLMGraphTransformer(llm=llm)
+
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # chunk settings
 CHUNK_SIZE = 1000
@@ -65,57 +69,92 @@ def read_root():
 # upload document, process and transform to knowledge graph data
 @app.post("/documents")
 async def post_documents(file: UploadFile = File(...)):
-    # check for file
+    """
+    Uploads a PDF file, extracts text using `process_document()`, stores chunked text with vectors in Neo4j.
+    Ensures each chunk has a globally unique ID and is linked correctly only within its document.
+    """
     if not file:
         raise HTTPException(status_code=400, detail="File is required")
 
-    # check for supported file type
-    allowed_extenssions = {"pdf"}
+    # Validate file type (PDF only)
+    allowed_extensions = {"pdf"}
     file_extension = file.filename.split(".")[-1].lower()
-    if file_extension not in allowed_extenssions:
+    if file_extension not in allowed_extensions:
         raise HTTPException(status_code=400, detail="Unsupported file type")
 
-    # reset file pointer for processing
-    file.file.seek(0)
+    # Read file content
+    file_content = await file.read()
+    if not file_content:
+        raise HTTPException(status_code=400, detail="File is empty or unreadable")
 
-    # process the file to extract text for neo4j insertion
     try:
-        file_content = file.file.read()
-        if not file_content:
-            raise HTTPException(status_code=400, detail="File is empty or unreadable")
+        # Generate a unique document ID
+        document_id = file.filename.split(".")[0]  # Use filename as document ID
 
+        # Call `process_document()` to extract text from PDF
         processed_data = process_document(file_content, file_extension)
         if not processed_data or "text" not in processed_data:
             raise HTTPException(
-                status_code=500, detail="Error processing file: no content extracted"
+                status_code=500, detail="Error processing PDF: no content extracted"
             )
 
         processed_text = processed_data["text"]
 
-        # create Document Object directly for test text
-        docs = [Document(page_content=processed_text)]
-
-        # split text into chunks
+        # Chunk the extracted text
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP
         )
+        chunks = text_splitter.split_text(processed_text)
 
-        documents = text_splitter.split_documents(documents=docs)
+        # Generate vector embeddings
+        chunk_embeddings = model.encode(chunks, convert_to_numpy=True)
 
-        graph_documents = llm_transformer.convert_to_graph_documents(documents)
-        graph_driver.add_graph_documents(
-            graph_documents, baseEntityLabel=True, include_source=True
-        )
+        # Store in Neo4j
+        with GraphDatabase.driver(
+            NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD)
+        ) as driver:
+            with driver.session() as session:
+                for i, chunk in enumerate(chunks):
+                    # ✅ Unique chunk ID using document_id + chunk_id
+                    unique_chunk_id = f"{document_id}_{i}"
+
+                    # ✅ Store vector as a proper float array
+                    session.run(
+                        """
+                        CREATE (c:Chunk {chunk_id: $chunk_id, document_id: $document_id, text: $text, vector: $vector})
+                        """,
+                        chunk_id=unique_chunk_id,
+                        document_id=document_id,
+                        text=chunk,
+                        vector=chunk_embeddings[
+                            i
+                        ].tolist(),  # ✅ FIXED: Now stores as an array
+                    )
+
+                    # ✅ Sequentially link chunks WITHIN the same document
+                    if i > 0:
+                        prev_chunk_id = f"{document_id}_{i - 1}"
+                        session.run(
+                            """
+                            MATCH (c1:Chunk {chunk_id: $chunk1, document_id: $document_id}),
+                                  (c2:Chunk {chunk_id: $chunk2, document_id: $document_id})
+                            CREATE (c1)-[:NEXT]->(c2)
+                            """,
+                            chunk1=prev_chunk_id,
+                            chunk2=unique_chunk_id,
+                            document_id=document_id,  # ✅ Only link within the same document
+                        )
 
         return {
-            "status": 200,
-            "message": f"Document '{file.filename}' succesfully processed and added to Neo4j.",
-            "graph_documents_count": len(graph_documents),
-            "graph_documents": graph_documents,
+            "message": f"Document '{file.filename}' processed and stored in Neo4j.",
+            "document_id": document_id,
+            "total_chunks": len(chunks),
         }
+
     except Exception as e:
+        logging.error(f"Error processing PDF: {e}")
         raise HTTPException(
-            status_code=500, detail={f"An internal error occured duing processing: {e}"}
+            status_code=500, detail=f"Internal error during processing: {e}"
         )
 
 
@@ -143,4 +182,3 @@ async def query_graph_with_cypher(request: QueryRequest):
             status_code=500,
             detail=f"An error occurred while querying the database: {e}",
         )
-        
