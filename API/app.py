@@ -380,3 +380,30 @@ async def delete_chat(chat_name: str):
     except Exception as e:
         logging.error(f"Error deleting chat history: {e}")
         raise HTTPException(status_code=500, detail="Error deleting chat history.")
+    
+@app.put("/rename_chat/{chat_name}")
+async def rename_chat(chat_name: str, new_chat_name: str = Body(..., embed=True)):
+    """
+    Renames a chat history file from `chat_name.json` to `new_chat_name.json`.
+    """
+    old_chat_file = os.path.join(CHAT_LOGS_DIR, f"{chat_name}.json")
+    new_chat_file = os.path.join(CHAT_LOGS_DIR, f"{new_chat_name}.json")
+
+    # Check if the original chat exists
+    if not os.path.exists(old_chat_file):
+        raise HTTPException(status_code=404, detail="Chat history not found.")
+
+    # Ensure the new chat name is valid
+    if not new_chat_name.strip():
+        raise HTTPException(status_code=400, detail="New chat name cannot be empty.")
+
+    # Prevent overwriting an existing chat
+    if os.path.exists(new_chat_file):
+        raise HTTPException(status_code=400, detail="A chat with the new name already exists.")
+
+    try:
+        os.rename(old_chat_file, new_chat_file)
+        return {"message": f"Chat '{chat_name}' has been renamed to '{new_chat_name}'."}
+    except Exception as e:
+        logging.error(f"Error renaming chat history: {e}")
+        raise HTTPException(status_code=500, detail="Error renaming chat history.")
