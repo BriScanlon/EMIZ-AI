@@ -70,7 +70,7 @@ os.makedirs(CHAT_LOGS_DIR, exist_ok=True)
 app = FastAPI()
 
 origins = ["*"]
-app.add_middlware(
+app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
