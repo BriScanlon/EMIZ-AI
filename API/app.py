@@ -4,6 +4,7 @@ import json
 from tempfile import NamedTemporaryFile
 from datetime import datetime
 from fastapi import FastAPI, HTTPException, File, UploadFile, Body, Query
+from fastapi.middleware.cors import CORSMiddleware
 from langchain_community.document_loaders import TextLoader
 from langchain.schema import Document
 from langchain_community.graphs import Neo4jGraph
@@ -67,6 +68,15 @@ os.makedirs(CHAT_LOGS_DIR, exist_ok=True)
 
 # initialise FastAPI
 app = FastAPI()
+
+origins = ["*"]
+app.add_middlware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Test Service running endpoint
