@@ -1,0 +1,54 @@
+// // src/components/Sidebar.scss
+// @import '../../theme/themeColors.scss';
+
+// .sidebar {
+//   width: 250px;
+//   height: 100vh;
+//   background-color: $-palette-grey-100;
+//   color: $-palette-common-black;
+//   display: flex;
+//   flex-direction: column;
+//   box-shadow: $-shadows-3;
+
+//   &__header {
+//     padding: 20px;
+//     background-color: $-palette-primary-main;
+//     color: $-palette-primary-contrastText;
+//     text-align: center;
+//     font-size: $-typography-h4-fontSize;
+//     font-weight: $-typography-h4-fontWeight;
+//   }
+
+//   &__menu {
+//     list-style: none;
+//     padding: 0;
+//     margin: 0;
+//     flex-grow: 1;
+
+//     &-item {
+//       padding: 15px 20px;
+//       cursor: pointer;
+//       display: flex;
+//       align-items: center;
+//       transition: background-color $-transitions-duration-short ms $-transitions-easing-easeInOut;
+
+//       &:hover {
+//         background-color: $-palette-grey-200;
+//       }
+
+//       &.active {
+//         background-color: $-palette-primary-light;
+//         color: $-palette-primary-main;
+//       }
+
+//       &-icon {
+//         margin-right: 10px;
+//       }
+
+//       &-text {
+//         font-size: $-typography-body1-fontSize;
+//         font-weight: $-typography-body1-fontWeight;
+//       }
+//     }
+//   }
+// }

@@ -1,0 +1,202 @@
+// .layout {
+//     display: flex;
+//     flex-direction: column;
+//     height: 100vh;
+//   }
+  
+//   .container {
+//     display: flex;
+//     flex: 1;
+//   }
+  
+//   .sidebar {
+//     width: 300px;
+//     background: #1e1e1e;
+//     color: white;
+//     padding: 20px;
+//     border-right: 1px solid rgba(255, 255, 255, 0.1);
+//   }
+  
+//   .mainContent {
+//     flex: 1;
+//     padding: 20px;
+//     display: flex;
+//     flex-direction: column;
+//   }
+  
+//   .contentWrapper {
+//     flex: 1;
+//     overflow-y: auto;
+//   }
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .container {
+    display: flex;
+    flex: 1;
+  }
+  
+  .sidebar {
+    width: 300px;
+    min-width: 300px;
+    max-width: 500px;
+    background: #1e1e1e;
+    color: white;
+    padding: 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    resize: horizontal;
+    overflow: auto;
+    height: 100vh;
+
+  }
+  
+  .sidebarResizeHandle {
+    width: 8px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: ew-resize;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition: background 0.2s ease;
+  }
+  
+  .sidebarResizeHandle:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+  
+  /* Sidebar Toggle Button */
+  .sidebarToggle {
+    position: absolute;
+    top: 10px;
+    left: -35px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s ease;
+  }
+  
+  .sidebarToggle:hover {
+    background: #1d4ed8;
+  }
+  
+  /* Main Content */
+  .mainContent {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .contentWrapper {
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  /* Button Styling */
+  .buttonGroup {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .button:hover {
+    transform: translateY(-2px);
+  }
+  
+  .graphButton {
+    background: #2563eb;
+    color: white;
+  }
+  
+  .graphButton:hover {
+    background: #1d4ed8;
+  }
+  
+  .tableButton {
+    background: #16a34a;
+    color: white;
+  }
+  
+  .tableButton:hover {
+    background: #15803d;
+  }
+  
+  .overlayButton {
+    background: #374151;
+    color: white;
+  }
+  
+  .overlayButton:hover {
+    background: #1f2937;
+  }
+  
+  /* Overlay Panel */
+  .overlay {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 350px;
+    background: rgba(30, 30, 30, 0.95);
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .overlay.open {
+    transform: translateX(0);
+  }
+  
+  .overlayHeader {
+    padding: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: #1e1e1e;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .overlayContent {
+    padding: 20px;
+    color: white;
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .overlayCloseButton {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+  }
+  
