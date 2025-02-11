@@ -1,0 +1,41 @@
+.scrollButtons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+  }
+  
+  .scrollButton {
+    background: rgba(0, 123, 255, 0.8);
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease-in-out, transform 0.2s ease;
+  
+    &:hover {
+      background: rgba(0, 123, 255, 1);
+      transform: scale(1.1);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .scrollButtons {
+      right: 10px;
+      bottom: 10px;
+    }
+    
+    .scrollButton {
+      font-size: 18px;
+      padding: 8px;
+    }
+  }
+  

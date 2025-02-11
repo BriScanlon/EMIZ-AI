@@ -1,0 +1,179 @@
+// .navbar {
+//   position: sticky;
+//   inset: 0 0 auto 0;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   height: 64px;
+//   padding: 0 1rem;
+//   background-color: white;
+//   box-shadow: var(--shadow-1);
+//   z-index: var(--zIndex-appBar);
+
+//   & .navbar__group {
+//     display: flex;
+//     align-items: center;
+//     gap: 1.5rem;
+//     height: 100%;
+
+//     & .navbar__logo-button {
+//       border: 0;
+//       padding: 0;
+//       margin: 0;
+//       height: 85%;
+//       background-color: transparent;
+//       border-radius: 4px;
+//       cursor: pointer;
+
+//       & .navbar__logo {
+//         height: 100%;
+//         fill: blue;
+//       }
+
+//       & .navbar__image {
+//         height: 100%;
+//         min-width: 100px;
+//         object-fit: contain;
+//         object-position: center;
+//       }
+
+//       &:focus-visible {
+//         outline: 2px solid blue;
+//       }
+//     }
+
+//     & .navbar__items {
+//       display: flex;
+//       align-items: center;
+//       gap: 0.5rem;
+
+//       & a {
+//         color: white;
+//       }
+//     }
+//   }
+
+//   @media screen and (min-width: 552px) {
+//     padding: 0 1.5rem;
+//   }
+
+//   @media screen and (min-width: 768px) {
+//     padding: 0 2rem;
+//   }
+// }
+
+// .navbar-popover {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0;
+//   border-radius: 6px;
+
+//   & .navbar-popover__header {
+//     display: flex;
+//     align-items: center;
+//     gap: 1.5rem;
+//     padding: 1.35rem;
+//     border-bottom: 1px solid grey;
+
+//     & .navbar-popover__user-info {
+//       & .navbar-popover__username,
+//       & .navbar-popover__email {
+//         overflow: hidden;
+//         white-space: nowrap;
+//         text-overflow: ellipsis;
+//         line-height: 1;
+//       }
+
+//       & .navbar-popover__username {
+//         font-size: 1.35rem;
+//         font-weight: 600;
+//         margin: 0 0 0.35rem;
+//         max-width: 48ch;
+//       }
+
+//       & .navbar-popover__email {
+//         font-size: 1rem;
+//         font-weight: 400;
+//         margin: 0.35rem 0 0;
+//         max-width: 56ch;
+//       }
+//     }
+//   }
+
+//   & .navbar-popover__buttons {
+//     padding: 1.15rem;
+//     border-bottom: 1px solid grey;
+
+//     & .navbar-popover__button {
+//       display: flex;
+//       align-items: center;
+//       justify-content: flex-start;
+//       border: 0;
+//       background-color: transparent;
+//       text-align: left;
+//       width: 100%;
+//       font-size: 1rem;
+//       font-weight: 600;
+//       padding: 0.4rem 0.6rem;
+//       border-radius: 4px;
+//       cursor: pointer;
+//       border: 1px solid transparent;
+//       text-decoration: none;
+//       color: black;
+
+//       & > svg {
+//         width: 1.5rem;
+//         height: 1.5rem;
+//         margin: 0 0.5rem 0 0;
+//         fill: blue;
+//       }
+
+//       & > hr {
+//         width: 0.1875rem;
+//         height: 1rem;
+//         margin: 0 0.5rem 0 0;
+//         border: 0;
+//         background-color: transparent;
+//         border-radius: 4px;
+//       }
+
+//       &:hover {
+//         background-color: lightgray;
+//         border-color: grey;
+
+//         & > hr {
+//           background-color: blue;
+//         }
+//       }
+
+//       &:active {
+//         background-color: lightgray;
+//       }
+
+//       &:focus-visible {
+//         outline: 2px solid blue;
+//       }
+//     }
+//   }
+
+//   & .navbar-popover__copyright {
+//     margin: 1.35rem 0 1.35rem 1rem;
+//     font-size: 0.875rem;
+//     font-style: italic;
+//     color: grey;
+//   }
+// }
+
+// button {
+//   padding: 10px 20px;
+//   background-color: #007bff;
+//   color: blue;
+//   border: 2px solid #0056b3; /* Add border to the button */
+//   border-radius: 5px;
+//   cursor: pointer;
+
+//   &:hover {
+//     background-color: #0056b3;
+//     color: white;
+//   }
+// }
