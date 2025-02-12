@@ -40,6 +40,8 @@ model = SentenceTransformer("all-MiniLM-L6-v2")
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
 
+
+
 # Neo4j settings
 graph_driver = Neo4jGraph(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
 
@@ -212,6 +214,7 @@ async def query_graph_with_cypher(request: QueryRequest):
         }
         save_chat_log(chat_name, query, response_data)  # Store chat log
         return response_data
+   
 
     try:
         # Placeholder query response
