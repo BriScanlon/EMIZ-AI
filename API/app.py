@@ -22,6 +22,7 @@ from neo4j import GraphDatabase
 from sentence_transformers import SentenceTransformer
 import pandas as pd
 from pydantic import BaseModel, Field
+from helpers.vector_search import vector_search
 
 # environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
@@ -217,8 +218,11 @@ async def query_graph_with_cypher(request: QueryRequest):
    
 
     try:
+        # vector
+        results = vector_search(query, top_n=5)
+        logging.info(f"Vector Search: {results}")
         # Placeholder query response
-        response = "TODO: placeholder response."
+        response = results
 
         # Structure the response correctly
         response_data = {

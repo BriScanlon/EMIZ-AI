@@ -1,15 +1,18 @@
 # helpers/vector_search.py
 
 import os
+import logging
 from sentence_transformers import SentenceTransformer
 from neo4j import GraphDatabase
 
-# Load the SentenceTransformer model.
-# You can override the model name using the SENTENCE_TRANSFORMER_MODEL environment variable.
+# Configure logging to show debug messages
+logging.basicConfig(level=logging.DEBUG)
+
+# Load SentenceTransformer model.
 MODEL_NAME = os.getenv("SENTENCE_TRANSFORMER_MODEL", "all-MiniLM-L6-v2")
 model = SentenceTransformer(MODEL_NAME)
 
-# Neo4j connection parameters (override via environment variables if needed)
+# Neo4j connection parameters
 NEO4J_URI = os.getenv("NEO4J_URI", "bolt://neo4j-db-container")
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "TestPassword")
@@ -17,59 +20,61 @@ NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "TestPassword")
 
 def fetch_similar_chunks(tx, query_embedding, top_n):
     """
-    Runs a Cypher query that computes cosine similarity between the query embedding
-    and each Chunk node's stored vector (in property `vector`).
-    Returns the top_n nodes with the highest cosine similarity.
+    Runs a Cypher query to compute cosine similarity between the query embedding
+    and each Chunk node's stored vector.
     """
     cypher_query = """
     WITH $query_embedding AS query
     MATCH (c:Chunk)
-    WHERE exists(c.vector)
-    WITH c, query,
-         // Compute dot product between the query and the node's vector.
-         reduce(dot = 0.0, i in range(0, size(query)) | dot + c.vector[i] * query[i]) AS dotProduct,
-         // Compute the L2 norm of the query vector.
-         sqrt(reduce(s = 0.0, i in range(0, size(query)) | s + query[i]*query[i])) AS normQuery,
-         // Compute the L2 norm of the node's vector.
-         sqrt(reduce(s = 0.0, i in range(0, size(c.vector)) | s + c.vector[i]*c.vector[i])) AS normChunk
-    WHERE normQuery <> 0 AND normChunk <> 0
-    WITH c, dotProduct/(normQuery*normChunk) AS cosineSimilarity
-    ORDER BY cosineSimilarity DESC
-    LIMIT $top_n
-    RETURN c, cosineSimilarity AS similarity
+    WHERE c.vector IS NOT NULL
+    CALL gds.beta.similarity.cosine({
+        vectorA: query,
+        vectorB: c.vector
+    })
+    YIELD similarity
+    RETURN c, similarity
+    ORDER BY similarity DESC
+    LIMIT $top_n;
     """
+
+    # Debug: Print the Cypher query (you may want to remove or mask this in production)
+    logging.debug("Executing Cypher Query:\n%s", cypher_query)
+
     result = tx.run(cypher_query, query_embedding=query_embedding, top_n=top_n)
     results = []
     for record in result:
         node = record["c"]
         similarity = record["similarity"]
-        results.append({
-            "id": node.id,
-            "properties": dict(node),
-            "similarity": similarity
-        })
+        results.append(
+            {"id": node.id, "properties": dict(node), "similarity": similarity}
+        )
+
+    # Debug: Log the response from the database
+    logging.debug("Database response: %s", results)
+
     return results
 
 
 def vector_search(query: str, top_n: int = 5):
     """
-    Given a text query, compute its embedding and retrieve the top_n similar chunks from Neo4j.
-    
-    Args:
-        query (str): The input text query.
-        top_n (int): The number of similar chunks to return.
-    
-    Returns:
-        list: A list of dictionaries, each containing node information and a similarity score.
+    Computes the embedding for the provided query and retrieves the top_n similar chunks from Neo4j.
     """
+    # Debug: Log the received query.
+    logging.debug("Received query: %s", query)
+
     # Compute the embedding for the query text.
     query_embedding = model.encode(query).tolist()
+
+    # Debug: Log the embedding values.
+    logging.debug("Computed query embedding: %s", query_embedding)
 
     # Initialize the Neo4j driver.
     driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
     try:
         with driver.session() as session:
-            results = session.read_transaction(fetch_similar_chunks, query_embedding, top_n)
+            results = session.read_transaction(
+                fetch_similar_chunks, query_embedding, top_n
+            )
         return results
     finally:
         driver.close()

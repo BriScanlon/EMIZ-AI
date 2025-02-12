@@ -26,4 +26,4 @@ WORKDIR /app
 EXPOSE 3000
 
 # Entry point for the container
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "3000", "--log-level", "debug"]
