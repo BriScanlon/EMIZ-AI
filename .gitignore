@@ -7,3 +7,4 @@ package-lock.json
 ollama/
 API/helpers/__pycache__/
 ollama_models/
+API/ChatLogs/*
