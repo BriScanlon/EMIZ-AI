@@ -1,0 +1,29 @@
+{
+    "nodes": [
+      { "id": "1", "name": "Engineering", "category": 0 },
+      { "id": "2", "name": "Aerospace", "category": 1 },
+      { "id": "3", "name": "AI Research", "category": 1 },
+      { "id": "4", "name": "Software", "category": 2 },
+      { "id": "5", "name": "Physics", "category": 2 },
+      { "id": "6", "name": "Quantum Computing", "category": 2 },
+      { "id": "7", "name": "Data Science", "category": 3 },
+      { "id": "8", "name": "Machine Learning", "category": 3 }
+    ],
+    "links": [
+      { "source": "1", "target": "2" },
+      { "source": "1", "target": "3" },
+      { "source": "3", "target": "4" },
+      { "source": "3", "target": "5" },
+      { "source": "5", "target": "6" },
+      { "source": "4", "target": "7" },
+      { "source": "7", "target": "8" },
+      { "source": "8", "target": "6" }
+    ],
+    "categories": [
+      { "name": "General Engineering" },
+      { "name": "Advanced Tech" },
+      { "name": "Computing" },
+      { "name": "AI & Data" }
+    ]
+  }
+  

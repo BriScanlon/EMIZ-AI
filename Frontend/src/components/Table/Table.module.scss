@@ -1,0 +1,65 @@
+// /* src/components/Table/Table.scss */
+
+// table {
+//   width: 100%;
+//   border-collapse: collapse;
+//   margin: 20px 0;
+// }
+
+// table, th, td {
+//   border: 1px solid black;
+// }
+
+// th, td {
+//   padding: 8px;
+//   text-align: left;
+// }
+
+// th {
+//   background-color: #f2f2f2;
+// }
+
+// div {
+//   width: 100%;
+//   overflow-x: auto;
+// }
+
+.tableContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers everything horizontally */
+  }
+  
+  .heading {
+    width: 80vw;
+    text-align: left; /* Aligns the text to the left */
+    margin: 20px auto 10px auto; /* Centers the <h2> and adds spacing */
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .table {
+    width: 80vw; /* Same width as the <h2> */
+    margin: 0 auto; /* Centers the table */
+    border-collapse: collapse;
+    font-size: 16px;
+    text-align: left;
+  }
+  
+  .th, .td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .th {
+    background-color: #f4f4f4;
+  }
+  
+  .tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .tr:hover {
+    background-color: #f1f1f1;
+  }
+  
