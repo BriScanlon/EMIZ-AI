@@ -27,7 +27,7 @@ def fetch_similar_chunks(tx, query_embedding, top_n):
     WITH $query_embedding AS query
     MATCH (c:Chunk)
     WHERE c.vector IS NOT NULL
-    CALL gds.beta.similarity.cosine({
+    CALL gds.similarity.overlap({
         vectorA: query,
         vectorB: c.vector
     })
