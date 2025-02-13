@@ -1,5 +1,6 @@
 import os
 import subprocess
+import asyncio
 import json
 from tempfile import NamedTemporaryFile
 from datetime import datetime
@@ -136,10 +137,7 @@ async def post_documents(file: UploadFile = File(...)):
         ) as driver:
             with driver.session() as session:
                 for i, chunk in enumerate(chunks):
-                    # ✅ Unique chunk ID using document_id + chunk_id
                     unique_chunk_id = f"{document_id}_{i}"
-
-                    # ✅ Store vector as a proper float array
                     session.run(
                         """
                         CREATE (c:Chunk {chunk_id: $chunk_id, document_id: $document_id, text: $text, vector: $vector})
@@ -149,10 +147,9 @@ async def post_documents(file: UploadFile = File(...)):
                         text=chunk,
                         vector=chunk_embeddings[
                             i
-                        ].tolist(),  # ✅ FIXED: Now stores as an array
+                        ].tolist(),
                     )
-
-                    # ✅ Sequentially link chunks WITHIN the same document
+                    
                     if i > 0:
                         prev_chunk_id = f"{document_id}_{i - 1}"
                         session.run(
@@ -163,7 +160,7 @@ async def post_documents(file: UploadFile = File(...)):
                             """,
                             chunk1=prev_chunk_id,
                             chunk2=unique_chunk_id,
-                            document_id=document_id,  # ✅ Only link within the same document
+                            document_id=document_id,
                         )
 
         return {
@@ -218,11 +215,27 @@ async def query_graph_with_cypher(request: QueryRequest):
    
 
     try:
-        # vector
+        # Perform vector search
         results = vector_search(query, top_n=5)
-        logging.info(f"Vector Search: {results}")
-        # Placeholder query response
-        response = results
+
+        # Ensure results is a list of dictionaries
+        if not isinstance(results, list):
+            raise ValueError("Unexpected results format, expected a list of dictionaries.")
+
+        neo4j_response = []
+        
+        for result in results:
+            # for each result get the text value of property
+            text = result.get("properties").get("text")
+            # get the text value of the property
+            if text:
+                # append text to neo4j_response
+                neo4j_response.append(text)
+
+        #send the response to ollama llm with the original query
+        response = llm.invoke(f"{query}, {neo4j_response}", max_tokens=2000, temperature=0.0)
+
+        logging.info(f"Neo4j Response: {json.dumps(neo4j_response)}")
 
         # Structure the response correctly
         response_data = {
@@ -230,17 +243,17 @@ async def query_graph_with_cypher(request: QueryRequest):
             "query": query,
             "chat_name": chat_name,
             "system_prompt": system_prompt,
-            "results": [
-                {
-                    "message": response 
-                }
-            ]
+            "results": [{"message": response}],
         }
 
-        # Save chat history in the correct format
+        # Save chat history
         save_chat_log(chat_name, query, response_data)
 
         return response_data
+
+    except ValueError as ve:
+        logging.error(f"Data format error: {ve}")
+        raise HTTPException(status_code=500, detail=f"Data format error: {ve}")
 
     except Exception as e:
         logging.error(f"Error querying Neo4j with GraphCypherQAChain: {e}")
@@ -248,6 +261,7 @@ async def query_graph_with_cypher(request: QueryRequest):
             status_code=500,
             detail=f"An error occurred while querying the database: {e}",
         )
+
 
 def canned_response():
     nodes = [

@@ -73,7 +73,7 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     ports:
-    - "5173:5173"
+    - "${FRONTEND_I}:${FRONTEND_E}"
     restart: unless-stopped
     depends_on:
     - api-service
