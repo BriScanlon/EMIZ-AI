@@ -42,7 +42,7 @@ const PdfUpload = () => {
     const formData = new FormData();
     formData.append("file", file);
     
-    fetch("/upload", {
+    fetch("http://localhost:8085/documents", {
       method: "POST",
       body: formData,
     })
