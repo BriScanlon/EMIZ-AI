@@ -1,6 +1,7 @@
 import os
 import subprocess
 import json
+import requests
 from tempfile import NamedTemporaryFile
 from datetime import datetime
 from fastapi import FastAPI, HTTPException, File, UploadFile, Body, Query
@@ -22,17 +23,21 @@ from neo4j import GraphDatabase
 from sentence_transformers import SentenceTransformer
 import pandas as pd
 from pydantic import BaseModel, Field
+from neo4j_prompt import neo4j_prompt, text_prompt
 
 # environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
-NEO4J_PASSWORD = "TestPassword"
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "TestPassword")
 
 # ollama settings
 llm_model="phi4"
 llm_port = os.getenv("OLLAMA_PORT_I", "11434")
 llm = OllamaLLM(base_url="http://ollama-container:{}".format(llm_port), model=llm_model, temperature=0)
 llm_transformer = LLMGraphTransformer(llm=llm)
+
+llm_current_chat_name = None
+llm_current_chat_history = None
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
@@ -215,8 +220,20 @@ async def query_graph_with_cypher(request: QueryRequest):
 
     try:
         # Placeholder query response
-        response = "TODO: placeholder response."
-
+        
+        # Take query and send to llm to generate neo4j query string
+        #qeury---->neo4j query string
+        # neo4j_query = get_neo4j_query()
+        
+        graph_data = get_graph_data(neo4j_query)
+        
+        
+        #db_data = get_graph_data(neo4j query string);
+        
+        text_response = "Do something to query the llm"
+        #to llm->>>>>  db_data + query + systemp prompt + user message
+        
+        
         # Structure the response correctly
         response_data = {
             "status": 200,
@@ -225,7 +242,8 @@ async def query_graph_with_cypher(request: QueryRequest):
             "system_prompt": system_prompt,
             "results": [
                 {
-                    "message": response 
+                    "message": text_response,
+                    "graph": graph_data
                 }
             ]
         }
@@ -241,6 +259,24 @@ async def query_graph_with_cypher(request: QueryRequest):
             status_code=500,
             detail=f"An error occurred while querying the database: {e}",
         )
+
+def query_llm_final_response(query, chatname):
+    #take query thats a message
+    # create a payload that contains all the chat history
+    return "text response from llm"
+
+def get_neo4j_query():
+    # sends a query to the llm and get s a no4j query back.
+    # Checks if query is valid with test function
+    # Checks if query is valud with llm query
+    # returns the neo4j query string.
+    return "Placeholder for node graph"
+
+def get_graph_data(database_query):
+    # call database
+    # This is a placeholder, someone else is implementing this
+    # return a node graph. (json formatted)
+    pass
 
 def canned_response():
     nodes = [
@@ -295,31 +331,44 @@ def canned_response():
     return responses
 
 def save_chat_log(chat_name: str, query: str, response: dict):
-    """Append a structured entry to the chat log file, maintaining history."""
+    """Append a structured entry to the chat log file, maintaining in-memory history."""
+    global llm_current_chat_name, llm_current_chat_history
+
     chat_file = os.path.join(CHAT_LOGS_DIR, f"{chat_name}.json")
 
-    # Create the structured log entry
+    # If switching to a new chat, reset and load from file
+    if llm_current_chat_name != chat_name:
+        llm_current_chat_name = chat_name
+        llm_current_chat_history = []
+
+        # Load previous chat history if the file exists
+        if os.path.exists(chat_file):
+            with open(chat_file, "r", encoding="utf-8") as file:
+                try:
+                    chat_data = json.load(file)
+                    if isinstance(chat_data, list):  # Ensure valid structure
+                        llm_current_chat_history = chat_data
+                except json.JSONDecodeError:
+                    llm_current_chat_history = []  # Reset on corruption
+
+    # Create structured log entry
     log_entry = {
         "timestamp": datetime.utcnow().isoformat() + "Z",
-        "response": response
+        "query": query,  # User input
+        "response": response  # LLM response
     }
 
-    # Load existing chat history if it exists
-    if os.path.exists(chat_file):
-        with open(chat_file, "r", encoding="utf-8") as file:
-            try:
-                chat_history = json.load(file)
-                if not isinstance(chat_history, list):  # Safety check
-                    chat_history = []
-            except json.JSONDecodeError:
-                chat_history = []  # If file is corrupted, start fresh
-    else:
-        chat_history = []
+    # Append new entry to in-memory history
+    llm_current_chat_history.append(log_entry)
 
-    # Append new entry and save
-    chat_history.append(log_entry)
+    # Ensure chat logs directory exists
+    os.makedirs(CHAT_LOGS_DIR, exist_ok=True)
+
+    # Save updated history to file
     with open(chat_file, "w", encoding="utf-8") as file:
-        json.dump(chat_history, file, indent=4)
+        json.dump(llm_current_chat_history, file, indent=4)
+
+    print(f"Chat log updated for '{chat_name}'.")
 
 @app.get("/chats")
 async def get_chats():
