@@ -1,5 +1,6 @@
 import os
 import subprocess
+import asyncio
 import json
 import requests
 from tempfile import NamedTemporaryFile
@@ -23,6 +24,7 @@ from neo4j import GraphDatabase
 from sentence_transformers import SentenceTransformer
 import pandas as pd
 from pydantic import BaseModel, Field
+from helpers.vector_search import vector_search
 from neo4j_prompt import neo4j_prompt, text_prompt
 
 # environment settings
@@ -44,6 +46,8 @@ model = SentenceTransformer("all-MiniLM-L6-v2")
 # chunk settings
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
+
+
 
 # Neo4j settings
 graph_driver = Neo4jGraph(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
@@ -138,10 +142,7 @@ async def post_documents(file: UploadFile = File(...)):
         ) as driver:
             with driver.session() as session:
                 for i, chunk in enumerate(chunks):
-                    # ✅ Unique chunk ID using document_id + chunk_id
                     unique_chunk_id = f"{document_id}_{i}"
-
-                    # ✅ Store vector as a proper float array
                     session.run(
                         """
                         CREATE (c:Chunk {chunk_id: $chunk_id, document_id: $document_id, text: $text, vector: $vector})
@@ -151,10 +152,9 @@ async def post_documents(file: UploadFile = File(...)):
                         text=chunk,
                         vector=chunk_embeddings[
                             i
-                        ].tolist(),  # ✅ FIXED: Now stores as an array
+                        ].tolist(),
                     )
-
-                    # ✅ Sequentially link chunks WITHIN the same document
+                    
                     if i > 0:
                         prev_chunk_id = f"{document_id}_{i - 1}"
                         session.run(
@@ -165,7 +165,7 @@ async def post_documents(file: UploadFile = File(...)):
                             """,
                             chunk1=prev_chunk_id,
                             chunk2=unique_chunk_id,
-                            document_id=document_id,  # ✅ Only link within the same document
+                            document_id=document_id,
                         )
 
         return {
@@ -203,7 +203,63 @@ async def query_graph_with_cypher(request: QueryRequest):
 
     # Use default system prompt if empty
     if not system_prompt or system_prompt.strip() == "":
-        system_prompt = "You are a helpful AI assistant."
+        system_prompt = """**Objective:** Analyze the provided engineering text and categorize significant engineering concepts into four groups: Component, Failure Mode, Root Cause, and Mitigation. Each concept should be represented as a unique node, and nodes should be logically linked to illustrate the relationships between components, failure modes, root causes, and mitigations.
+
+  ### Instructions
+  
+  1. **Initialize the Node Structure:**
+     - Start by creating the "System" node as the root of your Component hierarchy.
+     - For each component mentioned in the text, create a unique node under the 'Component' category. These nodes should be linked directly or indirectly to the 'System' node to maintain a clear component hierarchy.
+  
+  2. **Create and Connect Failure Mode Nodes:**
+     - Identify all failure modes described in the text. Create a unique node for each failure mode under the 'Failure Mode' category.
+     - Connect each failure mode node to its corresponding component node(s) based on the text descriptions. If a failure mode affects multiple components, ensure there is a link from each relevant component node to the failure mode node.
+  
+  3. **Identify and Link Root Causes:**
+     - For each root cause mentioned, create a node under the 'Root Cause' category.
+     - Link all relevant failure mode nodes to their respective root cause nodes, demonstrating which failure modes are associated with which root causes.
+  
+  4. **Detail Mitigations and Recommendations:**
+     - Create nodes for all mitigations and any engineering recommendations under the 'Mitigation' category.
+     - Connect these mitigation nodes to the root cause nodes they address. If specific failure modes are directly alleviated or addressed by particular mitigations, also link these mitigations to the respective failure mode nodes.
+  
+  5. **Ensure Full Connectivity:**
+     - Verify that the graph maintains the hierarchy: Component -> Failure Mode -> Root Cause -> Mitigation. There should be no isolated nodes, and apart from the initial 'System' node, every node should have at least one incoming link.
+     - Ensure that the failure mode or root cause is accurately linked to the component node as per the text. It shouldn't usually be linked to the system node.
+  
+  6. **Handle Variations and Commonalities:**
+     - If the text indicates variations in how failure modes or root causes present under different circumstances (e.g., based on environmental factors or operating conditions), ensure these variations are captured as separate nodes with appropriate links to illustrate their relationships.
+  
+  7. **Finalize the Graph Structure:**
+     - Review the graph to ensure it accurately represents all described engineering aspects and that the structure provides a clear and comprehensive view of the relationships from component to mitigation.
+  
+  ### Expected JSON Structure
+  
+  The graph should be summarized in the following JSON format, showing nodes, links, and categories, do not return any other data than the JSON object:
+  
+  json
+  {
+    "nodes": [
+      {"id": "0", "name": "System", "category": 0},
+      {"id": "1", "name": "example component", "category": 0},
+      {"id": "2", "name": "example failure mode", "category": 1},
+      {"id": "3", "name": "example root cause", "category": 2},
+      {"id": "4", "name": "example mitigation", "category": 3}
+    ],
+    "links": [
+      {"source": "0", "target": "1"},
+      {"source": "1", "target": "2"},
+      {"source": "2", "target": "3"},
+      {"source": "3", "target": "4"}
+    ],
+    "categories": [
+      {"id": "0", "name": "Component"},
+      {"id": "1", "name": "Failure Mode"},
+      {"id": "2", "name": "Root Cause"},
+      {"id": "3", "name": "Mitigation"}
+    ]
+  }
+  """
 
     # Debug mode: Return canned response
     if debug_test:
@@ -217,23 +273,31 @@ async def query_graph_with_cypher(request: QueryRequest):
         }
         save_chat_log(chat_name, query, response_data)  # Store chat log
         return response_data
+   
 
     try:
-        # Placeholder query response
+        # Perform vector search
+        results = vector_search(query, top_n=5)
+
+        # Ensure results is a list of dictionaries
+        if not isinstance(results, list):
+            raise ValueError("Unexpected results format, expected a list of dictionaries.")
+
+        neo4j_response = []
         
-        # Take query and send to llm to generate neo4j query string
-        #qeury---->neo4j query string
-        # neo4j_query = get_neo4j_query()
-        
-        graph_data = get_graph_data(neo4j_query)
-        
-        
-        #db_data = get_graph_data(neo4j query string);
-        
-        text_response = "Do something to query the llm"
-        #to llm->>>>>  db_data + query + systemp prompt + user message
-        
-        
+        for result in results:
+            # for each result get the text value of property
+            text = result.get("properties").get("text")
+            # get the text value of the property
+            if text:
+                # append text to neo4j_response
+                neo4j_response.append(text)
+
+        #send the response to ollama llm with the original query
+        response = llm.invoke(f"{query}, {neo4j_response}", max_tokens=16000, temperature=0.0)
+
+        logging.info(f"Neo4j Response: {json.dumps(neo4j_response)}")
+
         # Structure the response correctly
         response_data = {
             "status": 200,
@@ -242,16 +306,19 @@ async def query_graph_with_cypher(request: QueryRequest):
             "system_prompt": system_prompt,
             "results": [
                 {
-                    "message": text_response,
-                    "graph": graph_data
+                    "message": response 
                 }
             ]
         }
 
-        # Save chat history in the correct format
+        # Save chat history
         save_chat_log(chat_name, query, response_data)
 
         return response_data
+
+    except ValueError as ve:
+        logging.error(f"Data format error: {ve}")
+        raise HTTPException(status_code=500, detail=f"Data format error: {ve}")
 
     except Exception as e:
         logging.error(f"Error querying Neo4j with GraphCypherQAChain: {e}")

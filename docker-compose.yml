@@ -66,11 +66,11 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./Frontend
       dockerfile: Dockerfile
     container_name: frontend
     ports:
-    - "5173:5173"
+    - "${FRONTEND_I:-5173}:${FRONTEND_E:-5173}"
     restart: unless-stopped
     depends_on:
     - api-service
