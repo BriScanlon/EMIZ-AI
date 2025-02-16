@@ -41,24 +41,23 @@ def save_file(contents, file_name, file_location=DEFAULT_FILE_LOCATION):
 def load_file(file_name, file_location=DEFAULT_FILE_LOCATION):
     """
     Loads contents from a file.
-    
-    :param file_name: Name of the file (including extension)
-    :param file_location: Directory where the file is stored
-    :return: File contents as dict, list, or string
+    Returns a dictionary, list, or string, depending on file type.
+    Ensures a valid return type to prevent 'NoneType' errors.
     """
     file_path = os.path.join(file_location, file_name)
 
     if not os.path.exists(file_path):
-        logging.warning(f"File {file_path} not found.")
-        return None  # Return None if file doesn't exist
+        logging.warning(f"⚠️ File {file_path} not found.")
+        return []  # Always return a valid type
 
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             try:
-                return json.load(file)  # Return as dict/list
+                data = json.load(file)
+                return data if isinstance(data, (dict, list)) else []
             except json.JSONDecodeError:
-                return file.read().strip()  # Return text if not JSON
+                return file.read().strip() or ""  # Ensure text files return a string
 
     except Exception as e:
-        logging.error(f"Error loading file {file_path}: {e}")
-        return None  # Return None on failure
+        logging.error(f"❌ Error loading file {file_path}: {e}")
+        return []  # Always return an empty list if file load fails

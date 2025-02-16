@@ -327,33 +327,51 @@ def query_llm(user_query, neo4j_response, system_prompt=TEXT_SYSTEM_PROMPT, chat
 
     # Process chat history (latest messages first)
     for entry in reversed(llm_current_chat_history):
-        user_message = {"role": "user", "content": entry['query']}
-        assistant_message = {"role": "assistant", "content": entry['response']['results'][0]['message']}
+        user_message = {"role": "user", "content": entry["query"]}
+        assistant_messages = entry.get("results", [])
 
-        estimated_tokens = len(user_message["content"].split()) + len(assistant_message["content"].split())
+        # Compute token count for user message
+        user_message_tokens = len(user_message["content"].split())
+
+        # Ensure there's an assistant response
+        if assistant_messages:
+            assistant_message = {"role": "assistant", "content": assistant_messages[0].get("message", "")}
+            assistant_message_tokens = len(assistant_message["content"].split())
+        else:
+            logging.warning(f"❌ No response message found for: {entry['query']}")
+            continue  # Skip adding this entry if there's no response
+
+        # Check if adding both messages exceeds max token limit
+        estimated_tokens = user_message_tokens + assistant_message_tokens
 
         if token_count + estimated_tokens < max_tokens:
             message_history.append(user_message)
             message_history.append(assistant_message)
             token_count += estimated_tokens
-            messages_added += 2  # Count both user and assistant messages
-            logging.info(f"✅ Added to chat history: User({len(user_message['content'].split())} tokens), Assistant({len(assistant_message['content'].split())} tokens)")
+            messages_added += 2
+            logging.info(f"✅ Added: User({user_message_tokens} tokens), Assistant({assistant_message_tokens} tokens), Total({token_count}/{max_tokens})")
         else:
-            logging.warning(f"❌ Skipping message due to token limit: User({len(user_message['content'].split())} tokens), Assistant({len(assistant_message['content'].split())} tokens)")
+            logging.warning(f"❌ Skipping due to token limit: User({user_message_tokens} tokens), Assistant({assistant_message_tokens} tokens), Total({token_count}/{max_tokens})")
             break  # Stop adding history if token limit is reached
 
-    logging.info(f"🔹 Total messages included in history: {messages_added}")
+    logging.info(f"🔹 Total messages included: {messages_added}")
 
-    # Format and append the current query
+    # Append current user query and Neo4j response
     user_query_entry = {"role": "user", "content": user_query}
-    if token_count + len(user_query.split()) < max_tokens:
+    user_query_tokens = len(user_query.split())
+
+    if token_count + user_query_tokens < max_tokens:
         message_history.append(user_query_entry)
+        token_count += user_query_tokens
 
     # If Neo4j response exists, include it as "assistant" message
     if neo4j_response:
         neo4j_entry = {"role": "assistant", "content": json.dumps(neo4j_response, indent=2)}
-        if token_count + len(json.dumps(neo4j_response).split()) < max_tokens:
+        neo4j_tokens = len(json.dumps(neo4j_response).split())
+
+        if token_count + neo4j_tokens < max_tokens:
             message_history.append(neo4j_entry)
+            token_count += neo4j_tokens
 
     # Print structured conversation history for debugging
     print("\n" + "=" * 50)
@@ -365,7 +383,6 @@ def query_llm(user_query, neo4j_response, system_prompt=TEXT_SYSTEM_PROMPT, chat
     # Call LLM with full conversation history in structured JSON format
     return llm_text_response.invoke(json.dumps(message_history), max_tokens=max_tokens)
 
-
 def save_chat_log(chat_name: str, query: str, response: dict):
     """
     Append a structured entry to the chat log file, maintaining in-memory history.
@@ -375,11 +392,11 @@ def save_chat_log(chat_name: str, query: str, response: dict):
 
     chat_file = load_chat_history(chat_name)
 
-    # Create structured log entry
+    # Create structured log entry (removing unnecessary fields)
     log_entry = {
         "timestamp": datetime.utcnow().isoformat() + "Z",
         "query": query,  # User input
-        "response": response  # LLM response
+        "results": response.get("results", [])  # Extract only the results, keeping the format
     }
 
     # Append new entry to in-memory history
@@ -388,7 +405,8 @@ def save_chat_log(chat_name: str, query: str, response: dict):
     # Save updated history to file
     save_file(llm_current_chat_history, chat_file, CHAT_LOGS_DIR)
 
-    logging.info(f"Chat log updated for '{chat_name}'.")
+    logging.info(f"✅ Chat log updated for '{chat_name}' with new entry.")
+
 
 def load_chat_history(chat_name):
     global llm_current_chat_name, llm_current_chat_history
@@ -422,37 +440,24 @@ async def get_chats():
 async def get_chat_history(chat_name: str):
     """
     Retrieves chat history for a given chat name.
-    Returns only the results from each response in an array.
+    Returns only the relevant `results` section.
     """
-    chat_file = os.path.join(CHAT_LOGS_DIR, f"{chat_name}.json")
-
-    # Check if chat history exists
-    if not os.path.exists(chat_file):
-        raise HTTPException(status_code=404, detail="Chat history not found.")
+    chat_file = f"{chat_name}.json"  # Only store the filename
 
     try:
         # Load chat history
-        with open(chat_file, "r", encoding="utf-8") as file:
-            chat_history = json.load(file)
+        chat_history = load_file(chat_file, CHAT_LOGS_DIR)
 
         # Extract responses sorted by timestamp
         sorted_responses = sorted(chat_history, key=lambda x: x["timestamp"], reverse=True)
 
-
-        # Prepare response format with only `response["results"]`
-        formatted_history = {
-            "status": 200,
-            "chat_name": chat_name,
-            "results": [result for entry in sorted_responses for result in entry["response"]["results"]]
-        }
-
-        return formatted_history
+        return {"status": 200, "chat_name": chat_name, "chat_history": sorted_responses}
 
     except json.JSONDecodeError:
-        logging.error(f"Chat history JSON is corrupted: {chat_name}")
+        logging.error(f"❌ Chat history JSON is corrupted: {chat_name}")
         raise HTTPException(status_code=500, detail="Chat history file is corrupted.")
     except Exception as e:
-        logging.error(f"Error retrieving chat history: {e}")
+        logging.error(f"❌ Error retrieving chat history: {e}")
         raise HTTPException(status_code=500, detail="Error retrieving chat history.")
 
 @app.delete("/chat/{chat_name}")
