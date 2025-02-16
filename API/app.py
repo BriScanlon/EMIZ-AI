@@ -25,7 +25,8 @@ from sentence_transformers import SentenceTransformer
 import pandas as pd
 from pydantic import BaseModel, Field
 from helpers.vector_search import vector_search
-from neo4j_prompt import neo4j_prompt, text_prompt
+from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT
+from llmconfig.canned_response import canned_response
 
 # environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
@@ -61,6 +62,7 @@ class QueryRequest(BaseModel):
     system_prompt: str = Field(None, description = "System prompt to use, overrides the default one.")
     chat_name: str = Field(None, description = "Chat session identifier.")
     debug_test: bool = Field(False, description = "If you set this to true making a request you will get a canned response back")
+    verbose: bool  = Field(False, description = "If set to true this will include some additional debugging information not required to function, such as the system prompt.")
 
 # Cypher query connector
 cypher_chain = GraphCypherQAChain.from_llm(
@@ -187,8 +189,11 @@ async def query_graph_with_cypher(request: QueryRequest):
     """
     query = request.query
     chat_name = request.chat_name
+    
+    # Optional field, usualyl should not be letting the user specify the system prompt.
     system_prompt = request.system_prompt
     debug_test = request.debug_test
+    verbose = request.verbose
 
     # Check for empty query
     if not query or query.strip() == "":
@@ -203,75 +208,23 @@ async def query_graph_with_cypher(request: QueryRequest):
 
     # Use default system prompt if empty
     if not system_prompt or system_prompt.strip() == "":
-        system_prompt = """**Objective:** Analyze the provided engineering text and categorize significant engineering concepts into four groups: Component, Failure Mode, Root Cause, and Mitigation. Each concept should be represented as a unique node, and nodes should be logically linked to illustrate the relationships between components, failure modes, root causes, and mitigations.
-
-  ### Instructions
-  
-  1. **Initialize the Node Structure:**
-     - Start by creating the "System" node as the root of your Component hierarchy.
-     - For each component mentioned in the text, create a unique node under the 'Component' category. These nodes should be linked directly or indirectly to the 'System' node to maintain a clear component hierarchy.
-  
-  2. **Create and Connect Failure Mode Nodes:**
-     - Identify all failure modes described in the text. Create a unique node for each failure mode under the 'Failure Mode' category.
-     - Connect each failure mode node to its corresponding component node(s) based on the text descriptions. If a failure mode affects multiple components, ensure there is a link from each relevant component node to the failure mode node.
-  
-  3. **Identify and Link Root Causes:**
-     - For each root cause mentioned, create a node under the 'Root Cause' category.
-     - Link all relevant failure mode nodes to their respective root cause nodes, demonstrating which failure modes are associated with which root causes.
-  
-  4. **Detail Mitigations and Recommendations:**
-     - Create nodes for all mitigations and any engineering recommendations under the 'Mitigation' category.
-     - Connect these mitigation nodes to the root cause nodes they address. If specific failure modes are directly alleviated or addressed by particular mitigations, also link these mitigations to the respective failure mode nodes.
-  
-  5. **Ensure Full Connectivity:**
-     - Verify that the graph maintains the hierarchy: Component -> Failure Mode -> Root Cause -> Mitigation. There should be no isolated nodes, and apart from the initial 'System' node, every node should have at least one incoming link.
-     - Ensure that the failure mode or root cause is accurately linked to the component node as per the text. It shouldn't usually be linked to the system node.
-  
-  6. **Handle Variations and Commonalities:**
-     - If the text indicates variations in how failure modes or root causes present under different circumstances (e.g., based on environmental factors or operating conditions), ensure these variations are captured as separate nodes with appropriate links to illustrate their relationships.
-  
-  7. **Finalize the Graph Structure:**
-     - Review the graph to ensure it accurately represents all described engineering aspects and that the structure provides a clear and comprehensive view of the relationships from component to mitigation.
-  
-  ### Expected JSON Structure
-  
-  The graph should be summarized in the following JSON format, showing nodes, links, and categories, do not return any other data than the JSON object:
-  
-  json
-  {
-    "nodes": [
-      {"id": "0", "name": "System", "category": 0},
-      {"id": "1", "name": "example component", "category": 0},
-      {"id": "2", "name": "example failure mode", "category": 1},
-      {"id": "3", "name": "example root cause", "category": 2},
-      {"id": "4", "name": "example mitigation", "category": 3}
-    ],
-    "links": [
-      {"source": "0", "target": "1"},
-      {"source": "1", "target": "2"},
-      {"source": "2", "target": "3"},
-      {"source": "3", "target": "4"}
-    ],
-    "categories": [
-      {"id": "0", "name": "Component"},
-      {"id": "1", "name": "Failure Mode"},
-      {"id": "2", "name": "Root Cause"},
-      {"id": "3", "name": "Mitigation"}
-    ]
-  }
-  """
+        system_prompt = TEXT_SYSTEM_PROMPT
 
     # Debug mode: Return canned response
     if debug_test:
         logging.info("Debug test enabled, returning canned response.")
-        response_data = {
-            "status": 200,
-            "query": query,
-            "chat_name": "Canned response",
-            "system_prompt": system_prompt,
-            "results": canned_response()
-        }
-        save_chat_log(chat_name, query, response_data)  # Store chat log
+        
+        response_data = {}  # Initialize an empty dictionary
+
+        # Add properties incrementally
+        response_data["status"] = 200
+        response_data["query"] = query
+        response_data["chat_name"] = "Canned response"
+        if verbose: response_data["system_prompt"] = system_prompt
+        response_data["results"] = canned_response()
+
+        # Save and return
+        save_chat_log(chat_name, query, response_data)
         return response_data
    
 
@@ -327,11 +280,6 @@ async def query_graph_with_cypher(request: QueryRequest):
             detail=f"An error occurred while querying the database: {e}",
         )
 
-def query_llm_final_response(query, chatname):
-    #take query thats a message
-    # create a payload that contains all the chat history
-    return "text response from llm"
-
 def get_neo4j_query():
     # sends a query to the llm and get s a no4j query back.
     # Checks if query is valid with test function
@@ -345,57 +293,6 @@ def get_graph_data(database_query):
     # return a node graph. (json formatted)
     pass
 
-def canned_response():
-    nodes = [
-        {"id": "1", "name": "DHC-8-402 Dash 8, G-JEDI", "category": "Aircraft"},
-        {"id": "2", "name": "AC Electrical System", "category": "System"},
-        {"id": "3", "name": "Wiring Loom", "category": "Component"},
-        {"id": "4", "name": "Chafing due to blind rivet", "category": "FailureMode"},
-        {"id": "5", "name": "AC bus and generator warnings", "category": "Symptom"},
-        {"id": "6", "name": "Replace blind rivets with solid rivets", "category": "Resolution"},
-        {"id": "7", "name": "Incident: AC System Failure", "category": "Incident"},
-    ]
-    links = [
-        {"source": "1", "target": "7", "label": "OCCURRED_ON"},
-        {"source": "2", "target": "3", "label": "PART_OF"},
-        {"source": "4", "target": "2", "label": "AFFECTS"},
-        {"source": "4", "target": "5", "label": "LEADS_TO"},
-        {"source": "4", "target": "6", "label": "RESOLVED_BY"},
-    ]
-    categories = [
-        {"name": "Aircraft"},
-        {"name": "System"},
-        {"name": "Component"},
-        {"name": "FailureMode"},
-        {"name": "Symptom"},
-        {"name": "Resolution"},
-        {"name": "Incident"},
-    ]
-
-    messages = [
-        "Hello! I'm a friendly AI, here's a node graph for you.",
-        "Hey! This message has no graph, just checking in!",
-        "Here’s another graph! Let me know what you think.",
-        "Hope you're enjoying this! No graph this time.",
-        "Here's a final graph to wrap things up!"
-    ]
-
-    responses = []
-
-    for i, msg in enumerate(messages):
-        response = {"message": msg}
-        
-        # Only add a graph if `i` is even
-        if i % 2 == 0:
-            response["graph"] = {
-                "nodes": nodes,
-                "links": links,
-                "categories": categories,
-            }
-        
-        responses.append(response)
-
-    return responses
 
 def save_chat_log(chat_name: str, query: str, response: dict):
     """Append a structured entry to the chat log file, maintaining in-memory history."""
