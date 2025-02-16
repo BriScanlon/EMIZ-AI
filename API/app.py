@@ -210,7 +210,7 @@ async def query_graph_with_cypher(request: QueryRequest):
         logging.info(f"Chat name is empty, generating new one: {chat_name}")
 
     # Use default system prompt if empty
-    if not system_prompt or system_prompt.strip() == "":
+    if not isinstance(system_prompt, str) or not system_prompt.strip():
         system_prompt = TEXT_SYSTEM_PROMPT
 
     # Debug mode: Return canned response
