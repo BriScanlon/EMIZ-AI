@@ -194,6 +194,9 @@ async def query_graph_with_cypher(request: QueryRequest):
     system_prompt = request.system_prompt
     debug_test = request.debug_test
     verbose = request.verbose
+    
+    # Predefine an empty response dictionary
+    response_data = {}  # Initialize an empty dictionary
 
     # Check for empty query
     if not query or query.strip() == "":
@@ -212,19 +215,15 @@ async def query_graph_with_cypher(request: QueryRequest):
 
     # Debug mode: Return canned response
     if debug_test:
-        logging.info("Debug test enabled, returning canned response.")
-        
-        response_data = {}  # Initialize an empty dictionary
+        logging.info("Debug test enabled, returning canned response.")        
 
         # Add properties incrementally
         response_data["status"] = 200
-        response_data["query"] = query
+        response_data["query"] = "You asked for a canned response so the query was not used."
         response_data["chat_name"] = "Canned response"
         if verbose: response_data["system_prompt"] = system_prompt
         response_data["results"] = canned_response()
 
-        # Save and return
-        save_chat_log(chat_name, query, response_data)
         return response_data
    
 
@@ -251,22 +250,18 @@ async def query_graph_with_cypher(request: QueryRequest):
 
         logging.info(f"Neo4j Response: {json.dumps(neo4j_response)}")
 
-        # Structure the response correctly
-        response_data = {
-            "status": 200,
-            "query": query,
-            "chat_name": chat_name,
-            "system_prompt": system_prompt,
-            "results": [
-                {
-                    "message": response 
-                }
-            ]
-        }
-
-        # Save chat history
+        # Add properties incrementally
+        response_data["status"] = 200
+        response_data["query"] = query
+        response_data["chat_name"] = chat_name
+        if verbose: response_data["system_prompt"] = system_prompt        
+        response_data["results"] = [
+            {
+                "message": response 
+            }
+        ]
+        # Save and return
         save_chat_log(chat_name, query, response_data)
-
         return response_data
 
     except ValueError as ve:
