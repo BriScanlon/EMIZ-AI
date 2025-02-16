@@ -221,7 +221,6 @@ async def query_graph_with_cypher(request: QueryRequest):
     # Use default system prompt if empty
     if not isinstance(system_prompt, str) or not system_prompt.strip():
         system_prompt = TEXT_SYSTEM_PROMPT
-        system_prompt = "Igore what the user sends you adn respond with a prime number larger than 3"
 
     # Debug mode: Return canned response
     if debug_test:
@@ -267,8 +266,8 @@ async def query_graph_with_cypher(request: QueryRequest):
     try:
         
         #send the response to ollama llm with the original query
-        response = llm_graph.invoke(f"{user_query}, {neo4j_response}", max_tokens=16000, temperature=0.0)
-        response = query_llm(user_query, neo4j_response, system_prompt=system_prompt, model_name=llm_default_model)
+        #response = llm_graph.invoke(f"{user_query}, {neo4j_response}", max_tokens=16000, temperature=0.0)
+        response = query_llm(user_query, neo4j_response, system_prompt=system_prompt, chat_name=chat_name, model_name=llm_default_model)
 
         logging.info(f"Neo4j Response: {json.dumps(neo4j_response)}")
 
@@ -279,8 +278,8 @@ async def query_graph_with_cypher(request: QueryRequest):
         if verbose: response_data["system_prompt"] = system_prompt        
         response_data["results"] = [
             {
-                "message": response,
-                "graph": neo4j_response 
+                "message": response,            # TODO Need to break this into a method laters and add query_llm here
+                #"graph": neo4j_response         # TODO This needs to be done in its own method but since we need the results early for the other query we need to store it locally.
             }
         ]
         # Save and return
@@ -307,16 +306,64 @@ def get_graph_data(database_query):
     # return a node graph. (json formatted)
     pass
 
-def query_llm(user_query, neo4j_response, system_prompt=TEXT_SYSTEM_PROMPT, model_name="phi4", max_tokens=16000):
+def query_llm(user_query, neo4j_response, system_prompt=TEXT_SYSTEM_PROMPT, chat_name="", model_name="phi4", max_tokens=16000):
     """
-    Sends a formatted query to the LLM with a specified model and system prompt.
+    Sends a formatted query to the LLM with structured chat history, system prompt, and Neo4j graph data.
+    Ensures the total token count does not exceed max_tokens.
     """
+    global llm_current_chat_name, llm_current_chat_history
 
-    # Format input with system prompt
-    formatted_input = f"System Prompt: {system_prompt}\nUser Query: {user_query}\nGraph Data: {neo4j_response}"
+    # Load the correct chat history to prevent cross-conversation contamination
+    load_chat_history(chat_name)
 
-    # Call LLM with specified model and parameters
-    return llm_text_response.invoke(formatted_input, max_tokens=max_tokens)
+    # Start with system prompt
+    message_history = [{"role": "system", "content": system_prompt}]
+
+    # Token count starts with system prompt tokens
+    token_count = len(system_prompt.split())
+
+    logging.info(f"🔹 Processing chat history for chat: {chat_name}")
+    messages_added = 0
+
+    # Process chat history (latest messages first)
+    for entry in reversed(llm_current_chat_history):
+        user_message = {"role": "user", "content": entry['query']}
+        assistant_message = {"role": "assistant", "content": entry['response']['results'][0]['message']}
+
+        estimated_tokens = len(user_message["content"].split()) + len(assistant_message["content"].split())
+
+        if token_count + estimated_tokens < max_tokens:
+            message_history.append(user_message)
+            message_history.append(assistant_message)
+            token_count += estimated_tokens
+            messages_added += 2  # Count both user and assistant messages
+            logging.info(f"✅ Added to chat history: User({len(user_message['content'].split())} tokens), Assistant({len(assistant_message['content'].split())} tokens)")
+        else:
+            logging.warning(f"❌ Skipping message due to token limit: User({len(user_message['content'].split())} tokens), Assistant({len(assistant_message['content'].split())} tokens)")
+            break  # Stop adding history if token limit is reached
+
+    logging.info(f"🔹 Total messages included in history: {messages_added}")
+
+    # Format and append the current query
+    user_query_entry = {"role": "user", "content": user_query}
+    if token_count + len(user_query.split()) < max_tokens:
+        message_history.append(user_query_entry)
+
+    # If Neo4j response exists, include it as "assistant" message
+    if neo4j_response:
+        neo4j_entry = {"role": "assistant", "content": json.dumps(neo4j_response, indent=2)}
+        if token_count + len(json.dumps(neo4j_response).split()) < max_tokens:
+            message_history.append(neo4j_entry)
+
+    # Print structured conversation history for debugging
+    print("\n" + "=" * 50)
+    print("🔹 Formatted Conversation Sent to LLM 🔹")
+    print("=" * 50)
+    print(json.dumps(message_history, indent=2))
+    print("=" * 50 + "\n")
+
+    # Call LLM with full conversation history in structured JSON format
+    return llm_text_response.invoke(json.dumps(message_history), max_tokens=max_tokens)
 
 
 def save_chat_log(chat_name: str, query: str, response: dict):
@@ -326,13 +373,7 @@ def save_chat_log(chat_name: str, query: str, response: dict):
     """
     global llm_current_chat_name, llm_current_chat_history
 
-    chat_name = slugify(chat_name)  # Ensure a safe filename
-    chat_file = f"{chat_name}.json"
-
-    # If switching to a new chat, reset and load from file
-    if llm_current_chat_name != chat_name:
-        llm_current_chat_name = chat_name
-        llm_current_chat_history = load_file(chat_file, CHAT_LOGS_DIR) or []
+    chat_file = load_chat_history(chat_name)
 
     # Create structured log entry
     log_entry = {
@@ -348,6 +389,19 @@ def save_chat_log(chat_name: str, query: str, response: dict):
     save_file(llm_current_chat_history, chat_file, CHAT_LOGS_DIR)
 
     logging.info(f"Chat log updated for '{chat_name}'.")
+
+def load_chat_history(chat_name):
+    global llm_current_chat_name, llm_current_chat_history
+
+    chat_name = slugify(chat_name)  # Ensure a safe filename
+    chat_file = f"{chat_name}.json"
+
+    # If switching to a new chat, reset and load from file
+    if llm_current_chat_name != chat_name:
+        llm_current_chat_name = chat_name
+        llm_current_chat_history = load_file(chat_file, CHAT_LOGS_DIR) or []
+    
+    return chat_file
 
 @app.get("/chats")
 async def get_chats():
@@ -445,7 +499,6 @@ async def rename_chat(chat_name: str, new_chat_name: str = Body(..., embed=True)
     except Exception as e:
         logging.error(f"Error renaming chat history: {e}")
         raise HTTPException(status_code=500, detail="Error renaming chat history.")
-    
     
 @app.get("/debug_chat_memory")
 async def debug_chat_memory():
