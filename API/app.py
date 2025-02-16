@@ -207,8 +207,12 @@ async def query_graph_with_cypher(request: QueryRequest):
         raise HTTPException(status_code=418, detail=msg)
 
     # Generate chat name if empty
-    if not chat_name or chat_name.strip() == "": logging.info(f"Chat name is empty, generating new one: {chat_name}")
-    chat_name = slugify(chat_name) if chat_name else slugify(user_query[:12])        
+    if not chat_name or chat_name.strip() == "":
+        chat_name = slugify(user_query[:12])
+        logging.info(f"Chat name was empty, generated new one: {chat_name}")
+    else:
+        chat_name = slugify(chat_name)
+     
 
     # Use default system prompt if empty
     if not isinstance(system_prompt, str) or not system_prompt.strip():

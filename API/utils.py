@@ -9,7 +9,7 @@ DEFAULT_FILE_LOCATION = "."
 def slugify(text):
     """Convert text into a safe filename-friendly format."""
     return re.sub(r"[^a-zA-Z0-9_-]", "", text.replace(" ", "_")).lower()
-
+0000
 def save_file(contents, file_name, file_location=DEFAULT_FILE_LOCATION):
     """
     Saves contents to a file.
@@ -54,13 +54,10 @@ def load_file(file_name, file_location=DEFAULT_FILE_LOCATION):
 
     try:
         with open(file_path, "r", encoding="utf-8") as file:
-            # Attempt to load JSON first
             try:
                 return json.load(file)  # Return as dict/list
             except json.JSONDecodeError:
-                pass  # Fall back to loading as plain text
-
-            return file.read()  # Return as string if not JSON
+                return file.read().strip()  # Return text if not JSON
 
     except Exception as e:
         logging.error(f"Error loading file {file_path}: {e}")
