@@ -187,27 +187,28 @@ async def query_graph_with_cypher(request: QueryRequest):
     """
     Endpoint to query the Neo4j database using GraphCypherQAChain with Ollama.
     """
-    query = request.query
-    chat_name = request.chat_name
+    req_data = dict(request)
+
+    user_query = req_data.get("query", "").strip()
+    chat_name = req_data["chat_name"]
     
     # Optional fields
-    system_prompt = request.system_prompt
-    debug_test = request.debug_test
-    verbose = request.verbose
-    
+    system_prompt = req_data["system_prompt"]
+    debug_test = req_data.get("debug_test", False)
+    verbose = req_data.get("verbose", False)
+
     # Predefine an empty response dictionary
     response_data = {}  # Initialize an empty dictionary
 
     # Check for empty query
-    if not query or query.strip() == "":
+    if not user_query or user_query.strip() == "":
         msg = "Query string is empty or missing"
         logging.warning(msg)
         raise HTTPException(status_code=418, detail=msg)
 
     # Generate chat name if empty
-    if not chat_name or chat_name.strip() == "":
-        chat_name = slugify(query[:12])
-        logging.info(f"Chat name is empty, generating new one: {chat_name}")
+    if not chat_name or chat_name.strip() == "": logging.info(f"Chat name is empty, generating new one: {chat_name}")
+    chat_name = slugify(chat_name) if chat_name else slugify(user_query[:12])        
 
     # Use default system prompt if empty
     if not isinstance(system_prompt, str) or not system_prompt.strip():
@@ -225,37 +226,45 @@ async def query_graph_with_cypher(request: QueryRequest):
         response_data["results"] = canned_response()
 
         return response_data
-   
 
     try:
         # Perform vector search
-        results = vector_search(query, top_n=5)
+        results = vector_search(user_query, top_n=5) or []
 
         # Ensure results is a list of dictionaries
         if not isinstance(results, list):
             raise ValueError("Unexpected results format, expected a list of dictionaries.")
+                
+    except ValueError as ve:
+        logging.error(f"Data format error: {ve}")
+        raise HTTPException(status_code=500, detail=f"Data format error: {ve}")
+    except Exception as e:
+        logging.error(f"Vector search failed: {e}")
+        results = []
 
-        neo4j_response = []
+    neo4j_response = []
         
-        for result in results:
-            # for each result get the text value of property
-            properties = result.get("properties", {})
-            text = properties.get("text", "")
-            # get the text value of the property
-            if text:
-                # append text to neo4j_response
-                neo4j_response.append(text)
-            else:
-                logging.warning("No text object included in neo4j responsee.")
+    for result in results:
+        # for each result get the text value of property
+        properties = result.get("properties", {})
+        text = properties.get("text", "")
+        # get the text value of the property
+        if text:
+            # append text to neo4j_response
+            neo4j_response.append(text)
+        else:
+            logging.warning("No text object included in neo4j responsee.")
 
+    try:
+        
         #send the response to ollama llm with the original query
-        response = llm.invoke(f"{query}, {neo4j_response}", max_tokens=16000, temperature=0.0)
+        response = llm.invoke(f"{user_query}, {neo4j_response}", max_tokens=16000, temperature=0.0)
 
         logging.info(f"Neo4j Response: {json.dumps(neo4j_response)}")
 
         # Add properties incrementally
         response_data["status"] = 200
-        response_data["query"] = query
+        response_data["query"] = user_query
         response_data["chat_name"] = chat_name
         if verbose: response_data["system_prompt"] = system_prompt        
         response_data["results"] = [
@@ -264,18 +273,14 @@ async def query_graph_with_cypher(request: QueryRequest):
             }
         ]
         # Save and return
-        save_chat_log(chat_name, query, response_data)
-        return response_data
-
-    except ValueError as ve:
-        logging.error(f"Data format error: {ve}")
-        raise HTTPException(status_code=500, detail=f"Data format error: {ve}")
+        save_chat_log(chat_name, user_query, response_data)
+        return response_data  
 
     except Exception as e:
-        logging.error(f"Error querying Neo4j with GraphCypherQAChain: {e}")
+        logging.error(f"Error querying llm: {e}")
         raise HTTPException(
             status_code=500,
-            detail=f"An error occurred while querying the database: {e}",
+            detail=f"An error occurred while querying that LLM : {e}",
         )
 
 def get_neo4j_query():
