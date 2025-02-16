@@ -26,7 +26,7 @@ from pydantic import BaseModel, Field
 from helpers.vector_search import vector_search
 from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT
 from llmconfig.canned_response import canned_response
-from utils import slugify
+from utils import slugify, save_file, load_file
 
 # environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
@@ -293,25 +293,19 @@ def get_graph_data(database_query):
 
 
 def save_chat_log(chat_name: str, query: str, response: dict):
-    """Append a structured entry to the chat log file, maintaining in-memory history."""
+    """
+    Append a structured entry to the chat log file, maintaining in-memory history.
+    Uses `save_file()` and `load_file()` from utils.py for file handling.
+    """
     global llm_current_chat_name, llm_current_chat_history
 
-    chat_file = os.path.join(CHAT_LOGS_DIR, f"{chat_name}.json")
+    chat_name = slugify(chat_name)  # Ensure a safe filename
+    chat_file = f"{chat_name}.json"
 
     # If switching to a new chat, reset and load from file
     if llm_current_chat_name != chat_name:
         llm_current_chat_name = chat_name
-        llm_current_chat_history = []
-
-        # Load previous chat history if the file exists
-        if os.path.exists(chat_file):
-            with open(chat_file, "r", encoding="utf-8") as file:
-                try:
-                    chat_data = json.load(file)
-                    if isinstance(chat_data, list):  # Ensure valid structure
-                        llm_current_chat_history = chat_data
-                except json.JSONDecodeError:
-                    llm_current_chat_history = []  # Reset on corruption
+        llm_current_chat_history = load_file(chat_file, CHAT_LOGS_DIR) or []
 
     # Create structured log entry
     log_entry = {
@@ -323,14 +317,10 @@ def save_chat_log(chat_name: str, query: str, response: dict):
     # Append new entry to in-memory history
     llm_current_chat_history.append(log_entry)
 
-    # Ensure chat logs directory exists
-    os.makedirs(CHAT_LOGS_DIR, exist_ok=True)
-
     # Save updated history to file
-    with open(chat_file, "w", encoding="utf-8") as file:
-        json.dump(llm_current_chat_history, file, indent=4)
+    save_file(llm_current_chat_history, chat_file, CHAT_LOGS_DIR)
 
-    print(f"Chat log updated for '{chat_name}'.")
+    logging.info(f"Chat log updated for '{chat_name}'.")
 
 @app.get("/chats")
 async def get_chats():
