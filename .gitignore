@@ -8,3 +8,4 @@ ollama/
 API/helpers/__pycache__/
 ollama_models/
 API/ChatLogs/*
+/API/llmconfig/__pycache__
