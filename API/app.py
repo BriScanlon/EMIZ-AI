@@ -239,11 +239,14 @@ async def query_graph_with_cypher(request: QueryRequest):
         
         for result in results:
             # for each result get the text value of property
-            text = result.get("properties").get("text")
+            properties = result.get("properties", {})
+            text = properties.get("text", "")
             # get the text value of the property
             if text:
                 # append text to neo4j_response
                 neo4j_response.append(text)
+            else:
+                logging.warning("No text object included in neo4j responsee.")
 
         #send the response to ollama llm with the original query
         response = llm.invoke(f"{query}, {neo4j_response}", max_tokens=16000, temperature=0.0)
