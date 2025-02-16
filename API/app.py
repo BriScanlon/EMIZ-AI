@@ -14,7 +14,6 @@ from langchain_community.vectorstores import Neo4jVector
 from langchain_experimental.graph_transformers import LLMGraphTransformer
 from langchain.chains import GraphCypherQAChain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from neo4j import GraphDatabase
 import logging
 from helpers.process_document import process_document
 from helpers.chunk_text import chunk_text
@@ -27,6 +26,7 @@ from pydantic import BaseModel, Field
 from helpers.vector_search import vector_search
 from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT
 from llmconfig.canned_response import canned_response
+from utils import slugify
 
 # environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
@@ -40,7 +40,7 @@ llm = OllamaLLM(base_url="http://ollama-container:{}".format(llm_port), model=ll
 llm_transformer = LLMGraphTransformer(llm=llm)
 
 llm_current_chat_name = None
-llm_current_chat_history = None
+llm_current_chat_history = []
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
@@ -190,7 +190,7 @@ async def query_graph_with_cypher(request: QueryRequest):
     query = request.query
     chat_name = request.chat_name
     
-    # Optional field, usualyl should not be letting the user specify the system prompt.
+    # Optional fields
     system_prompt = request.system_prompt
     debug_test = request.debug_test
     verbose = request.verbose
@@ -206,7 +206,7 @@ async def query_graph_with_cypher(request: QueryRequest):
 
     # Generate chat name if empty
     if not chat_name or chat_name.strip() == "":
-        chat_name = query[:12].replace(" ", "_")
+        chat_name = slugify(query[:12])
         logging.info(f"Chat name is empty, generating new one: {chat_name}")
 
     # Use default system prompt if empty
