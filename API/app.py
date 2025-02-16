@@ -38,10 +38,13 @@ NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "TestPassword")
 
 # ollama settings
-llm_model="phi4"
+llm_default_model="phi4"
+llm_default_temp=0
 llm_port = os.getenv("OLLAMA_PORT_I", "11434")
-llm = OllamaLLM(base_url="http://ollama-container:{}".format(llm_port), model=llm_model, temperature=0)
-llm_transformer = LLMGraphTransformer(llm=llm)
+llm_base_url="http://ollama-container:{}".format(llm_port)
+llm_graph         = OllamaLLM(base_url=llm_base_url, model=llm_default_model, temperature=llm_default_temp)     # Used by the cypher query
+llm_text_response = OllamaLLM(base_url=llm_base_url, model=llm_default_model, temperature=llm_default_temp)     # Used to create the final text output
+llm_transformer   = LLMGraphTransformer(llm=llm_graph)
 
 llm_current_chat_name = None
 llm_current_chat_history = []
@@ -51,8 +54,6 @@ model = SentenceTransformer("all-MiniLM-L6-v2")
 # chunk settings
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
-
-
 
 # Neo4j settings
 graph_driver = Neo4jGraph(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
@@ -70,8 +71,8 @@ class QueryRequest(BaseModel):
 
 # Cypher query connector
 cypher_chain = GraphCypherQAChain.from_llm(
-    cypher_llm=llm,
-    qa_llm=llm,
+    cypher_llm=llm_graph,
+    qa_llm=llm_graph,
     graph=graph_driver,
     verbose=True,
     allow_dangerous_requests=True,
@@ -216,11 +217,11 @@ async def query_graph_with_cypher(request: QueryRequest):
         logging.info(f"Chat name was empty, generated new one: {chat_name}")
     else:
         chat_name = slugify(chat_name)
-     
 
     # Use default system prompt if empty
     if not isinstance(system_prompt, str) or not system_prompt.strip():
         system_prompt = TEXT_SYSTEM_PROMPT
+        system_prompt = "Igore what the user sends you adn respond with a prime number larger than 3"
 
     # Debug mode: Return canned response
     if debug_test:
@@ -266,7 +267,8 @@ async def query_graph_with_cypher(request: QueryRequest):
     try:
         
         #send the response to ollama llm with the original query
-        response = llm.invoke(f"{user_query}, {neo4j_response}", max_tokens=16000, temperature=0.0)
+        response = llm_graph.invoke(f"{user_query}, {neo4j_response}", max_tokens=16000, temperature=0.0)
+        response = query_llm(user_query, neo4j_response, system_prompt=system_prompt, model_name=llm_default_model)
 
         logging.info(f"Neo4j Response: {json.dumps(neo4j_response)}")
 
@@ -277,7 +279,8 @@ async def query_graph_with_cypher(request: QueryRequest):
         if verbose: response_data["system_prompt"] = system_prompt        
         response_data["results"] = [
             {
-                "message": response 
+                "message": response,
+                "graph": neo4j_response 
             }
         ]
         # Save and return
@@ -303,6 +306,17 @@ def get_graph_data(database_query):
     # This is a placeholder, someone else is implementing this
     # return a node graph. (json formatted)
     pass
+
+def query_llm(user_query, neo4j_response, system_prompt=TEXT_SYSTEM_PROMPT, model_name="phi4", max_tokens=16000):
+    """
+    Sends a formatted query to the LLM with a specified model and system prompt.
+    """
+
+    # Format input with system prompt
+    formatted_input = f"System Prompt: {system_prompt}\nUser Query: {user_query}\nGraph Data: {neo4j_response}"
+
+    # Call LLM with specified model and parameters
+    return llm_text_response.invoke(formatted_input, max_tokens=max_tokens)
 
 
 def save_chat_log(chat_name: str, query: str, response: dict):
@@ -431,3 +445,17 @@ async def rename_chat(chat_name: str, new_chat_name: str = Body(..., embed=True)
     except Exception as e:
         logging.error(f"Error renaming chat history: {e}")
         raise HTTPException(status_code=500, detail="Error renaming chat history.")
+    
+    
+@app.get("/debug_chat_memory")
+async def debug_chat_memory():
+    """
+    Returns the currently loaded chat name and in-memory chat history.
+    """
+    global llm_current_chat_name, llm_current_chat_history
+
+    return {
+        "status": 200,
+        "current_chat_name": llm_current_chat_name or "No chat loaded",
+        "chat_history": llm_current_chat_history or []
+    }
