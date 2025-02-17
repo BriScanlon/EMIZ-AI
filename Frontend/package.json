@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+<<<<<<< HEAD
     "start": "react-router-serve ./build/server/index.js",
+=======
+    "start": "npx serve -s dist -l 5173",
+>>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
     "typecheck": "react-router typegen && tsc",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -18,8 +22,11 @@
     "@mui/material": "^6.4.1",
     "@react-router/node": "^7.1.1",
     "@react-router/serve": "^7.1.1",
+<<<<<<< HEAD
     "@tanstack/react-query": "^5.66.0",
     "@tanstack/react-query-devtools": "^5.66.0",
+=======
+>>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
     "axios": "^1.6.8",
     "cheerio": "^1.0.0-rc.12",
     "echarts": "^5.5.0",
@@ -29,10 +36,16 @@
     "react-dom": "^19.0.0",
     "react-force-graph": "^1.46.0",
     "react-force-graph-3d": "^1.26.0",
+<<<<<<< HEAD
     "react-hot-toast": "^2.5.1",
     "react-icons": "^5.4.0",
     "react-router": "^7.1.5",
     "react-router-dom": "^7.1.5",
+=======
+    "react-icons": "^5.4.0",
+    "react-router": "^7.1.1",
+    "react-router-dom": "^7.1.3",
+>>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
     "sass": "^1.77.1",
     "scss": "^0.2.4"
   },

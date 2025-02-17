@@ -6,4 +6,10 @@ nvidia
 package-lock.json
 ollama/
 API/helpers/__pycache__/
+<<<<<<< HEAD
 ollama_models/
+=======
+ollama_models/
+/API/llmconfig/__pycache__
+/API/batch
+>>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5

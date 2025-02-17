@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { getNodeData } from '../../services/api';
 import styles from './Table.module.scss'; // Import the module
+<<<<<<< HEAD
 import Spinner from '../../ui/Spinner/Spinner';
+=======
+>>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
 
 const Table = () => {
   const [data, setData] = useState(null);
 
+<<<<<<< HEAD
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -20,6 +24,18 @@ const Table = () => {
     }, [data]);
 
   if (!data) return <Spinner/>
+=======
+  useEffect(() => {
+    const fetchedData = getNodeData();
+    if (fetchedData) {
+      setData(fetchedData);
+    } else {
+      console.error("Error: No data received.");
+    }
+  }, []);
+
+  if (!data) return <p>Loading data...</p>;
+>>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
 
   return (
     <div className={styles.tableContainer}>

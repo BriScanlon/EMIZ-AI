@@ -1,0 +1,110 @@
+[
+    {
+        "timestamp": "2025-02-16T20:30:47.025693Z",
+        "query": "Hi, I'm dave",
+        "results": [
+            {
+                "message": "Hello Dave! It's great to meet you. How can I assist you today? Are you looking for help with diagnosing a problem or do you need guidance on any daily tasks related to the rail network? If there's anything specific you'd like to discuss, feel free to let me know, and we'll dive into it together!"
+            }
+        ]
+    },
+    {
+        "timestamp": "2025-02-16T20:31:31.409172Z",
+        "query": "I started today and I dont know what to do with myself",
+        "results": [
+            {
+                "message": "Hello Dave! Welcome to the team. Starting a new role can be overwhelming, but don't worry\u2014I'm here to help you get settled in.\n\nSince it's your first day, let's start by familiarizing yourself with some of the daily tasks and responsibilities that are part of working on the rail network:\n\n1. **Safety Checks**: Begin by reviewing safety protocols and ensuring all equipment is functioning correctly. This includes checking signals, switches, and any maintenance tools you'll be using.\n\n2. **Routine Inspections**: Familiarize yourself with the inspection procedures for tracks, trains, and other infrastructure components. Understanding these will help you identify potential issues early on.\n\n3. **Documentation Review**: Take some time to go through existing documentation related to your tasks or projects. This can include maintenance logs, incident reports, and operational manuals.\n\n4. **Meetings and Briefings**: Attend any scheduled meetings or briefings with your team. These sessions are great for getting up-to-speed on current projects and understanding the team's workflow.\n\n5. **Mentorship**: Don't hesitate to reach out to a more experienced colleague who can guide you through your initial tasks and answer any questions you might have.\n\nIf there\u2019s anything specific you\u2019d like help with or if you want to dive into diagnostics, just let me know! I'm here to support you as you get started.",
+                "graph": {
+                    "nodes": [
+                        {
+                            "id": "1",
+                            "name": "DHC-8-402 Dash 8, G-JEDI",
+                            "category": "Aircraft"
+                        },
+                        {
+                            "id": "2",
+                            "name": "AC Electrical System",
+                            "category": "System"
+                        },
+                        {
+                            "id": "3",
+                            "name": "Wiring Loom",
+                            "category": "Component"
+                        },
+                        {
+                            "id": "4",
+                            "name": "Chafing due to blind rivet",
+                            "category": "FailureMode"
+                        },
+                        {
+                            "id": "5",
+                            "name": "AC bus and generator warnings",
+                            "category": "Symptom"
+                        },
+                        {
+                            "id": "6",
+                            "name": "Replace blind rivets with solid rivets",
+                            "category": "Resolution"
+                        },
+                        {
+                            "id": "7",
+                            "name": "Incident: AC System Failure",
+                            "category": "Incident"
+                        }
+                    ],
+                    "links": [
+                        {
+                            "source": "1",
+                            "target": "7",
+                            "label": "OCCURRED_ON"
+                        },
+                        {
+                            "source": "2",
+                            "target": "3",
+                            "label": "PART_OF"
+                        },
+                        {
+                            "source": "4",
+                            "target": "2",
+                            "label": "AFFECTS"
+                        },
+                        {
+                            "source": "4",
+                            "target": "5",
+                            "label": "LEADS_TO"
+                        },
+                        {
+                            "source": "4",
+                            "target": "6",
+                            "label": "RESOLVED_BY"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "name": "Aircraft"
+                        },
+                        {
+                            "name": "System"
+                        },
+                        {
+                            "name": "Component"
+                        },
+                        {
+                            "name": "FailureMode"
+                        },
+                        {
+                            "name": "Symptom"
+                        },
+                        {
+                            "name": "Resolution"
+                        },
+                        {
+                            "name": "Incident"
+                        }
+                    ]
+                }
+            }
+        ]
+    
+    }
+]

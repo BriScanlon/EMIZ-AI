@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "dummyData": {
     "nodeData": {
@@ -169,3 +170,33 @@
     ]
   }
 }
+=======
+
+  
+  {
+    "dummyData": {
+        "nodeData": {
+            "nodes": [
+                { "id": "0", "name": "AAIB Investigations", "category": 0 },
+                { "id": "1", "name": "AAIB investigation to Boeing 737-8K5, G-TAWD", "category": 1 },
+                { "id": "2", "name": "AAIB investigation to Spitfire IXT, G-LFIX, 6 May 2024", "category": 1 },
+                { "id": "3", "name": "AAIB Statement on LauncherOne launch failure", "category": 1 },
+                { "id": "4", "name": "AAIB investigation to Beagle B121 Series 2 Pup, G-AZCZ", "category": 1 },
+                { "id": "5", "name": "AAIB investigation to Boeing 767-332, N197DN", "category": 1 }
+              ],
+              "links": [
+                { "source": "0", "target": "1" },
+                { "source": "0", "target": "2" },
+                { "source": "0", "target": "3" },
+                { "source": "0", "target": "4" },
+                { "source": "0", "target": "5" }
+              ],
+              "categories": [
+                { "id": 0, "name": "Source" },
+                { "id": 1, "name": "Reports" }
+              ]
+        }
+      }
+  }
+  
+>>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5

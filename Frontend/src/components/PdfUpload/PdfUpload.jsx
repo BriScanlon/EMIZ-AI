@@ -38,11 +38,20 @@ const PdfUpload = () => {
     setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
   };
 
+<<<<<<< HEAD
   const handleUpload = (file, index) => {
     const formData = new FormData();
     formData.append("file", file);
     
     fetch("/upload", {
+=======
+  const handleUpload = async (file, index) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    
+    
+    await fetch("http://localhost:8085/documents", {
+>>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
       method: "POST",
       body: formData,
     })

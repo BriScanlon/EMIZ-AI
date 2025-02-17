@@ -3,6 +3,7 @@ import { SearchProvider } from "../../contexts/SearchContext";
 import Footer from "../../components/Footer/Footer";
 import styles from "./Layout2.module.scss";
 import { Link, Outlet } from "react-router-dom";
+<<<<<<< HEAD
 import {
   FaTable,
   FaChartBar,
@@ -10,6 +11,9 @@ import {
   FaTimes,
   FaBars,
 } from "react-icons/fa";
+=======
+import { FaTable, FaChartBar, FaArrowLeft, FaTimes, FaBars } from "react-icons/fa";
+>>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
 import Chat from "../../components/Chat/Chat";
 import Overlay from "../../ui/Overlay/Overlay";
 
@@ -74,15 +78,20 @@ export default function Layout2({ onBack }) {
           {/* Main Content Area */}
           <main className={styles.mainContent}>
             {/* Back Button */}
+<<<<<<< HEAD
             <button
               onClick={onBack}
               className="p-2 bg-blue-600 rounded-md text-white flex items-center gap-2"
             >
+=======
+            <button onClick={onBack} className="p-2 bg-blue-600 rounded-md text-white flex items-center gap-2">
+>>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
               <FaArrowLeft /> Back to Home
             </button>
 
             {/* Toggle Buttons */}
             <div className="flex gap-4 mb-4">
+<<<<<<< HEAD
               <Link
                 to="/graph"
                 className="p-2 bg-blue-600 rounded-md text-white flex items-center gap-2"
@@ -94,6 +103,13 @@ export default function Layout2({ onBack }) {
                 to="/table"
                 className="p-2 bg-green-600 rounded-md text-white flex items-center gap-2"
               >
+=======
+              <Link to="/graph" className="p-2 bg-blue-600 rounded-md text-white flex items-center gap-2">
+                <FaChartBar /> Graph View
+              </Link>
+
+              <Link to="/table" className="p-2 bg-green-600 rounded-md text-white flex items-center gap-2">
+>>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
                 <FaTable /> Table View
               </Link>
 
