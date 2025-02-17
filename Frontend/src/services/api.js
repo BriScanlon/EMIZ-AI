@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import Axios from "axios";
 import { BASE_URL } from "../config/config";
 import dummyData from "../data/dummyData.json";
@@ -41,41 +40,11 @@ export async function sendChatMessage({ userId, message }) {
     throw new Error(error.response?.data?.message || "Failed to send message");
   }
 }
-=======
-import dummyData from '../data/dummyData.json';
-
-export const BASE_URL = import.meta.env.VITE_BASE_URL || "https://example.com";
-
-const API_URL = `${BASE_URL}/api/chat`;
-export const urlNode = `${BASE_URL}/api/v1/users/node`;
-
-// Function to fetch chat response based on the search request
-export const fetchChatSummaryResponse = async (searchRequest) => {
-  try {
-    const response = await fetch(`${API_URL}?query=${encodeURIComponent(searchRequest)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
-
-    const data = await response.json();
-    return data; 
-  } catch (error) {
-    throw error;
-  }
-};
->>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
 
 // Function to get node data from JSON
 export const getNodeData = () => {
   return dummyData?.dummyData?.nodeData || null;
 };
-<<<<<<< HEAD
 
 // Function to get dummy chat messages from JSON
 export const getDummyMessages = () => {
@@ -173,5 +142,3 @@ export async function getChatHistory(chatName) {
 export const getSuggestedQuestions = () => {
   return dummyData?.dummyData?.suggestedQuestions || [];
 };
-=======
->>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5

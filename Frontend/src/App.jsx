@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-=======
-import { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
->>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
 import { ThemeProvider, CssBaseline } from "@mui/material";
 
 // Components
@@ -27,7 +22,6 @@ import SidebarNav from "./components/Sidebar/SidebarNav";
 import Footer from "./components/Footer/Footer";
 import Logo from "./components/Logo/Logo";
 import Main from "./pages/Main/Main";
-<<<<<<< HEAD
 import ForceGraph3DComponent from "./components/Graphs/ForceGraph3D/ForceGraph3DComponent";
 import ResponseLayout from "./pages/Response/ResponseLayout";
 import Chat from "./components/Chat/Chat";
@@ -44,14 +38,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-=======
-import ForceGraph3DComponent from './components/Graphs/ForceGraph3D/ForceGraph3DComponent';
-import ResponseLayout from './pages/Response/ResponseLayout';
-import Chat from './components/Chat/Chat';
-import Layout1 from './layouts/Layout1/Layout1';
-import PdfUpload from './components/PdfUpload/PdfUpload';
-import Layout2 from './layouts/Layout2/Layout2';
->>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -75,7 +61,6 @@ function App() {
   };
 
   return (
-<<<<<<< HEAD
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
@@ -110,38 +95,6 @@ function App() {
         </LightDarkModeProvider>
       </BrowserRouter>
     </QueryClientProvider>
-=======
-    <BrowserRouter>
-      <LightDarkModeProvider>
-        {/* <ScreenSizeProvider> */}
-        {/* <div className="App"> */}
-        <Routes>
-          <Route element={<Layout1 />}>
-                <Route index element={<Chat />} />
-                <Route path="/upload" element={<PdfUpload />} />
-          </Route>
-          <Route element={<Layout2 />}>
-                <Route index element={<Chat />} />
-                <Route path="/graph" element={<ForceGraph2 />} />
-                <Route path="/table" element={<Table />} />
-          </Route>
-          {/* <Route path="/upload" element={<Main showPdfUpload={true} />} /> Route for PdfUpload */}
-          {/* <Route path="/chat" element={<Chat />} /> */}
-          {/* <Route path="/response" element={<ResponseLayout />} /> */}
-          <Route path="/response2" element={<ForceGraph3DComponent />} />
-          {/* <Route path="/table" element={<Table />} /> */}
-
-
-
-        </Routes>
-        {/* <Ssidebar/>
-        <Sidebar/> */}
-        {/* </div> */}
-        {/* </ScreenSizeProvider> */}
-        {/* <Footer/> */}
-      </LightDarkModeProvider>
-    </BrowserRouter>
->>>>>>> 466bea6d8b5d6752cfbcc12ac9bff7e984035da5
   );
 }
 
