@@ -2,7 +2,10 @@
 import os
 import json
 import logging
+import io
+import asyncio
 from datetime import datetime
+from fastapi.responses import StreamingResponse
 
 # Third-Party Imports
 from fastapi import FastAPI, HTTPException, File, UploadFile, Body, Query
@@ -517,3 +520,52 @@ async def debug_chat_memory():
         "current_chat_name": llm_current_chat_name or "No chat loaded",
         "chat_history": llm_current_chat_history or []
     }
+
+@app.get("/batch")
+async def process_batch():
+    """
+    Processes all files in the 'batch' folder by sending them one at a time to the '/documents' endpoint.
+    Deletes each file after successful processing and streams real-time progress updates.
+    """
+    batch_folder = "batch"
+    
+    # Ensure the batch folder exists
+    if not os.path.exists(batch_folder):
+        raise HTTPException(status_code=400, detail="Batch folder does not exist.")
+
+    files = [f for f in os.listdir(batch_folder) if os.path.isfile(os.path.join(batch_folder, f))]
+    
+    if not files:
+        raise HTTPException(status_code=400, detail="No files to process in the batch folder.")
+
+    total_files = len(files)
+
+    async def process_files():
+        for idx, filename in enumerate(files, start=1):
+            file_path = os.path.join(batch_folder, filename)
+
+            try:
+                with open(file_path, "rb") as file:
+                    file_content = file.read()
+                    file_like = io.BytesIO(file_content)  # Convert bytes into a file-like object
+
+                    file_upload = UploadFile(filename=filename, file=file_like)
+
+                    # Send file to /documents endpoint
+                    response = await post_documents(file_upload)
+
+                    # Delete the file after successful processing
+                    os.remove(file_path)
+
+                    yield f"data: {{\"file\": \"{filename}\", \"status\": \"processed\", \"progress\": \"{idx} of {total_files}\"}}\n\n"
+                
+                # Simulate a small delay (optional, for better streaming effect)
+                await asyncio.sleep(0.5)
+
+            except Exception as e:
+                logging.error(f"Error processing file {filename}: {e}")
+                yield f"data: {{\"file\": \"{filename}\", \"status\": \"failed: {str(e)}\", \"progress\": \"{idx} of {total_files}\"}}\n\n"
+
+        yield f"data: {{\"message\": \"Batch processing completed.\"}}\n\n"
+
+    return StreamingResponse(process_files(), media_type="text/event-stream")
