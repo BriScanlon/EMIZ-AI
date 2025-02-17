@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ChatSummaryResponse.scss";
 import { useSearch } from "../../contexts/SearchContext"; // Import the useSearch hook
-import { fetchChatSummaryResponse } from "../../services/api"; // Import the API request handler
+// import { fetchChatSummaryResponse } from "../../services/api"; // Import the API request handler
 
 const ChatSummaryResponse = () => {
   const { searchRequests } = useSearch(); // Get the searchRequests from context
