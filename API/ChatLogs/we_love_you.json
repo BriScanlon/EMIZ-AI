@@ -1,0 +1,295 @@
+[
+    {
+        "timestamp": "2025-02-16T23:42:48.692857Z",
+        "response": {
+            "status": 200,
+            "query": "we love you",
+            "chat_name": "Canned response",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "Hello! I'm a friendly AI, here's a node graph for you.",
+                    "graph": {
+                        "nodes": [
+                            {
+                                "id": "1",
+                                "name": "DHC-8-402 Dash 8, G-JEDI",
+                                "category": "Aircraft"
+                            },
+                            {
+                                "id": "2",
+                                "name": "AC Electrical System",
+                                "category": "System"
+                            },
+                            {
+                                "id": "3",
+                                "name": "Wiring Loom",
+                                "category": "Component"
+                            },
+                            {
+                                "id": "4",
+                                "name": "Chafing due to blind rivet",
+                                "category": "FailureMode"
+                            },
+                            {
+                                "id": "5",
+                                "name": "AC bus and generator warnings",
+                                "category": "Symptom"
+                            },
+                            {
+                                "id": "6",
+                                "name": "Replace blind rivets with solid rivets",
+                                "category": "Resolution"
+                            },
+                            {
+                                "id": "7",
+                                "name": "Incident: AC System Failure",
+                                "category": "Incident"
+                            }
+                        ],
+                        "links": [
+                            {
+                                "source": "1",
+                                "target": "7",
+                                "label": "OCCURRED_ON"
+                            },
+                            {
+                                "source": "2",
+                                "target": "3",
+                                "label": "PART_OF"
+                            },
+                            {
+                                "source": "4",
+                                "target": "2",
+                                "label": "AFFECTS"
+                            },
+                            {
+                                "source": "4",
+                                "target": "5",
+                                "label": "LEADS_TO"
+                            },
+                            {
+                                "source": "4",
+                                "target": "6",
+                                "label": "RESOLVED_BY"
+                            }
+                        ],
+                        "categories": [
+                            {
+                                "name": "Aircraft"
+                            },
+                            {
+                                "name": "System"
+                            },
+                            {
+                                "name": "Component"
+                            },
+                            {
+                                "name": "FailureMode"
+                            },
+                            {
+                                "name": "Symptom"
+                            },
+                            {
+                                "name": "Resolution"
+                            },
+                            {
+                                "name": "Incident"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "message": "Hey! This message has no graph, just checking in!"
+                },
+                {
+                    "message": "Here\u2019s another graph! Let me know what you think.",
+                    "graph": {
+                        "nodes": [
+                            {
+                                "id": "1",
+                                "name": "DHC-8-402 Dash 8, G-JEDI",
+                                "category": "Aircraft"
+                            },
+                            {
+                                "id": "2",
+                                "name": "AC Electrical System",
+                                "category": "System"
+                            },
+                            {
+                                "id": "3",
+                                "name": "Wiring Loom",
+                                "category": "Component"
+                            },
+                            {
+                                "id": "4",
+                                "name": "Chafing due to blind rivet",
+                                "category": "FailureMode"
+                            },
+                            {
+                                "id": "5",
+                                "name": "AC bus and generator warnings",
+                                "category": "Symptom"
+                            },
+                            {
+                                "id": "6",
+                                "name": "Replace blind rivets with solid rivets",
+                                "category": "Resolution"
+                            },
+                            {
+                                "id": "7",
+                                "name": "Incident: AC System Failure",
+                                "category": "Incident"
+                            }
+                        ],
+                        "links": [
+                            {
+                                "source": "1",
+                                "target": "7",
+                                "label": "OCCURRED_ON"
+                            },
+                            {
+                                "source": "2",
+                                "target": "3",
+                                "label": "PART_OF"
+                            },
+                            {
+                                "source": "4",
+                                "target": "2",
+                                "label": "AFFECTS"
+                            },
+                            {
+                                "source": "4",
+                                "target": "5",
+                                "label": "LEADS_TO"
+                            },
+                            {
+                                "source": "4",
+                                "target": "6",
+                                "label": "RESOLVED_BY"
+                            }
+                        ],
+                        "categories": [
+                            {
+                                "name": "Aircraft"
+                            },
+                            {
+                                "name": "System"
+                            },
+                            {
+                                "name": "Component"
+                            },
+                            {
+                                "name": "FailureMode"
+                            },
+                            {
+                                "name": "Symptom"
+                            },
+                            {
+                                "name": "Resolution"
+                            },
+                            {
+                                "name": "Incident"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "message": "Hope you're enjoying this! No graph this time."
+                },
+                {
+                    "message": "Here's a final graph to wrap things up!",
+                    "graph": {
+                        "nodes": [
+                            {
+                                "id": "1",
+                                "name": "DHC-8-402 Dash 8, G-JEDI",
+                                "category": "Aircraft"
+                            },
+                            {
+                                "id": "2",
+                                "name": "AC Electrical System",
+                                "category": "System"
+                            },
+                            {
+                                "id": "3",
+                                "name": "Wiring Loom",
+                                "category": "Component"
+                            },
+                            {
+                                "id": "4",
+                                "name": "Chafing due to blind rivet",
+                                "category": "FailureMode"
+                            },
+                            {
+                                "id": "5",
+                                "name": "AC bus and generator warnings",
+                                "category": "Symptom"
+                            },
+                            {
+                                "id": "6",
+                                "name": "Replace blind rivets with solid rivets",
+                                "category": "Resolution"
+                            },
+                            {
+                                "id": "7",
+                                "name": "Incident: AC System Failure",
+                                "category": "Incident"
+                            }
+                        ],
+                        "links": [
+                            {
+                                "source": "1",
+                                "target": "7",
+                                "label": "OCCURRED_ON"
+                            },
+                            {
+                                "source": "2",
+                                "target": "3",
+                                "label": "PART_OF"
+                            },
+                            {
+                                "source": "4",
+                                "target": "2",
+                                "label": "AFFECTS"
+                            },
+                            {
+                                "source": "4",
+                                "target": "5",
+                                "label": "LEADS_TO"
+                            },
+                            {
+                                "source": "4",
+                                "target": "6",
+                                "label": "RESOLVED_BY"
+                            }
+                        ],
+                        "categories": [
+                            {
+                                "name": "Aircraft"
+                            },
+                            {
+                                "name": "System"
+                            },
+                            {
+                                "name": "Component"
+                            },
+                            {
+                                "name": "FailureMode"
+                            },
+                            {
+                                "name": "Symptom"
+                            },
+                            {
+                                "name": "Resolution"
+                            },
+                            {
+                                "name": "Incident"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+]

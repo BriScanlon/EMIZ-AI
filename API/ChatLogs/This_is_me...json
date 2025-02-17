@@ -1,0 +1,16 @@
+[
+    {
+        "timestamp": "2025-02-13T14:05:56.683782Z",
+        "response": {
+            "status": 200,
+            "query": "This is me....\n",
+            "chat_name": "This_is_me..",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    }
+]

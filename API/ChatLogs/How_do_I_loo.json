@@ -1,11 +1,11 @@
 [
     {
-        "timestamp": "2025-02-11T10:34:17.717157Z",
+        "timestamp": "2025-02-12T15:18:09.827792Z",
         "response": {
             "status": 200,
-            "query": "string",
+            "query": "How do I loosten brakes",
             "chat_name": "Canned response",
-            "system_prompt": "string",
+            "system_prompt": "You are a helpful AI assistant.",
             "results": [
                 {
                     "message": "Hello! I'm a friendly AI, here's a node graph for you.",
@@ -293,12 +293,12 @@
         }
     },
     {
-        "timestamp": "2025-02-12T15:01:59.056980Z",
+        "timestamp": "2025-02-12T15:18:36.018247Z",
         "response": {
             "status": 200,
-            "query": "Hi how do I free up breakes",
-            "chat_name": "string",
-            "system_prompt": "string",
+            "query": "How do I loosten brakes",
+            "chat_name": "How_do_I_loo",
+            "system_prompt": "You are a helpful AI assistant.",
             "results": [
                 {
                     "message": "TODO: placeholder response."
@@ -307,305 +307,26 @@
         }
     },
     {
-        "timestamp": "2025-02-12T15:12:20.173638Z",
+        "timestamp": "2025-02-17T00:21:15.200711Z",
         "response": {
             "status": 200,
-            "query": "string",
-            "chat_name": "Canned response",
-            "system_prompt": "string",
+            "query": "How do I loosten brakes",
+            "chat_name": "How_do_I_loo",
+            "system_prompt": "You are a helpful AI assistant.",
             "results": [
                 {
-                    "message": "Hello! I'm a friendly AI, here's a node graph for you.",
-                    "graph": {
-                        "nodes": [
-                            {
-                                "id": "1",
-                                "name": "DHC-8-402 Dash 8, G-JEDI",
-                                "category": "Aircraft"
-                            },
-                            {
-                                "id": "2",
-                                "name": "AC Electrical System",
-                                "category": "System"
-                            },
-                            {
-                                "id": "3",
-                                "name": "Wiring Loom",
-                                "category": "Component"
-                            },
-                            {
-                                "id": "4",
-                                "name": "Chafing due to blind rivet",
-                                "category": "FailureMode"
-                            },
-                            {
-                                "id": "5",
-                                "name": "AC bus and generator warnings",
-                                "category": "Symptom"
-                            },
-                            {
-                                "id": "6",
-                                "name": "Replace blind rivets with solid rivets",
-                                "category": "Resolution"
-                            },
-                            {
-                                "id": "7",
-                                "name": "Incident: AC System Failure",
-                                "category": "Incident"
-                            }
-                        ],
-                        "links": [
-                            {
-                                "source": "1",
-                                "target": "7",
-                                "label": "OCCURRED_ON"
-                            },
-                            {
-                                "source": "2",
-                                "target": "3",
-                                "label": "PART_OF"
-                            },
-                            {
-                                "source": "4",
-                                "target": "2",
-                                "label": "AFFECTS"
-                            },
-                            {
-                                "source": "4",
-                                "target": "5",
-                                "label": "LEADS_TO"
-                            },
-                            {
-                                "source": "4",
-                                "target": "6",
-                                "label": "RESOLVED_BY"
-                            }
-                        ],
-                        "categories": [
-                            {
-                                "name": "Aircraft"
-                            },
-                            {
-                                "name": "System"
-                            },
-                            {
-                                "name": "Component"
-                            },
-                            {
-                                "name": "FailureMode"
-                            },
-                            {
-                                "name": "Symptom"
-                            },
-                            {
-                                "name": "Resolution"
-                            },
-                            {
-                                "name": "Incident"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "message": "Hey! This message has no graph, just checking in!"
-                },
-                {
-                    "message": "Here\u2019s another graph! Let me know what you think.",
-                    "graph": {
-                        "nodes": [
-                            {
-                                "id": "1",
-                                "name": "DHC-8-402 Dash 8, G-JEDI",
-                                "category": "Aircraft"
-                            },
-                            {
-                                "id": "2",
-                                "name": "AC Electrical System",
-                                "category": "System"
-                            },
-                            {
-                                "id": "3",
-                                "name": "Wiring Loom",
-                                "category": "Component"
-                            },
-                            {
-                                "id": "4",
-                                "name": "Chafing due to blind rivet",
-                                "category": "FailureMode"
-                            },
-                            {
-                                "id": "5",
-                                "name": "AC bus and generator warnings",
-                                "category": "Symptom"
-                            },
-                            {
-                                "id": "6",
-                                "name": "Replace blind rivets with solid rivets",
-                                "category": "Resolution"
-                            },
-                            {
-                                "id": "7",
-                                "name": "Incident: AC System Failure",
-                                "category": "Incident"
-                            }
-                        ],
-                        "links": [
-                            {
-                                "source": "1",
-                                "target": "7",
-                                "label": "OCCURRED_ON"
-                            },
-                            {
-                                "source": "2",
-                                "target": "3",
-                                "label": "PART_OF"
-                            },
-                            {
-                                "source": "4",
-                                "target": "2",
-                                "label": "AFFECTS"
-                            },
-                            {
-                                "source": "4",
-                                "target": "5",
-                                "label": "LEADS_TO"
-                            },
-                            {
-                                "source": "4",
-                                "target": "6",
-                                "label": "RESOLVED_BY"
-                            }
-                        ],
-                        "categories": [
-                            {
-                                "name": "Aircraft"
-                            },
-                            {
-                                "name": "System"
-                            },
-                            {
-                                "name": "Component"
-                            },
-                            {
-                                "name": "FailureMode"
-                            },
-                            {
-                                "name": "Symptom"
-                            },
-                            {
-                                "name": "Resolution"
-                            },
-                            {
-                                "name": "Incident"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "message": "Hope you're enjoying this! No graph this time."
-                },
-                {
-                    "message": "Here's a final graph to wrap things up!",
-                    "graph": {
-                        "nodes": [
-                            {
-                                "id": "1",
-                                "name": "DHC-8-402 Dash 8, G-JEDI",
-                                "category": "Aircraft"
-                            },
-                            {
-                                "id": "2",
-                                "name": "AC Electrical System",
-                                "category": "System"
-                            },
-                            {
-                                "id": "3",
-                                "name": "Wiring Loom",
-                                "category": "Component"
-                            },
-                            {
-                                "id": "4",
-                                "name": "Chafing due to blind rivet",
-                                "category": "FailureMode"
-                            },
-                            {
-                                "id": "5",
-                                "name": "AC bus and generator warnings",
-                                "category": "Symptom"
-                            },
-                            {
-                                "id": "6",
-                                "name": "Replace blind rivets with solid rivets",
-                                "category": "Resolution"
-                            },
-                            {
-                                "id": "7",
-                                "name": "Incident: AC System Failure",
-                                "category": "Incident"
-                            }
-                        ],
-                        "links": [
-                            {
-                                "source": "1",
-                                "target": "7",
-                                "label": "OCCURRED_ON"
-                            },
-                            {
-                                "source": "2",
-                                "target": "3",
-                                "label": "PART_OF"
-                            },
-                            {
-                                "source": "4",
-                                "target": "2",
-                                "label": "AFFECTS"
-                            },
-                            {
-                                "source": "4",
-                                "target": "5",
-                                "label": "LEADS_TO"
-                            },
-                            {
-                                "source": "4",
-                                "target": "6",
-                                "label": "RESOLVED_BY"
-                            }
-                        ],
-                        "categories": [
-                            {
-                                "name": "Aircraft"
-                            },
-                            {
-                                "name": "System"
-                            },
-                            {
-                                "name": "Component"
-                            },
-                            {
-                                "name": "FailureMode"
-                            },
-                            {
-                                "name": "Symptom"
-                            },
-                            {
-                                "name": "Resolution"
-                            },
-                            {
-                                "name": "Incident"
-                            }
-                        ]
-                    }
+                    "message": "TODO: placeholder response."
                 }
             ]
         }
     },
     {
-        "timestamp": "2025-02-12T15:17:52.406217Z",
+        "timestamp": "2025-02-17T00:21:30.870805Z",
         "response": {
             "status": 200,
             "query": "How do I loosten brakes",
             "chat_name": "Canned response",
-            "system_prompt": "string",
+            "system_prompt": "You are a helpful AI assistant.",
             "results": [
                 {
                     "message": "Hello! I'm a friendly AI, here's a node graph for you.",

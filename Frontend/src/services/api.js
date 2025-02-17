@@ -1,11 +1,32 @@
-import Axios from 'axios';
-import { BASE_URL } from '../config/config';
-import dummyData from '../data/dummyData.json';
+import Axios from "axios";
+import { BASE_URL } from "../config/config";
+import dummyData from "../data/dummyData.json";
 
 const URL = `${BASE_URL}`;
 
-export const urlChats = `${URL}/chats`;
-export const urlChat = `${URL}/chat`;
+const urlChats = `${URL}/chats`;
+const urlChat = `${URL}/chat`;
+
+// Function to post a query with specified parameters
+export async function postQuery({
+  query,
+  system_prompt,
+  chat_name,
+  debug_test = true,
+}) {
+  try {
+    const response = await Axios.post(`${URL}/query`, {
+      query,
+      system_prompt,
+      chat_name,
+      debug_test,
+    });
+    return response.data;
+    // console.log(response.data);
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to post query");
+  }
+}
 
 // Function to send a chat message
 export async function sendChatMessage({ userId, message }) {
@@ -16,7 +37,7 @@ export async function sendChatMessage({ userId, message }) {
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || 'Failed to send message');
+    throw new Error(error.response?.data?.message || "Failed to send message");
   }
 }
 
@@ -41,29 +62,36 @@ export async function readRoot() {
     const response = await Axios.get(`${URL}/`);
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || 'Failed to read root');
+    throw new Error(error.response?.data?.message || "Failed to read root");
   }
 }
 
 // Function to post documents
 export async function postDocuments(file) {
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append("file", file);
 
   try {
     const response = await Axios.post(`${URL}/documents`, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || 'Failed to post documents');
+    throw new Error(
+      error.response?.data?.message || "Failed to post documents"
+    );
   }
 }
 
 // Function to query graph with Cypher
-export async function queryGraph(query, systemPrompt, chatName, debugTest = true) {
+export async function queryGraph(
+  query,
+  systemPrompt,
+  chatName,
+  debugTest = true
+) {
   try {
     const response = await Axios.post(`${URL}/query`, {
       query,
@@ -73,17 +101,28 @@ export async function queryGraph(query, systemPrompt, chatName, debugTest = true
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || 'Failed to query graph');
+    throw new Error(error.response?.data?.message || "Failed to query graph");
   }
 }
 
 // Function to get chats
+// export async function getChats() {
+//   try {
+//     const response = await Axios.get(`${URL}/chats`);
+//     return response.data;
+//   } catch (error) {
+//     throw new Error(error.response?.data?.message || 'Failed to get chats');
+//   }
+// }
+
 export async function getChats() {
   try {
-    const response = await Axios.get(`${URL}/chats`);
+    const response = await Axios.get(urlChats);
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || 'Failed to get chats');
+    throw new Error(
+      error.response.data.message || "Failed to fetch bookings data"
+    );
   }
 }
 
@@ -93,6 +132,13 @@ export async function getChatHistory(chatName) {
     const response = await Axios.get(`${URL}/chat_history/${chatName}`);
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || 'Failed to get chat history');
+    throw new Error(
+      error.response?.data?.message || "Failed to get chat history"
+    );
   }
 }
+
+// Function to get suggested questions from JSON
+export const getSuggestedQuestions = () => {
+  return dummyData?.dummyData?.suggestedQuestions || [];
+};

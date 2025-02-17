@@ -1,304 +1,11 @@
 [
     {
-        "timestamp": "2025-02-11T10:34:17.717157Z",
+        "timestamp": "2025-02-13T14:45:15.206310Z",
         "response": {
             "status": 200,
-            "query": "string",
-            "chat_name": "Canned response",
-            "system_prompt": "string",
-            "results": [
-                {
-                    "message": "Hello! I'm a friendly AI, here's a node graph for you.",
-                    "graph": {
-                        "nodes": [
-                            {
-                                "id": "1",
-                                "name": "DHC-8-402 Dash 8, G-JEDI",
-                                "category": "Aircraft"
-                            },
-                            {
-                                "id": "2",
-                                "name": "AC Electrical System",
-                                "category": "System"
-                            },
-                            {
-                                "id": "3",
-                                "name": "Wiring Loom",
-                                "category": "Component"
-                            },
-                            {
-                                "id": "4",
-                                "name": "Chafing due to blind rivet",
-                                "category": "FailureMode"
-                            },
-                            {
-                                "id": "5",
-                                "name": "AC bus and generator warnings",
-                                "category": "Symptom"
-                            },
-                            {
-                                "id": "6",
-                                "name": "Replace blind rivets with solid rivets",
-                                "category": "Resolution"
-                            },
-                            {
-                                "id": "7",
-                                "name": "Incident: AC System Failure",
-                                "category": "Incident"
-                            }
-                        ],
-                        "links": [
-                            {
-                                "source": "1",
-                                "target": "7",
-                                "label": "OCCURRED_ON"
-                            },
-                            {
-                                "source": "2",
-                                "target": "3",
-                                "label": "PART_OF"
-                            },
-                            {
-                                "source": "4",
-                                "target": "2",
-                                "label": "AFFECTS"
-                            },
-                            {
-                                "source": "4",
-                                "target": "5",
-                                "label": "LEADS_TO"
-                            },
-                            {
-                                "source": "4",
-                                "target": "6",
-                                "label": "RESOLVED_BY"
-                            }
-                        ],
-                        "categories": [
-                            {
-                                "name": "Aircraft"
-                            },
-                            {
-                                "name": "System"
-                            },
-                            {
-                                "name": "Component"
-                            },
-                            {
-                                "name": "FailureMode"
-                            },
-                            {
-                                "name": "Symptom"
-                            },
-                            {
-                                "name": "Resolution"
-                            },
-                            {
-                                "name": "Incident"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "message": "Hey! This message has no graph, just checking in!"
-                },
-                {
-                    "message": "Here\u2019s another graph! Let me know what you think.",
-                    "graph": {
-                        "nodes": [
-                            {
-                                "id": "1",
-                                "name": "DHC-8-402 Dash 8, G-JEDI",
-                                "category": "Aircraft"
-                            },
-                            {
-                                "id": "2",
-                                "name": "AC Electrical System",
-                                "category": "System"
-                            },
-                            {
-                                "id": "3",
-                                "name": "Wiring Loom",
-                                "category": "Component"
-                            },
-                            {
-                                "id": "4",
-                                "name": "Chafing due to blind rivet",
-                                "category": "FailureMode"
-                            },
-                            {
-                                "id": "5",
-                                "name": "AC bus and generator warnings",
-                                "category": "Symptom"
-                            },
-                            {
-                                "id": "6",
-                                "name": "Replace blind rivets with solid rivets",
-                                "category": "Resolution"
-                            },
-                            {
-                                "id": "7",
-                                "name": "Incident: AC System Failure",
-                                "category": "Incident"
-                            }
-                        ],
-                        "links": [
-                            {
-                                "source": "1",
-                                "target": "7",
-                                "label": "OCCURRED_ON"
-                            },
-                            {
-                                "source": "2",
-                                "target": "3",
-                                "label": "PART_OF"
-                            },
-                            {
-                                "source": "4",
-                                "target": "2",
-                                "label": "AFFECTS"
-                            },
-                            {
-                                "source": "4",
-                                "target": "5",
-                                "label": "LEADS_TO"
-                            },
-                            {
-                                "source": "4",
-                                "target": "6",
-                                "label": "RESOLVED_BY"
-                            }
-                        ],
-                        "categories": [
-                            {
-                                "name": "Aircraft"
-                            },
-                            {
-                                "name": "System"
-                            },
-                            {
-                                "name": "Component"
-                            },
-                            {
-                                "name": "FailureMode"
-                            },
-                            {
-                                "name": "Symptom"
-                            },
-                            {
-                                "name": "Resolution"
-                            },
-                            {
-                                "name": "Incident"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "message": "Hope you're enjoying this! No graph this time."
-                },
-                {
-                    "message": "Here's a final graph to wrap things up!",
-                    "graph": {
-                        "nodes": [
-                            {
-                                "id": "1",
-                                "name": "DHC-8-402 Dash 8, G-JEDI",
-                                "category": "Aircraft"
-                            },
-                            {
-                                "id": "2",
-                                "name": "AC Electrical System",
-                                "category": "System"
-                            },
-                            {
-                                "id": "3",
-                                "name": "Wiring Loom",
-                                "category": "Component"
-                            },
-                            {
-                                "id": "4",
-                                "name": "Chafing due to blind rivet",
-                                "category": "FailureMode"
-                            },
-                            {
-                                "id": "5",
-                                "name": "AC bus and generator warnings",
-                                "category": "Symptom"
-                            },
-                            {
-                                "id": "6",
-                                "name": "Replace blind rivets with solid rivets",
-                                "category": "Resolution"
-                            },
-                            {
-                                "id": "7",
-                                "name": "Incident: AC System Failure",
-                                "category": "Incident"
-                            }
-                        ],
-                        "links": [
-                            {
-                                "source": "1",
-                                "target": "7",
-                                "label": "OCCURRED_ON"
-                            },
-                            {
-                                "source": "2",
-                                "target": "3",
-                                "label": "PART_OF"
-                            },
-                            {
-                                "source": "4",
-                                "target": "2",
-                                "label": "AFFECTS"
-                            },
-                            {
-                                "source": "4",
-                                "target": "5",
-                                "label": "LEADS_TO"
-                            },
-                            {
-                                "source": "4",
-                                "target": "6",
-                                "label": "RESOLVED_BY"
-                            }
-                        ],
-                        "categories": [
-                            {
-                                "name": "Aircraft"
-                            },
-                            {
-                                "name": "System"
-                            },
-                            {
-                                "name": "Component"
-                            },
-                            {
-                                "name": "FailureMode"
-                            },
-                            {
-                                "name": "Symptom"
-                            },
-                            {
-                                "name": "Resolution"
-                            },
-                            {
-                                "name": "Incident"
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-    },
-    {
-        "timestamp": "2025-02-12T15:01:59.056980Z",
-        "response": {
-            "status": 200,
-            "query": "Hi how do I free up breakes",
-            "chat_name": "string",
-            "system_prompt": "string",
+            "query": "hhh",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
             "results": [
                 {
                     "message": "TODO: placeholder response."
@@ -307,12 +14,12 @@
         }
     },
     {
-        "timestamp": "2025-02-12T15:12:20.173638Z",
+        "timestamp": "2025-02-17T03:00:19.438560Z",
         "response": {
             "status": 200,
-            "query": "string",
+            "query": "Sammyboy",
             "chat_name": "Canned response",
-            "system_prompt": "string",
+            "system_prompt": "You are a helpful AI assistant.",
             "results": [
                 {
                     "message": "Hello! I'm a friendly AI, here's a node graph for you.",
@@ -600,12 +307,12 @@
         }
     },
     {
-        "timestamp": "2025-02-12T15:17:52.406217Z",
+        "timestamp": "2025-02-17T03:01:04.758259Z",
         "response": {
             "status": 200,
-            "query": "How do I loosten brakes",
+            "query": "Great guy...",
             "chat_name": "Canned response",
-            "system_prompt": "string",
+            "system_prompt": "You are a helpful AI assistant.",
             "results": [
                 {
                     "message": "Hello! I'm a friendly AI, here's a node graph for you.",
@@ -888,6 +595,398 @@
                             }
                         ]
                     }
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:15:34.198298Z",
+        "response": {
+            "status": 200,
+            "query": "Testing testing...",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:16:16.815742Z",
+        "response": {
+            "status": 200,
+            "query": "Big Sammy Boy",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:16:42.926932Z",
+        "response": {
+            "status": 200,
+            "query": "Big Sam",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:16:49.405401Z",
+        "response": {
+            "status": 200,
+            "query": "Sammo",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:26:32.168755Z",
+        "response": {
+            "status": 200,
+            "query": "We are good",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:26:44.777348Z",
+        "response": {
+            "status": 200,
+            "query": "Let us go there...",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:30:01.150510Z",
+        "response": {
+            "status": 200,
+            "query": "There is more to come",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:33:17.664555Z",
+        "response": {
+            "status": 200,
+            "query": "Amazing God",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:33:32.426239Z",
+        "response": {
+            "status": 200,
+            "query": "God is so so so good to me mehn",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:33:54.470484Z",
+        "response": {
+            "status": 200,
+            "query": "Again and again",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:35:52.847885Z",
+        "response": {
+            "status": 200,
+            "query": "God is so good to me",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:35:59.896555Z",
+        "response": {
+            "status": 200,
+            "query": "Again and again",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:36:08.285432Z",
+        "response": {
+            "status": 200,
+            "query": "Again and again",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:37:55.805076Z",
+        "response": {
+            "status": 200,
+            "query": "We are good",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:38:01.480574Z",
+        "response": {
+            "status": 200,
+            "query": "Glory to God",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:38:11.940321Z",
+        "response": {
+            "status": 200,
+            "query": "Amen and Amen",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:40:19.725281Z",
+        "response": {
+            "status": 200,
+            "query": "i",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:40:24.118389Z",
+        "response": {
+            "status": 200,
+            "query": "g",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:40:33.904334Z",
+        "response": {
+            "status": 200,
+            "query": "g",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:48:03.307328Z",
+        "response": {
+            "status": 200,
+            "query": "B",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:48:07.293573Z",
+        "response": {
+            "status": 200,
+            "query": "B",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:48:14.388413Z",
+        "response": {
+            "status": 200,
+            "query": "B",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:50:40.521923Z",
+        "response": {
+            "status": 200,
+            "query": "B",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:50:44.873458Z",
+        "response": {
+            "status": 200,
+            "query": "B",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:50:50.943540Z",
+        "response": {
+            "status": 200,
+            "query": "B",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:50:54.098285Z",
+        "response": {
+            "status": 200,
+            "query": "B",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:50:58.566377Z",
+        "response": {
+            "status": 200,
+            "query": "B",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    },
+    {
+        "timestamp": "2025-02-17T17:51:45.528103Z",
+        "response": {
+            "status": 200,
+            "query": "B",
+            "chat_name": "hhh",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
                 }
             ]
         }

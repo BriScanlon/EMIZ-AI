@@ -63,12 +63,8 @@ services:
     environment:
       - NVIDIA_VISIBLE_DEVICES=all # Expose all GPUs
       - NVIDIA_DRIVER_CAPABILITIES=all # Grant all driver capabilities
-<<<<<<< HEAD
-    #command: /bin/sh -c "ollama pull phi4"
-=======
     
 
->>>>>>> e52d97649cb6efd878fcb6a72f2ee0ae8b5fb027
     restart: unless-stopped
 
 networks:

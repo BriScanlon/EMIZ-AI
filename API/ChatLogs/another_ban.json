@@ -1,0 +1,16 @@
+[
+    {
+        "timestamp": "2025-02-13T14:52:27.366705Z",
+        "response": {
+            "status": 200,
+            "query": "\nanother banga",
+            "chat_name": "\nanother_ban",
+            "system_prompt": "You are a helpful AI assistant.",
+            "results": [
+                {
+                    "message": "TODO: placeholder response."
+                }
+            ]
+        }
+    }
+]
