@@ -12,28 +12,31 @@ export default function Layout1() {
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
   return (
-    <SearchProvider>
-      <div className={styles.layout}>
-        {/* Top Navigation */}
-        <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+    <div className={styles.layout}>
+      {/* Top Navigation */}
+      <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
-        {/* Main Content */}
-        <div className={styles.content}>
+      {/* Main Content */}
+      <div className={styles.content}>
+        {/* Sidebar */}
+        <aside
+          className={`${styles.sidebar} ${
+            !isSidebarOpen ? styles.collapsed : ""
+          }`}
+        >
+          <Sidebar isSidebarOpen={isSidebarOpen} />
+        </aside>
 
-          {/* Sidebar */}
-          <aside className={`${styles.sidebar} ${!isSidebarOpen ? styles.collapsed : ""}`}>
-            <Sidebar isSidebarOpen={isSidebarOpen} />
-          </aside>
-
-          {/* Main Section */}
-          <main className={`${styles.main} ${!isSidebarOpen ? styles.expanded : ""}`}>
-            <Outlet/>
-          </main>
-        </div>
-
-        {/* Footer */}
-        <Footer />
+        {/* Main Section */}
+        <main
+          className={`${styles.main} ${!isSidebarOpen ? styles.expanded : ""}`}
+        >
+          <Outlet />
+        </main>
       </div>
-    </SearchProvider>
+
+      {/* Footer */}
+      <Footer />
+    </div>
   );
 }

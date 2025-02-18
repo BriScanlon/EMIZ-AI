@@ -20,7 +20,9 @@ const PdfUpload = () => {
   };
 
   const validateAndSetFiles = (files) => {
-    const validFiles = files.filter((file) => file.type === "application/pdf" && file.size <= 5 * 1024 * 1024);
+    const validFiles = files.filter(
+      (file) => file.type === "application/pdf" && file.size <= 5 * 1024 * 1024
+    );
     if (validFiles.length !== files.length) {
       setError("Some files were invalid or exceeded 5MB size limit.");
     } else {
@@ -38,12 +40,11 @@ const PdfUpload = () => {
     setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
   };
 
-  const handleUpload = async (file, index) => {
+  const handleUpload = (file, index) => {
     const formData = new FormData();
     formData.append("file", file);
-    
-    
-    await fetch("http://localhost:8085/documents", {
+
+    fetch("/upload", {
       method: "POST",
       body: formData,
     })
@@ -55,7 +56,11 @@ const PdfUpload = () => {
           setError(`Failed to upload ${file.name}. Please try again.`);
         }
       })
-      .catch(() => setError(`Network error while uploading ${file.name}. Please try again.`));
+      .catch(() =>
+        setError(
+          `Network error while uploading ${file.name}. Please try again.`
+        )
+      );
   };
 
   const openFileDialog = () => {
@@ -72,7 +77,9 @@ const PdfUpload = () => {
           onDragOver={handleDragOver}
         >
           <FiUploadCloud className="upload-icon" />
-          <p className="upload-instructions">Drag & drop PDF files here, or click to select files.</p>
+          <p className="upload-instructions">
+            Drag & drop PDF files here, or click to select files.
+          </p>
           <input
             ref={fileInputRef}
             type="file"
@@ -88,12 +95,24 @@ const PdfUpload = () => {
             {uploadedFiles.map((file, index) => (
               <li key={index} className="file-item">
                 <span className="file-name">{file.name}</span>
-                <button onClick={() => handleUpload(file, index)} className="upload-btn">Upload</button>
-                <button onClick={() => handleRemoveFile(index)} className="remove-btn">Remove</button>
+                <button
+                  onClick={() => handleUpload(file, index)}
+                  className="upload-btn"
+                >
+                  Upload
+                </button>
+                <button
+                  onClick={() => handleRemoveFile(index)}
+                  className="remove-btn"
+                >
+                  Remove
+                </button>
               </li>
             ))}
           </ul>
-          <button onClick={openFileDialog} className="add-more-btn">Add More Files</button>
+          <button onClick={openFileDialog} className="add-more-btn">
+            Add More Files
+          </button>
         </>
       )}
       {error && <p className="error-message">{error}</p>}
