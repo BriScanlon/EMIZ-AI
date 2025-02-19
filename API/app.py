@@ -34,6 +34,7 @@ from helpers.vector_search import vector_search
 from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT
 from llmconfig.canned_response import canned_response
 from utils import slugify, save_file, load_file
+from helpers.embed_text import embed_text
 
 # environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
@@ -569,3 +570,23 @@ async def process_batch():
         yield f"data: {{\"message\": \"Batch processing completed.\"}}\n\n"
 
     return StreamingResponse(process_files(), media_type="text/event-stream")
+
+# endpoint for saving query to the database
+@app.post("/query/save/")
+async def save_query():
+    # define the query and response to be saved
+    query = llm_current_chat_history[0].get("query")
+    message = llm_current_chat_history[0].get("results"[0].get("message"))
+    
+    # check that query and message exists
+    if not query and message:
+        return HTTPException(status_code=400, detail="No chat currently loaded")
+    
+    # embed text into vector IDs
+    query_embeddings = embed_text(query)
+    message_embeddings = embed_text(message)
+    
+    # save embeddings to neo4j database as entity type response and connect to chunks that the response is related to
+    
+    
+    print()
