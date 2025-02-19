@@ -9,3 +9,4 @@ API/helpers/__pycache__/
 ollama_models/
 /API/llmconfig/__pycache__
 /API/batch
+API/ChatLogs/

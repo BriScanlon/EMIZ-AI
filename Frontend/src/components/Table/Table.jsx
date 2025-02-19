@@ -1,20 +1,25 @@
-import { useEffect, useState } from 'react';
-import { getNodeData } from '../../services/api';
-import styles from './Table.module.scss'; // Import the module
+import { useEffect, useState } from "react";
+import { getNodeData } from "../../services/api";
+import styles from "./Table.module.scss"; // Import the module
+import Spinner from "../../ui/Spinner/Spinner";
 
 const Table = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    const fetchedData = getNodeData();
-    if (fetchedData) {
-      setData(fetchedData);
-    } else {
-      console.error("Error: No data received.");
-    }
-  }, []);
+    const fetchData = async () => {
+      try {
+        const fetchedData = await getNodeData();
+        setData(fetchedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  if (!data) return <p>Loading data...</p>;
+    fetchData();
+  }, [data]);
+
+  if (!data) return <Spinner />;
 
   return (
     <div className={styles.tableContainer}>
@@ -39,11 +44,13 @@ const renderNodesTable = (data) => {
         </tr>
       </thead>
       <tbody>
-        {data.nodes.map(node => (
+        {data.nodes.map((node) => (
           <tr key={node.id}>
             <td className={styles.td}>{node.id}</td>
             <td className={styles.td}>{node.name}</td>
-            <td className={styles.td}>{data.categories[node.category]?.name || "Unknown"}</td>
+            <td className={styles.td}>
+              {data.categories[node.category]?.name || "Unknown"}
+            </td>
           </tr>
         ))}
       </tbody>
@@ -64,7 +71,9 @@ const renderCategoriesTable = (data) => {
         {data.categories.map((category, index) => (
           <tr key={index}>
             <td className={styles.td}>{category.name}</td>
-            <td className={styles.td}>{category.description || 'No description'}</td>
+            <td className={styles.td}>
+              {category.description || "No description"}
+            </td>
           </tr>
         ))}
       </tbody>
@@ -85,9 +94,15 @@ const renderLinksTable = (data) => {
       <tbody>
         {data.links.map((link, index) => (
           <tr key={index}>
-            <td className={styles.td}>{data.nodes.find(node => node.id === link.source)?.name || "Unknown"}</td>
-            <td className={styles.td}>{data.nodes.find(node => node.id === link.target)?.name || "Unknown"}</td>
-            <td className={styles.td}>{'Affects'}</td>
+            <td className={styles.td}>
+              {data.nodes.find((node) => node.id === link.source)?.name ||
+                "Unknown"}
+            </td>
+            <td className={styles.td}>
+              {data.nodes.find((node) => node.id === link.target)?.name ||
+                "Unknown"}
+            </td>
+            <td className={styles.td}>{"Affects"}</td>
           </tr>
         ))}
       </tbody>
