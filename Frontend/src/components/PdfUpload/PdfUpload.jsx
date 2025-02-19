@@ -40,11 +40,12 @@ const PdfUpload = () => {
     setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
   };
 
-  const handleUpload = (file, index) => {
+  const handleUpload = async (file, index) => {
     const formData = new FormData();
     formData.append("file", file);
 
-    fetch("/upload", {
+
+    await fetch("http://localhost:8085/documents", {
       method: "POST",
       body: formData,
     })
@@ -56,11 +57,7 @@ const PdfUpload = () => {
           setError(`Failed to upload ${file.name}. Please try again.`);
         }
       })
-      .catch(() =>
-        setError(
-          `Network error while uploading ${file.name}. Please try again.`
-        )
-      );
+      .catch(() => setError(`Network error while uploading ${file.name}. Please try again.`));
   };
 
   const openFileDialog = () => {
