@@ -34,7 +34,7 @@ def canned_response():
     messages = [
         "Hello! I'm a friendly AI, here's a node graph for you.",
         "Hey! This message has no graph, just checking in!",
-        "Here’s another graph! Let me know what you think.",
+        "Heres another graph! Let me know what you think.",
         "Hope you're enjoying this! No graph this time.",
         "Here's a final graph to wrap things up!"
     ]
