@@ -32,9 +32,10 @@ import Chat from "../../components/Chat/Chat";
 import QueryForm from "../../components/QueryForm/QueryForm";
 import SuggestedQuestions from "../../components/SuggestedQuestions/SuggestedQuestions";
 import { useSearch } from "../../contexts/SearchContext";
+import styles from "./main.module.scss";
 
 const Main = () => {
-  const { queries, recentSearches } = useSearch(); // Get recent searches from context
+  const { isNewChat, queries, recentSearches } = useSearch(); // Get recent searches from context
 
   // const [queries, setQueries] = useState([]);
   // const [queryResponses, setQueryResponses] = useState([]);
@@ -49,21 +50,24 @@ const Main = () => {
   // console.log(queries);
   // console.log(queryResponses);
   return (
-    <div>
-      {!queries || !recentSearches || recentSearches.length === 0 ? (
-        <SuggestedQuestions />
-      ) : (
-        <Chat
-        // queries={queries}
-        // queryResponses={queryResponses}
+    <div className={styles.main}>
+      <div>
+        {/* {!queries || !recentSearches || recentSearches.length === 0 ? ( */}
+        {isNewChat ? (
+          <SuggestedQuestions />
+        ) : (
+          <Chat
+          // queries={queries}
+          // queryResponses={queryResponses}
+          // handleNewQuery={handleNewQuery}
+          // handleNewResponse={handleNewResponse}
+          />
+        )}
+        <QueryForm
         // handleNewQuery={handleNewQuery}
         // handleNewResponse={handleNewResponse}
         />
-      )}
-      <QueryForm
-      // handleNewQuery={handleNewQuery}
-      // handleNewResponse={handleNewResponse}
-      />
+      </div>
     </div>
   );
 };

@@ -13,6 +13,8 @@ function SearchProvider({ children }) {
   const [queries, setQueries] = useState([]);
   const [queryResponses, setQueryResponses] = useState([]);
 
+  const [isNewChat, setIsNewChat] = useState(false); // New state for tracking new chat event
+
   const { chats, isLoading } = useChats();
 
   const handleNewQuery = (query) => {
@@ -44,7 +46,8 @@ function SearchProvider({ children }) {
 
   const onClickNewChat = () => {
     console.log("Starting new chat...");
-    setRecentSearches([]);
+    setIsNewChat(true); // Update the state to indicate a new chat has started
+    // setRecentSearches([]);
     setQueries([]);
     setSelectedSearch(null);
     localStorage.removeItem("selectedSearch"); // Clear local storage when starting new chat
@@ -55,6 +58,7 @@ function SearchProvider({ children }) {
   const handleRecentSearchClick = (search) => {
     console.log("Clicked on recent search:", search);
     setSelectedSearch(search);
+    setIsNewChat(false); // Reset the new chat state when a recent search is clicked
   };
 
   return (
@@ -69,6 +73,7 @@ function SearchProvider({ children }) {
         queryResponses,
         handleNewQuery,
         handleNewResponse,
+        isNewChat,
       }}
     >
       {children}
