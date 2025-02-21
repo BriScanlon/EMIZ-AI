@@ -7,44 +7,12 @@ $hover-color: #565869;
 $main-bg: #f4f4f4;
 $main-text-color: #333;
 
-.main-content {
+.main {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  justify-content: space-between;
   width: 100vw;
-  background-color: $main-bg;
+  align-items: center; // Use align-items to center horizontally
+  // width: 100vw; // Uncomment to make the container take full viewport width
+  background-color: yellow;
 }
-
-.sidebar-main {
-  display: flex;
-  flex-grow: 1;
-  transition: all 0.3s ease-in-out; // Smooth transition when toggling sidebar
-}
-
-.sidebar {
-  width: 250px;
-  transition: width 0.3s ease-in-out;
-}
-
-.sidebar.collapsed {
-  width: 0; // Hide sidebar smoothly
-  overflow: hidden;
-}
-
-.main-section {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center; // Centers content horizontally and vertically
-  padding: 2rem;
-  transition: margin-left 0.3s ease-in-out;
-  width: calc(100% - 250px); // Adjust width based on sidebar
-
-  &.full-width {
-    width: 100%; // Take full width when sidebar is hidden
-  }
-
-  background-color: #f4f4f4;
-}
-
-
