@@ -35,7 +35,7 @@ import { useSearch } from "../../contexts/SearchContext";
 import styles from "./main.module.scss";
 
 const Main = () => {
-  const { queries, recentSearches } = useSearch(); // Get recent searches from context
+  const { isNewChat, queries, recentSearches } = useSearch(); // Get recent searches from context
 
   // const [queries, setQueries] = useState([]);
   // const [queryResponses, setQueryResponses] = useState([]);
@@ -52,7 +52,8 @@ const Main = () => {
   return (
     <div className={styles.main}>
       <div>
-        {!queries || !recentSearches || recentSearches.length === 0 ? (
+        {/* {!queries || !recentSearches || recentSearches.length === 0 ? ( */}
+        {isNewChat ? (
           <SuggestedQuestions />
         ) : (
           <Chat
