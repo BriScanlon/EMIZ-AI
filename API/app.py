@@ -183,13 +183,66 @@ async def post_documents(file: UploadFile = File(...)):
             "message": f"Document '{file.filename}' processed and stored in Neo4j.",
             "document_id": document_id,
             "total_chunks": len(chunks),
-        }
-
+        }  
+    
     except Exception as e:
         logging.error(f"Error processing PDF: {e}")
         raise HTTPException(
             status_code=500, detail=f"Internal error during processing: {e}"
         )
+
+@app.post("/understanding")
+async def understanding(file: UploadFile = File(...)):
+    # new section to experiment with creating a Corporate Understanding of the report, using a retreived Corporate Memory
+    # knowledge graph from Neo4j.  We will send the Corporate memory JSON along with the text of the report to the LLM
+    # to generate a summary of the report that is in line with the Corporate Memory.
+    # We will then store the summary in the Neo4j database as a new node with a relationship to the original document.
+    
+    # check for file
+    if not file:
+        raise HTTPException(status_code=400, detail="File is required")
+    
+    # Validate file type (PDF only)
+    allowed_extensions = {"pdf"}
+    file_extension = file.filename.split(".")[-1].lower()
+    if file_extension not in allowed_extensions:
+        raise HTTPException(status_code=400, detail="Unsupported file type")
+    
+    # process document using process_document function
+    file_content = await file.read()
+    if not file_content:
+        raise HTTPException(status_code=400, detail="File is empty or unreadable")
+    
+    # retrieve Corporate Memory from neo4j
+    query = """
+    MATCH (n:CM_Category)-[r:HAS]->(m:CM_Category)
+    RETURN n, r, m
+    """
+    
+    try:
+        # Step 1, retrieve the Corporate Memory knowledge graph from Neo4j
+        with GraphDatabase.driver(
+            NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD)
+        ) as driver:
+            with driver.session() as session:
+                results = session.run(query)
+                memory_graph = []
+                for record in results:
+                    memory_graph.append({
+                        "from": record["n"]["name"],
+                        "relationship": record["r"].type,
+                        "to": record["m"]["name"]
+                    })
+
+        # Step 2, send the Corporate Memory and the text of the report to the LLM
+        llm_response = llm_text_response(prompt=f"{file_content}, {memory_graph}")
+        return {"message": llm_response}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving Corporate Memory from Neo4j: {e}")
+        
+        # Step 3, store the retruned Neo4j knowledge graph of the report as the Corporate Understanding Graph, subsequent
+        # Documents will be merged into this graph to create a Corporate Understanding of the company.
+      
 
 @app.post("/query")
 async def query_graph_with_cypher(request: QueryRequest):
