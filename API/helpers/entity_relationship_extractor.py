@@ -48,22 +48,24 @@ async def entity_relationship_extractor(processed_text: str):
     embedder = embed_text(processed_text)
 
     # Step 1: Create and Run the KG Pipeline
-    
-    kg_builder = SimpleKGPipeline(
-        llm=llm_ollama,
-        driver=neo4j_driver,
-        embedder=embedder,
-        text_splitter=text_splitter,
-        from_pdf=False,  # We're using processed text
-        entities=[
-            {"label": label, "properties": [{"name": "name", "type": "STRING"}]}
-            for label in node_labels
-        ],
-        relations=[{"label": rel} for rel in rel_types],
-        perform_entity_resolution=True,  # Merge duplicates
-        neo4j_database="neo4j",
-        on_error="RAISE",
-    )
+    try:
+      kg_builder = SimpleKGPipeline(
+          llm=llm_ollama,
+          driver=neo4j_driver,
+          embedder=embedder,
+          text_splitter=text_splitter,
+          from_pdf=False, 
+          entities=[
+              {"label": label, "properties": [{"name": "name", "type": "STRING"}]}
+              for label in node_labels
+          ],
+          relations=[{"label": rel} for rel in rel_types],
+          perform_entity_resolution=True,
+          neo4j_database="neo4j",
+          on_error="RAISE",
+      )
 
-    await kg_builder.run_async(text=processed_text)
+      await kg_builder.run_async(text=processed_text)
+    except Exception as e:
+        return {"message": f"Entity and relationship extraction failed: {str(e)}"}
     return {"message": "Entity and relationship extraction completed successfully."}
