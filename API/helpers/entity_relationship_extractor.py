@@ -5,6 +5,10 @@ from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
 from langchain_ollama.llms import OllamaLLM
 import os
 
+# helpers
+from helpers.embed_text import embed_text
+from chunk_text import chunk_text
+
 # Reuse existing Neo4j and Ollama LLM settings from the main app
 NEO4J_URI = "bolt://neo4j-db-container"
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
@@ -33,6 +37,11 @@ node_labels = [
 # Corporate Memory relationship types
 rel_types = ["HAS"]
 
+# embedder
+embedder = embed_text()
+
+# chunker
+text_splitter = chunk_text()
 
 async def entity_relationship_extractor(processed_text: str):
     """
@@ -43,6 +52,8 @@ async def entity_relationship_extractor(processed_text: str):
     kg_builder = SimpleKGPipeline(
         llm=llm_ollama,
         driver=neo4j_driver,
+        embedder=embedder,
+        text_splitter=text_splitter,
         from_pdf=False,  # We're using processed text
         entities=[
             {"label": label, "properties": [{"name": "name", "type": "STRING"}]}
