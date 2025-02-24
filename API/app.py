@@ -31,7 +31,7 @@ from neo4j import GraphDatabase
 from helpers.process_document import process_document
 from helpers.chunk_text import chunk_text
 from helpers.vector_search import vector_search
-# from helpers.entity_relationship_extractor import entity_relationship_extractor
+from helpers.entity_relationship_extractor import entity_relationship_extractor
 from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT
 from llmconfig.canned_response import canned_response
 from utils import slugify, save_file, load_file
@@ -226,8 +226,8 @@ async def understanding(file: UploadFile = File(...)):
     
     try:
         # Call the new entity and relationship extractor pipeline
-        response = {"message": "Placeholder for entity extraction"}
-        # response = await entity_relationship_extractor(processed_text)
+        # response = {"message": "Placeholder for entity extraction"}
+        response = await entity_relationship_extractor(processed_text)
         return response
 
     except Exception as e:
