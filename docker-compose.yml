@@ -52,16 +52,23 @@ services:
     restart: unless-stopped
 
   ollama:
-    image: ollama/ollama:latest
-    container_name: ollama-container
+    build:
+      context: ./ollama
+      dockerfile: Dockerfile
+    container_name: ollama_phi4
     ports:
-      - "${OLLAMA_PORT_E:-11434}:${OLLAMA_PORT_I:-11434}"
+      - "11434:11434"
     volumes:
-      - ./ollama:/var/lib/ollama
-    runtime: nvidia # Enable NVIDIA runtime for GPU access
+      - ./ollama_data:/root/.ollama
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
     environment:
-      - NVIDIA_VISIBLE_DEVICES=all # Expose all GPUs
-      - NVIDIA_DRIVER_CAPABILITIES=all # Grant all driver capabilities
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
     restart: unless-stopped
 
   frontend:
@@ -70,10 +77,10 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     ports:
-    - "${FRONTEND_I:-5173}:${FRONTEND_E:-5173}"
+      - "${FRONTEND_I:-5173}:${FRONTEND_E:-5173}"
     restart: unless-stopped
     depends_on:
-    - api-service
+      - api-service
 
 networks:
   default:
