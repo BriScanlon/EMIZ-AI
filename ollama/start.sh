@@ -1,4 +1,4 @@
-#!/bin/sh
+﻿#!/bin/sh
 # start.sh - Starts Ollama server and creates the model if missing
 
 set -e
