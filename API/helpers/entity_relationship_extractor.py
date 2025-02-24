@@ -87,7 +87,7 @@ async def entity_relationship_extractor(processed_text: str):
             {"label": "Mitigation", "properties": [{"name": "name", "type": "STRING"}]},
         ],
         relations=[{"label": "HAS"}],
-        potential_schema=[
+        possible_schema=[
             ("Concept", "HAS", "Aircraft"),
             ("Aircraft", "HAS", "Component"),
             ("Component", "HAS", "Feature"),
