@@ -13,3 +13,4 @@ PyPDF2
 python-docx
 sentence_transformers
 Ollama
+eval-type-backport
