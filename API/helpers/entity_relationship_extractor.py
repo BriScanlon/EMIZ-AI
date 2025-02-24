@@ -7,7 +7,7 @@ import os
 
 # helpers
 from helpers.embed_text import embed_text
-from chunk_text import chunk_text
+from helpers.chunk_text import chunk_text
 
 # Reuse existing Neo4j and Ollama LLM settings from the main app
 NEO4J_URI = "bolt://neo4j-db-container"
