@@ -17,7 +17,8 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON
 
 # Install Python packages
 COPY requirements.txt /app/requirements.txt
-RUN pip install "neo4j-graphrag[ollama]"
+RUN python3.9 -m pip install neo4j-graphrag==1.4.2
+RUN python3.9 -m pip install neo4j-graphrag[ollama]
 RUN pip install --no-cache-dir -r /app/requirements.txt
 WORKDIR /app
 
