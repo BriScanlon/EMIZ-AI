@@ -1,9 +1,0 @@
-FROM ollama/ollama:latest
-
-COPY Modelfile /app/Modelfile
-
-WORKDIR /app
-
-EXPOSE 11434
-
-CMD ["ollama", "serve"]
