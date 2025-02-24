@@ -43,10 +43,11 @@ NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "TestPassword")
 
 # ollama settings
 llm_default_model="phi4"
+llm_max_ctx_model="phi4_max_ctx"
 llm_default_temp=0
 llm_port = os.getenv("OLLAMA_PORT_I", "11434")
 llm_base_url="http://ollama-container:{}".format(llm_port)
-llm_graph         = OllamaLLM(base_url=llm_base_url, model=llm_default_model, temperature=llm_default_temp)     # Used by the cypher query
+llm_graph         = OllamaLLM(base_url=llm_base_url, model=llm_max_ctx_model, temperature=llm_default_temp)     # Used by the cypher query
 llm_text_response = OllamaLLM(base_url=llm_base_url, model=llm_default_model, temperature=llm_default_temp)     # Used to create the final text output
 llm_transformer   = LLMGraphTransformer(llm=llm_graph)
 
@@ -244,7 +245,7 @@ async def understanding(file: UploadFile = File(...)):
                     })
 
         # Step 2, send the Corporate Memory and the text of the report to the LLM
-        llm_response = llm_text_response(prompt=f"{processed_text}, {memory_graph}", num_predict=16000, max_tokens=16000)
+        llm_response = llm_graph(prompt=f"{processed_text}, {memory_graph}")
         return {"message": llm_response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving Corporate Memory from Neo4j: {e}")
