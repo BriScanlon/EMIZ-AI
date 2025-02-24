@@ -1,0 +1,16 @@
+FROM ollama/ollama:latest
+
+# Copy the Modelfile into the container
+COPY Modelfile /app/Modelfile
+
+# Set working directory
+WORKDIR /app
+
+# Create the customized model
+RUN ollama create -f Modelfile phi4
+
+# Expose default port
+EXPOSE 11434
+
+# Run Ollama when the container starts
+CMD ["ollama", "serve"]

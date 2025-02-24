@@ -4,7 +4,6 @@ API/__pycache__/
 API/venv
 nvidia
 package-lock.json
-ollama/
 API/helpers/__pycache__/
 ollama_models/
 /API/llmconfig/__pycache__
