@@ -2,12 +2,6 @@
 
 from neo4j import GraphDatabase
 from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
-from neo4j_graphrag.experimental.components.schema import (
-    SchemaBuilder,
-    SchemaEntity,
-    SchemaProperty,
-    SchemaRelation,
-)
 from langchain_ollama.llms import OllamaLLM
 import os
 
@@ -25,76 +19,36 @@ llm_ollama = OllamaLLM(base_url=llm_base_url, model=llm_model, temperature=0)
 # Neo4j driver
 neo4j_driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
 
+# Corporate Memory node labels
+node_labels = [
+    "Concept",
+    "Aircraft",
+    "Component",
+    "Feature",
+    "Failure",
+    "Root_Cause",
+    "Mitigation",
+]
+
+# Corporate Memory relationship types
+rel_types = ["HAS"]
+
 
 async def entity_relationship_extractor(processed_text: str):
     """
     Runs the entity and relationship extraction pipeline based on the Corporate Memory schema.
     """
 
-    # Step 1: Define Corporate Memory Schema
-    schema_builder = SchemaBuilder()
-    await schema_builder.run(
-        entities=[
-            SchemaEntity(
-                label="Concept", properties=[SchemaProperty(name="name", type="STRING")]
-            ),
-            SchemaEntity(
-                label="Aircraft",
-                properties=[SchemaProperty(name="name", type="STRING")],
-            ),
-            SchemaEntity(
-                label="Component",
-                properties=[SchemaProperty(name="name", type="STRING")],
-            ),
-            SchemaEntity(
-                label="Feature", properties=[SchemaProperty(name="name", type="STRING")]
-            ),
-            SchemaEntity(
-                label="Failure", properties=[SchemaProperty(name="name", type="STRING")]
-            ),
-            SchemaEntity(
-                label="Root_Cause",
-                properties=[SchemaProperty(name="name", type="STRING")],
-            ),
-            SchemaEntity(
-                label="Mitigation",
-                properties=[SchemaProperty(name="name", type="STRING")],
-            ),
-        ],
-        relations=[SchemaRelation(label="HAS")],
-        possible_schema=[
-            ("Concept", "HAS", "Aircraft"),
-            ("Aircraft", "HAS", "Component"),
-            ("Component", "HAS", "Feature"),
-            ("Feature", "HAS", "Failure"),
-            ("Failure", "HAS", "Root_Cause"),
-            ("Root_Cause", "HAS", "Mitigation"),
-        ],
-    )
-
-    # Step 2: Create and Run the KG Pipeline
+    # Step 1: Create and Run the KG Pipeline
     kg_builder = SimpleKGPipeline(
         llm=llm_ollama,
         driver=neo4j_driver,
         from_pdf=False,  # We're using processed text
         entities=[
-            {"label": "Concept", "properties": [{"name": "name", "type": "STRING"}]},
-            {"label": "Aircraft", "properties": [{"name": "name", "type": "STRING"}]},
-            {"label": "Component", "properties": [{"name": "name", "type": "STRING"}]},
-            {"label": "Feature", "properties": [{"name": "name", "type": "STRING"}]},
-            {"label": "Failure", "properties": [{"name": "name", "type": "STRING"}]},
-            {"label": "Root_Cause", "properties": [{"name": "name", "type": "STRING"}]},
-            {"label": "Mitigation", "properties": [{"name": "name", "type": "STRING"}]},
+            {"label": label, "properties": [{"name": "name", "type": "STRING"}]}
+            for label in node_labels
         ],
-        relations=[{"label": "HAS"}],
-        possible_schema=[
-            ("Concept", "HAS", "Aircraft"),
-            ("Aircraft", "HAS", "Component"),
-            ("Component", "HAS", "Feature"),
-            ("Feature", "HAS", "Failure"),
-            ("Failure", "HAS", "Root_Cause"),
-            ("Root_Cause", "HAS", "Mitigation"),
-        ],
+        relations=[{"label": rel} for rel in rel_types],
         perform_entity_resolution=True,  # Merge duplicates
         neo4j_database="neo4j",
         on_error="RAISE",
