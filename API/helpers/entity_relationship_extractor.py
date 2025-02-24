@@ -37,18 +37,18 @@ node_labels = [
 # Corporate Memory relationship types
 rel_types = ["HAS"]
 
-# embedder
-embedder = embed_text()
-
-# chunker
-text_splitter = chunk_text()
-
 async def entity_relationship_extractor(processed_text: str):
     """
     Runs the entity and relationship extraction pipeline based on the Corporate Memory schema.
     """
+    # chunker
+    text_splitter = chunk_text(processed_text)
+    
+    # embedder
+    embedder = embed_text(processed_text)
 
     # Step 1: Create and Run the KG Pipeline
+    
     kg_builder = SimpleKGPipeline(
         llm=llm_ollama,
         driver=neo4j_driver,
