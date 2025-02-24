@@ -235,7 +235,7 @@ async def understanding(file: UploadFile = File(...)):
                     })
 
         # Step 2, send the Corporate Memory and the text of the report to the LLM
-        llm_response = llm_text_response(prompt=f"{file_content}, {memory_graph}")
+        llm_response = llm_text_response(prompt=f"{file_content}, {memory_graph}", num_predict=16000)
         return {"message": llm_response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving Corporate Memory from Neo4j: {e}")
