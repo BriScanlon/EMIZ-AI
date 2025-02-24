@@ -6,11 +6,11 @@ COPY Modelfile /app/Modelfile
 # Set working directory
 WORKDIR /app
 
-# Create the customized model
-RUN ollama create -f Modelfile phi4
-
-# Expose default port
+# Expose default port for Ollama
 EXPOSE 11434
 
-# Run Ollama when the container starts
-CMD ["ollama", "serve"]
+# Start Ollama server and create the model if it doesn't exist
+CMD ollama serve & \
+  sleep 5 && \
+  ollama create -f Modelfile phi4 || echo "Model already created" && \
+  wait
