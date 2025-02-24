@@ -2,6 +2,7 @@ langchain_community
 langchain_experimental
 langchain_ollama
 neo4j
+neo4j-graphrag
 neo4j-graphrag[ollama]
 pandas
 uvicorn
