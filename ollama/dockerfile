@@ -1,16 +1,17 @@
 FROM ollama/ollama:latest
 
-# Copy the Modelfile into the container
+# Copy necessary files
 COPY Modelfile /app/Modelfile
+COPY start.sh /app/start.sh
 
 # Set working directory
 WORKDIR /app
 
-# Expose default port for Ollama
+# Make the startup script executable
+RUN chmod +x /app/start.sh
+
+# Expose default Ollama port
 EXPOSE 11434
 
-# Start Ollama server and create the model if it doesn't exist
-CMD ollama serve & \
-  sleep 5 && \
-  ollama create -f Modelfile phi4 || echo "Model already created" && \
-  wait
+# Run the startup script instead of direct CMD
+ENTRYPOINT ["/app/start.sh"]
