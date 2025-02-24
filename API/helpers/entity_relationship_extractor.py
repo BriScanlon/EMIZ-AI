@@ -1,4 +1,4 @@
-entity_relationship_extractor.py
+# entity_relationship_extractor.py
 
 from neo4j import GraphDatabase
 from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
