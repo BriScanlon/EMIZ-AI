@@ -31,6 +31,7 @@ from neo4j import GraphDatabase
 from helpers.process_document import process_document
 from helpers.chunk_text import chunk_text
 from helpers.vector_search import vector_search
+from helpers.entity_relationship_extractor import entity_relationship_extractor
 from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT
 from llmconfig.canned_response import canned_response
 from utils import slugify, save_file, load_file
@@ -223,35 +224,13 @@ async def understanding(file: UploadFile = File(...)):
 
     processed_text = processed_data["text"]
     
-    # retrieve Corporate Memory from neo4j
-    query = """
-    MATCH (n:CM_Category)-[r:HAS]->(m:CM_Category)
-    RETURN n, r, m
-    """
-    
     try:
-        # Step 1, retrieve the Corporate Memory knowledge graph from Neo4j
-        with GraphDatabase.driver(
-            NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD)
-        ) as driver:
-            with driver.session() as session:
-                results = session.run(query)
-                memory_graph = []
-                for record in results:
-                    memory_graph.append({
-                        "from": record["n"]["name"],
-                        "relationship": record["r"].type,
-                        "to": record["m"]["name"]
-                    })
+        # Call the new entity and relationship extractor pipeline
+        response = await entity_relationship_extractor(processed_text)
+        return response
 
-        # Step 2, send the Corporate Memory and the text of the report to the LLM
-        llm_response = llm_graph(prompt=f"{processed_text}, {memory_graph}")
-        return {"message": llm_response}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error retrieving Corporate Memory from Neo4j: {e}")
-        
-        # Step 3, store the retruned Neo4j knowledge graph of the report as the Corporate Understanding Graph, subsequent
-        # Documents will be merged into this graph to create a Corporate Understanding of the company.
+        raise HTTPException(status_code=500, detail=f"Error during entity extraction: {e}")
       
 
 @app.post("/query")
