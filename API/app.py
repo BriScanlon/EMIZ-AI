@@ -213,6 +213,15 @@ async def understanding(file: UploadFile = File(...)):
     if not file_content:
         raise HTTPException(status_code=400, detail="File is empty or unreadable")
     
+    # Call `process_document()` to extract text from PDF
+    processed_data = process_document(file_content, file_extension)
+    if not processed_data or "text" not in processed_data:
+        raise HTTPException(
+            status_code=500, detail="Error processing PDF: no content extracted"
+        )
+
+    processed_text = processed_data["text"]
+    
     # retrieve Corporate Memory from neo4j
     query = """
     MATCH (n:CM_Category)-[r:HAS]->(m:CM_Category)
@@ -235,7 +244,7 @@ async def understanding(file: UploadFile = File(...)):
                     })
 
         # Step 2, send the Corporate Memory and the text of the report to the LLM
-        llm_response = llm_text_response(prompt=f"{file_content}, {memory_graph}", num_predict=16000)
+        llm_response = llm_text_response(prompt=f"{processed_text}, {memory_graph}", num_predict=16000, max_tokens=16000)
         return {"message": llm_response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving Corporate Memory from Neo4j: {e}")
