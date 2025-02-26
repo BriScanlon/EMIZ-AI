@@ -27,43 +27,21 @@
 
 // export default Main;
 
-import { useState } from "react";
 import Chat from "../../components/Chat/Chat";
 import QueryForm from "../../components/QueryForm/QueryForm";
 import SuggestedQuestions from "../../components/SuggestedQuestions/SuggestedQuestions";
 import { useSearch } from "../../contexts/SearchContext";
+import styles from "./main.module.scss";
 
 const Main = () => {
-  const { queries, recentSearches } = useSearch(); // Get recent searches from context
+  const { isNewChat, queries, recentSearches } = useSearch();
 
-  // const [queries, setQueries] = useState([]);
-  // const [queryResponses, setQueryResponses] = useState([]);
-
-  // const handleNewQuery = (query) => {
-  //   setQueries((prev) => [...prev, query]);
-  // };
-
-  // const handleNewResponse = (response) => {
-  //   setQueryResponses((prev) => [...prev, response]);
-  // };
-  // console.log(queries);
-  // console.log(queryResponses);
   return (
-    <div>
-      {!queries || !recentSearches || recentSearches.length === 0 ? (
-        <SuggestedQuestions />
-      ) : (
-        <Chat
-        // queries={queries}
-        // queryResponses={queryResponses}
-        // handleNewQuery={handleNewQuery}
-        // handleNewResponse={handleNewResponse}
-        />
-      )}
-      <QueryForm
-      // handleNewQuery={handleNewQuery}
-      // handleNewResponse={handleNewResponse}
-      />
+    <div className={styles.main}>
+      <div className={styles.chatContainer}>
+        {isNewChat ? <SuggestedQuestions /> : <Chat />}
+        <QueryForm />
+      </div>
     </div>
   );
 };

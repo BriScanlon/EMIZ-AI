@@ -8,15 +8,21 @@ function SearchProvider({ children }) {
   const [recentSearches, setRecentSearches] = useState([]);
   const [selectedSearch, setSelectedSearch] = useState(null);
 
+  const [queryInput, setQueryInput] = useState(null);
+
   // const [selectedSearch, setSelectedSearch] = useState(null);
 
   const [queries, setQueries] = useState([]);
   const [queryResponses, setQueryResponses] = useState([]);
 
+  const [isNewChat, setIsNewChat] = useState(false); // New state for tracking new chat event
+
   const { chats, isLoading } = useChats();
 
   const handleNewQuery = (query) => {
     setQueries((prev) => [...prev, query]);
+
+    setQueryInput(null);
   };
 
   const handleNewResponse = (response) => {
@@ -42,9 +48,18 @@ function SearchProvider({ children }) {
   console.log(selectedSearch);
   console.log("queries", queries);
 
+  const handleQueryInput = (inputText) => {
+    setQueryInput(inputText);
+  };
+
+  const handleNewChatIsFalse = () => {
+    if (isNewChat === true) setIsNewChat(false);
+    console.log("now false");
+  };
   const onClickNewChat = () => {
     console.log("Starting new chat...");
-    setRecentSearches([]);
+    setIsNewChat(true); // Update the state to indicate a new chat has started
+    // setRecentSearches([]);
     setQueries([]);
     setSelectedSearch(null);
     localStorage.removeItem("selectedSearch"); // Clear local storage when starting new chat
@@ -55,20 +70,25 @@ function SearchProvider({ children }) {
   const handleRecentSearchClick = (search) => {
     console.log("Clicked on recent search:", search);
     setSelectedSearch(search);
+    setIsNewChat(false); // Reset the new chat state when a recent search is clicked
   };
 
   return (
     <SearchContext.Provider
       value={{
+        queryInput,
         selectedSearch,
         onClickNewChat,
         recentSearches,
         handleRecentSearchClick,
+        handleNewChatIsFalse,
+        handleQueryInput,
 
         queries,
         queryResponses,
         handleNewQuery,
         handleNewResponse,
+        isNewChat,
       }}
     >
       {children}

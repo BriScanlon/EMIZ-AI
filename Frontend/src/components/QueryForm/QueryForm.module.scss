@@ -1,71 +1,137 @@
-$secondary-color: #282a36;
-$accent-color: #4a90e2;
-$text-color: #f8f8f2;
+// $secondary-color: #282a36;
+// $accent-color: #4a90e2;
+// $text-color: #f8f8f2;
+
+// .queryForm {
+//   display: flex;
+//   padding: 10px;
+//   background: $secondary-color;
+//   align-items: center;
+//   justify-content: end;
+//   position: fixed;
+//   bottom: 30px;
+//   width: 100%;
+//   max-width: 700px;
+//   max-height: 200px;
+
+//   textarea {
+//     flex: 1;
+//     padding: 10px;
+//     border: none;
+//     background: transparent;
+//     color: $text-color;
+//     font-size: 14px;
+//     outline: none;
+//     max-height: 200px;
+//     min-height: 40px;
+
+//     &::placeholder {
+//       color: rgba(255, 255, 255, 0.5);
+//     }
+//   }
+
+//   button {
+//     background: $accent-color;
+//     border: none;
+//     padding: 10px;
+//     color: white;
+//     cursor: pointer;
+//     border-radius: 50%;
+//     position: absolute;
+//     bottom: 0;
+//     right: 40px;
+
+//     svg {
+//       font-size: 18px;
+//     }
+
+//     &:hover {
+//       background: lighten($accent-color, 10%);
+//     }
+//   }
+
+//   .typing {
+//     align-self: flex-start;
+//     font-size: 12px;
+//     color: $text-color;
+//     opacity: 0.7;
+//     animation: blink 1.5s infinite;
+//   }
+// }
+
+// /* Typing Animation */
+// @keyframes blink {
+//   0%,
+//   100% {
+//     opacity: 0.3;
+//   }
+//   50% {
+//     opacity: 1;
+//   }
+// }
 
 .queryForm {
   display: flex;
-  padding: 10px;
-  background: $secondary-color;
   align-items: center;
-  justify-content: end;
+  padding: 15px 10px 10px;
+  background-color: #ccc;
+  border-top: 1px solid #afacac;
   position: fixed;
-  bottom: 30px;
+  bottom: 0;
   width: 100%;
-  max-width: 700px;
-  max-height: 200px;
+  max-width: 800px;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
 
-  textarea {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    background: transparent;
-    color: $text-color;
-    font-size: 14px;
-    outline: none;
-    max-height: 200px;
-    min-height: 40px;
+textarea {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  resize: none;
+  font-size: 14px;
+  line-height: 2.5;
+  margin-right: 10px;
+  max-height: 100px;
+  overflow-y: auto;
+}
 
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
-  }
+button {
+  padding: 10px 20px;
+  background-color: #0078d4;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  button {
-    background: $accent-color;
-    border: none;
-    padding: 10px;
-    color: white;
-    cursor: pointer;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 0;
-    right: 40px;
-
-    svg {
-      font-size: 18px;
-    }
-
-    &:hover {
-      background: lighten($accent-color, 10%);
-    }
-  }
-
-  .typing {
-    align-self: flex-start;
-    font-size: 12px;
-    color: $text-color;
-    opacity: 0.7;
-    animation: blink 1.5s infinite;
+  svg {
+    font-size: 18px;
   }
 }
 
-/* Typing Animation */
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 1;
+button:hover {
+  background-color: #005a9e;
+}
+
+.typing {
+  font-size: 20px;
+  color: #999;
+  margin-left: 10px;
+  opacity: 0.7;
+  animation: blink 1.5s infinite;
+
+  /* Typing Animation */
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
   }
 }
