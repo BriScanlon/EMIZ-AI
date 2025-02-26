@@ -196,22 +196,32 @@
 // export default Chat;
 
 import React from "react";
-import { useSearch } from "../../contexts/SearchContext";
 import ChatHistory from "./ChatHistory";
 import NewConversation from "./NewConversation";
 import ScrollButtons from "../../ui/ScrollButtons/ScrollButtons";
 import styles from "./Chat.module.scss";
+import { useChatHistory } from "../../hooks/useChatHistory";
+import { useSearch } from "../../contexts/SearchContext";
 
-const Chat = ({ queries, queryResponses }) => {
-  // const { selectedSearch: chatName } = useSearch();
+const Chat = () => {
+  const { selectedSearch: chatNameFromContext } = useSearch();
+  const chatName =
+    chatNameFromContext || JSON.parse(localStorage.getItem("selectedSearch"));
+  const { results, chatTitle } = useChatHistory(chatName);
 
-  return (
-    <div className={styles.chatContainer}>
-      <ChatHistory />
-      <NewConversation queries={queries} queryResponses={queryResponses} />
-      <ScrollButtons />
-    </div>
-  );
+  if (chatTitle || results)
+    return (
+      <div className={styles.chatContainer}>
+        <div className={styles.chatHeader}>{chatTitle || "New Chat"}</div>
+        <div className={styles.chatBody}>
+          <ChatHistory />
+          <NewConversation />
+        </div>
+        <div className={styles.chatFooter}>
+          <ScrollButtons />
+        </div>
+      </div>
+    );
 };
 
 export default Chat;

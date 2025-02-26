@@ -8,6 +8,8 @@ function SearchProvider({ children }) {
   const [recentSearches, setRecentSearches] = useState([]);
   const [selectedSearch, setSelectedSearch] = useState(null);
 
+  const [queryInput, setQueryInput] = useState(null);
+
   // const [selectedSearch, setSelectedSearch] = useState(null);
 
   const [queries, setQueries] = useState([]);
@@ -19,6 +21,8 @@ function SearchProvider({ children }) {
 
   const handleNewQuery = (query) => {
     setQueries((prev) => [...prev, query]);
+
+    setQueryInput(null);
   };
 
   const handleNewResponse = (response) => {
@@ -44,6 +48,14 @@ function SearchProvider({ children }) {
   console.log(selectedSearch);
   console.log("queries", queries);
 
+  const handleQueryInput = (inputText) => {
+    setQueryInput(inputText);
+  };
+
+  const handleNewChatIsFalse = () => {
+    if (isNewChat === true) setIsNewChat(false);
+    console.log("now false");
+  };
   const onClickNewChat = () => {
     console.log("Starting new chat...");
     setIsNewChat(true); // Update the state to indicate a new chat has started
@@ -64,10 +76,13 @@ function SearchProvider({ children }) {
   return (
     <SearchContext.Provider
       value={{
+        queryInput,
         selectedSearch,
         onClickNewChat,
         recentSearches,
         handleRecentSearchClick,
+        handleNewChatIsFalse,
+        handleQueryInput,
 
         queries,
         queryResponses,

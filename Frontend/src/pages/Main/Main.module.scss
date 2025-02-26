@@ -7,12 +7,33 @@ $hover-color: #565869;
 $main-bg: #f4f4f4;
 $main-text-color: #333;
 
+// .main {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   width: 100vw;
+//   align-items: center; // Use align-items to center horizontally
+//   background-color: yellow;
+// }
+
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 100vw;
-  align-items: center; // Use align-items to center horizontally
-  // width: 100vw; // Uncomment to make the container take full viewport width
-  background-color: yellow;
+  align-items: center;
+  justify-content: end;
+  height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20px;
+  margin-bottom: 100px;
+}
+
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
