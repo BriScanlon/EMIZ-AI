@@ -31,7 +31,7 @@ import Chat from "../../components/Chat/Chat";
 import QueryForm from "../../components/QueryForm/QueryForm";
 import SuggestedQuestions from "../../components/SuggestedQuestions/SuggestedQuestions";
 import { useSearch } from "../../contexts/SearchContext";
-import styles from "./main.module.scss";
+import styles from "./Main.module.scss";
 
 const Main = () => {
   const { isNewChat, queries, recentSearches } = useSearch();
