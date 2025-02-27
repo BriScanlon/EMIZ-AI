@@ -43,7 +43,7 @@ NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "TestPassword")
 
 # ollama settings
-llm_default_model = "phi4"
+llm_default_model = "phi4_ctx_10000"
 llm_max_ctx_model = "phi4_max_ctx"
 llm_default_temp = 0
 llm_port = os.getenv("OLLAMA_PORT_I", "11434")
@@ -302,14 +302,6 @@ async def query_graph_with_cypher(request: QueryRequest):
         logging.info(f"Neo4j Response: {json.dumps(neo4j_response)}")
         print("DEBUG: Raw LLM Response:", response)  # Log LLM output
 
-        # split the response text into message and node graph
-        if isinstance(response, str):
-            try:
-                response = json.loads(response)  # Convert string to dictionary
-            except json.JSONDecodeError:
-                raise HTTPException(
-                    status_code=500, detail="LLM response is not valid JSON"
-                )
 
         print("DEBUG: Response received before splitting:", type(response), response)
 
