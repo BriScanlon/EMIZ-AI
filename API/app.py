@@ -31,7 +31,7 @@ from neo4j import GraphDatabase
 from helpers.process_document import process_document
 from helpers.chunk_text import chunk_text
 from helpers.vector_search import vector_search
-from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT
+from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT, GRAPH_SYSTEM_PROMPT
 from llmconfig.canned_response import canned_response
 from utils import slugify, save_file, load_file
 from helpers.embed_text import embed_text
@@ -239,7 +239,7 @@ async def query_graph_with_cypher(request: QueryRequest):
 
     # Use default system prompt if empty
     if not isinstance(system_prompt, str) or not system_prompt.strip():
-        system_prompt = TEXT_SYSTEM_PROMPT
+        system_prompt = TEXT_SYSTEM_PROMPT + "\n" + GRAPH_SYSTEM_PROMPT
 
     # Debug mode: Return canned response
     if debug_test:
@@ -307,7 +307,9 @@ async def query_graph_with_cypher(request: QueryRequest):
             try:
                 response = json.loads(response)  # Convert string to dictionary
             except json.JSONDecodeError:
-                raise HTTPException(status_code=500, detail="LLM response is not valid JSON")
+                raise HTTPException(
+                    status_code=500, detail="LLM response is not valid JSON"
+                )
 
         print("DEBUG: Response received before splitting:", type(response), response)
 
@@ -321,9 +323,9 @@ async def query_graph_with_cypher(request: QueryRequest):
             response_data["system_prompt"] = system_prompt
         response_data["results"] = [
             {
-                "message": final_response.get("message")
-            },
-            {"graph": final_response.get("node_graph")},
+                "message": final_response.get("message"),
+                "graph": final_response.get("node_graph"),
+            }
         ]
         # Save and return
         save_chat_log(chat_name, user_query, response_data)

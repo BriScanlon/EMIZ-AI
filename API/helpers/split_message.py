@@ -12,10 +12,9 @@ def split_message_object(message_obj):
     Returns:
         dict: A dictionary with separate `message` and `node_graph` fields.
     """
-    full_message = message_obj.get("message", "")
 
     # Extract JSON block using regex
-    json_match = re.search(r"```json\n(.*?)\n```", full_message, re.DOTALL)
+    json_match = re.search(r"```json\n(.*?)\n```", message_obj, re.DOTALL)
 
     if json_match:
         json_str = json_match.group(1)
@@ -26,10 +25,10 @@ def split_message_object(message_obj):
 
         # Remove JSON part from the message
         text_message = re.sub(
-            r"```json\n.*?\n```", "", full_message, flags=re.DOTALL
+            r"```json\n.*?\n```", "", message_obj, flags=re.DOTALL
         ).strip()
     else:
         node_graph = {}
-        text_message = full_message.strip()
+        text_message = message_obj.strip()
 
     return {"message": text_message, "node_graph": node_graph}
