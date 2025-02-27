@@ -300,6 +300,8 @@ async def query_graph_with_cypher(request: QueryRequest):
         )
 
         logging.info(f"Neo4j Response: {json.dumps(neo4j_response)}")
+        print("DEBUG: Raw LLM Response:", response)  # Log LLM output
+
         # split the response text into message and node graph
         if isinstance(response, str):
             try:
