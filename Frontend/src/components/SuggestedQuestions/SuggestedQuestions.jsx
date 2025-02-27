@@ -5,10 +5,20 @@ import { useSearch } from "../../contexts/SearchContext";
 
 function SuggestedQuestions() {
   const [questions, setQuestions] = useState([]);
+  const { handleQueryInput } = useSearch();
 
   useEffect(() => {
-    setQuestions(getSuggestedQuestions());
+    const fetchQuestions = async () => {
+      const suggestedQuestions = await getSuggestedQuestions();
+      setQuestions(suggestedQuestions);
+    };
+
+    fetchQuestions();
   }, []);
+
+  const handleQuestionClick = (question) => {
+    handleQueryInput(question);
+  };
 
   return (
     <div className={styles.suggestedContainer}>
@@ -18,7 +28,7 @@ function SuggestedQuestions() {
           <li
             key={index}
             className={styles.item}
-            onClick={() => console.log("clicked")}
+            onClick={() => handleQuestionClick(question)}
           >
             {question}
           </li>

@@ -74,11 +74,11 @@
 
 // export default QueryForm;
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 import { usePostQuery } from "../../hooks/usePostQuery";
-import styles from "./QueryForm.module.scss";
 import { useSearch } from "../../contexts/SearchContext";
+import styles from "./QueryForm.module.scss";
 
 const QueryForm = () => {
   const [input, setInput] = useState("");
@@ -87,15 +87,23 @@ const QueryForm = () => {
   const { postQuery, isLoading } = usePostQuery();
 
   const {
+    queryInput,
     selectedSearch: chatNameFromContext,
     handleNewQuery,
     handleNewResponse,
+    handleNewChatIsFalse,
   } = useSearch();
 
   const chatName =
     chatNameFromContext || JSON.parse(localStorage.getItem("selectedSearch"));
 
-  const handleSendMessage = (e) => {
+  useEffect(() => {
+    if (queryInput) {
+      setInput(queryInput);
+    }
+  }, [queryInput]);
+
+  const handleSendMessage = () => {
     if (!input.trim()) return;
 
     const userMessage = chatName
@@ -103,6 +111,7 @@ const QueryForm = () => {
       : { query: input };
 
     handleNewQuery(input); // Call handleNewQuery when a new query is submitted
+    handleNewChatIsFalse();
     setInput("");
     setIsTyping(true);
 
