@@ -43,8 +43,8 @@ NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "TestPassword")
 
 # ollama settings
-llm_default_model = "phi4_ctx_10000"
-llm_max_ctx_model = "phi4_max_ctx"
+llm_default_model = "phi4_ctx_16000"
+llm_max_ctx_model = "phi4_ctx_16000"
 llm_default_temp = 0
 llm_port = os.getenv("OLLAMA_PORT_I", "11434")
 llm_base_url = "http://ollama-container:{}".format(llm_port)
@@ -96,6 +96,40 @@ cypher_chain = GraphCypherQAChain.from_llm(
     verbose=True,
     allow_dangerous_requests=True,
 )
+
+class Node(BaseModel):
+    id: str
+    name: str
+    category: int
+
+class Link(BaseModel):
+    source: str
+    target: str
+
+class Category(BaseModel):
+    id: int
+    name: str
+
+class GraphSchema(BaseModel):
+    nodes: list[Node]
+    links: list[Link]
+    categories: list[Category]
+
+def generate_node_graph(user_query):
+    """
+    Generates a node graph using Ollama's API based on a user query.
+    """
+    response = llm_graph(
+        messages=[
+            {
+                'role': 'user',
+                'content': user_query,
+                'system_prompt': TEXT_SYSTEM_PROMPT,
+            }
+        ],
+        format=GraphSchema.model_json_schema(),
+    )
+    return GraphSchema.model_validate_json(response.message.content)
 
 # Ensure ChatLogs folder exists
 CHAT_LOGS_DIR = "ChatLogs"
@@ -298,7 +332,7 @@ async def query_graph_with_cypher(request: QueryRequest):
             chat_name=chat_name,
             model_name=llm_default_model,
         )
-
+        
         logging.info(f"Neo4j Response: {json.dumps(neo4j_response)}")
         print("DEBUG: Raw LLM Response:", response)  # Log LLM output
 
@@ -339,7 +373,14 @@ def get_neo4j_query():
     return "Placeholder for node graph"
 
 
-def get_graph_data(database_query):
+def get_graph_data(    
+    user_query,
+    neo4j_response,
+    system_prompt=TEXT_SYSTEM_PROMPT,
+    chat_name="",
+    model_name="phi4",
+    max_tokens=16000,
+    ):
     # call database
     # This is a placeholder, someone else is implementing this
     # return a node graph. (json formatted)
