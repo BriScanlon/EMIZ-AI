@@ -244,6 +244,7 @@ async def query_graph_with_cypher(request: QueryRequest):
     # Use default system prompt if empty
     if not isinstance(system_prompt, str) or not system_prompt.strip():
         system_prompt = TEXT_SYSTEM_PROMPT + "\n" + GRAPH_SYSTEM_PROMPT
+        logging.debug(f"System Prompt = {system_prompt}")
 
     # Debug mode: Return canned response
     if debug_test:
@@ -260,10 +261,20 @@ async def query_graph_with_cypher(request: QueryRequest):
         response_data["results"] = canned_response()
 
         return response_data
+    
+    # perform the corporate memory lookup
+    try: 
+        corp_results = get_corporate_memory_graph()
+        logging.debug(f"corp_results = {corp_results}")
+        # Add corporate memory to neo4j_response
+        # neo4j_response.append(corp_results)
+    except Exception as e:
+        logging.error(f"Corporate memory search failed: {e}")
+        corp_results = []
 
     try:
         # Perform vector search
-        results = vector_search(user_query, top_n=5) or []
+        results = vector_search(user_query, top_n=5)
        
         # Ensure results is a list of dictionaries
         if not isinstance(results, list):
@@ -271,15 +282,8 @@ async def query_graph_with_cypher(request: QueryRequest):
                 "Unexpected results format, expected a list of dictionaries."
             )
         
-        # Return the corporate memory
-        corp_results = get_corporate_memory_graph(graph_driver.driver)
+       
         
-        # Ensure corp_results is a dictionary
-        if not isinstance(corp_results, dict):
-            raise ValueError(
-                "Unexpected corporate memory format, expected a dictionary."
-            )
-
     except ValueError as ve:
         logging.error(f"Data format error: {ve}")
         raise HTTPException(status_code=500, detail=f"Data format error: {ve}")
@@ -298,14 +302,10 @@ async def query_graph_with_cypher(request: QueryRequest):
             # append text to neo4j_response
             neo4j_response.append(text)
         else:
-            logging.warning("No text object included in neo4j responsee.")
+            logging.warning("No text object included in neo4j response.")
             
-    # Add corporate memory to neo4j_response
-    neo4j_response.append(corp_results)
-    
 
     try:
-
         # send the response to ollama llm with the original query
         # response = llm_graph.invoke(f"{user_query}, {neo4j_response}", max_tokens=16000, temperature=0.0)
         response = query_llm(
@@ -316,12 +316,6 @@ async def query_graph_with_cypher(request: QueryRequest):
             model_name=llm_default_model,
         )
         
-        logging.info(f"Neo4j Response: {json.dumps(neo4j_response)}")
-        print("DEBUG: Raw LLM Response:", response)  # Log LLM output
-
-
-        print("DEBUG: Response received before splitting:", type(response), response)
-
         final_response = split_message_object(response)
 
         # Add properties incrementally

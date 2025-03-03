@@ -1,6 +1,7 @@
 from neo4j import GraphDatabase
 import os
 import dotenv
+import logging
 
 dotenv.load_dotenv()
 
@@ -9,7 +10,7 @@ NEO4J_USER = os.getenv("NEO4J_USER")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
 
 
-def get_corporate_memory_graph(driver: GraphDatabase) -> dict:
+def get_corporate_memory_graph() -> dict:
     """
     Fetches the entire corporate memory graph from Neo4j.
 
@@ -23,7 +24,8 @@ def get_corporate_memory_graph(driver: GraphDatabase) -> dict:
 
     with driver.session() as session:
         # Retrieve nodes along with their internal IDs
-        node_query = "MATCH (n:CM_Category) RETURN id(n) as id, n"
+        node_query = "MATCH (n:CM_Category) RETURN elementId(n) AS id, n"
+        logging.debug()
         node_result = session.run(node_query)
         nodes = []
         for record in node_result:
@@ -36,7 +38,7 @@ def get_corporate_memory_graph(driver: GraphDatabase) -> dict:
         # Retrive relationships between CM_Category nodes with their source and target IDs
         rel_query = (
             "MATCH (n:CM_Category)-[r]->(m:CM_Category) "
-            "RETURN id(n) AS source, id(m) AS target, type(r) AS type, r"
+            "RETURN elementId(n) AS source, elementId(m) AS target, type(r) AS type, r"
         )
 
     rel_result = session.run(rel_query)
