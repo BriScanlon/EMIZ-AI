@@ -31,12 +31,17 @@ from neo4j import GraphDatabase
 from helpers.process_document import process_document
 from helpers.chunk_text import chunk_text
 from helpers.vector_search import vector_search
-from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT, GRAPH_SYSTEM_PROMPT, GRAPH_SYSTEM_PROMPT2
+from llmconfig.system_prompts import (
+    TEXT_SYSTEM_PROMPT,
+    GRAPH_SYSTEM_PROMPT,
+    GRAPH_SYSTEM_PROMPT2,
+)
 from llmconfig.canned_response import canned_response
 from utils import slugify, save_file, load_file
 from helpers.embed_text import embed_text
 from helpers.split_message import split_message_object
 from helpers.corporate_memory import get_corporate_memory_graph
+from helpers.merge_understanding import merge_understanding_graph_and_link_chunks
 
 # environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
@@ -210,59 +215,44 @@ async def post_documents(file: UploadFile = File(...)):
 
 @app.post("/query")
 async def query_graph_with_cypher(request: QueryRequest):
-    """
-    Endpoint to query the Neo4j database using GraphCypherQAChain with Ollama.
-    """
     req_data = dict(request)
-    
-    corp_results = []
 
     # perform the corporate memory lookup
-    try: 
+    try:
         corp_results = get_corporate_memory_graph()
         logging.debug(f"corp_results = {corp_results}")
-        # Add corporate memory to neo4j_response
-        # neo4j_response.append(corp_results)
     except Exception as e:
         logging.error(f"Corporate memory search failed: {e}")
         corp_results = []
-    
+
     corp_memory_str = json.dumps(corp_results, indent=2)
 
     user_query = req_data.get("query", "").strip()
     chat_name = req_data["chat_name"]
-
-    # Optional fields
     system_prompt = req_data["system_prompt"]
     debug_test = req_data.get("debug_test", False)
     verbose = req_data.get("verbose", False)
+    response_data = {}
 
-    # Predefine an empty response dictionary
-    response_data = {}  # Initialize an empty dictionary
-
-    # Check for empty query
     if not user_query or user_query.strip() == "":
         msg = "Query string is empty or missing"
         logging.warning(msg)
         raise HTTPException(status_code=418, detail=msg)
 
-    # Generate chat name if empty
     if not chat_name or chat_name.strip() == "":
         chat_name = slugify(user_query[:12])
         logging.info(f"Chat name was empty, generated new one: {chat_name}")
     else:
         chat_name = slugify(chat_name)
 
-    # Use default system prompt if empty
     if not isinstance(system_prompt, str) or not system_prompt.strip():
-        system_prompt = TEXT_SYSTEM_PROMPT + "\n" + GRAPH_SYSTEM_PROMPT2 + " " + corp_memory_str
+        system_prompt = (
+            TEXT_SYSTEM_PROMPT + "\n" + GRAPH_SYSTEM_PROMPT2 + " " + corp_memory_str
+        )
         logging.debug(f"System Prompt = {system_prompt}")
 
-    # Debug mode: Return canned response
     if debug_test:
         logging.info("Debug test enabled, returning canned response.")
-
-        # Add properties incrementally
         response_data["status"] = 200
         response_data["query"] = (
             "You asked for a canned response so the query was not used."
@@ -271,47 +261,36 @@ async def query_graph_with_cypher(request: QueryRequest):
         if verbose:
             response_data["system_prompt"] = system_prompt
         response_data["results"] = canned_response()
-
         return response_data
-    
-
 
     try:
-        # Perform vector search
         results = vector_search(user_query, top_n=5)
-       
-        # Ensure results is a list of dictionaries
         if not isinstance(results, list):
             raise ValueError(
                 "Unexpected results format, expected a list of dictionaries."
             )
-        
-       
-        
-    except ValueError as ve:
-        logging.error(f"Data format error: {ve}")
-        raise HTTPException(status_code=500, detail=f"Data format error: {ve}")
     except Exception as e:
         logging.error(f"Vector search failed: {e}")
         results = []
 
     neo4j_response = []
-
+    chunks = []  # List for linking chunks
+    chunk_ids = []
     for result in results:
-        # for each result get the text value of property
         properties = result.get("properties", {})
         text = properties.get("text", "")
-        # get the text value of the property
+        chunk_id = properties.get("chunk_id")
+        numeric_chunk_id = result.get("id")
         if text:
-            # append text to neo4j_response
             neo4j_response.append(text)
+            if chunk_id:
+                chunks.append({"id": numeric_chunk_id, "chunk_id": chunk_id})
         else:
             logging.warning("No text object included in neo4j response.")
-            
+
+
 
     try:
-        # send the response to ollama llm with the original query
-        # response = llm_graph.invoke(f"{user_query}, {neo4j_response}", max_tokens=16000, temperature=0.0)
         response = query_llm(
             user_query,
             neo4j_response,
@@ -319,10 +298,9 @@ async def query_graph_with_cypher(request: QueryRequest):
             chat_name=chat_name,
             model_name=llm_default_model,
         )
-        
+
         final_response = split_message_object(response)
 
-        # Add properties incrementally
         response_data["status"] = 200
         response_data["query"] = user_query
         response_data["chat_name"] = chat_name
@@ -334,7 +312,17 @@ async def query_graph_with_cypher(request: QueryRequest):
                 "graph": final_response.get("node_graph"),
             }
         ]
-        # Save and return
+        
+            # Merge the chunk relationships into Neo4j.
+        try:
+            merge_understanding_graph_and_link_chunks(final_response.get("node_graph"), chunks, NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
+            
+        except Exception as e:
+            logging.error(f"Error merging chunk relationships: {e}")
+            raise HTTPException(
+                status_code=500,
+                detail=f"Error merging chunk relationships: {e}",
+            )
         save_chat_log(chat_name, user_query, response_data)
         return response_data
 
@@ -354,14 +342,14 @@ def get_neo4j_query():
     return "Placeholder for node graph"
 
 
-def get_graph_data(    
+def get_graph_data(
     user_query,
     neo4j_response,
     system_prompt=TEXT_SYSTEM_PROMPT,
     chat_name="",
     model_name="phi4",
     max_tokens=16000,
-    ):
+):
     # call database
     # This is a placeholder, someone else is implementing this
     # return a node graph. (json formatted)
