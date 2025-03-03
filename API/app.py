@@ -36,6 +36,7 @@ from llmconfig.canned_response import canned_response
 from utils import slugify, save_file, load_file
 from helpers.embed_text import embed_text
 from helpers.split_message import split_message_object
+from helpers.corporate_memory import get_corporate_memory_graph
 
 # environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
@@ -213,6 +214,8 @@ async def query_graph_with_cypher(request: QueryRequest):
     Endpoint to query the Neo4j database using GraphCypherQAChain with Ollama.
     """
     req_data = dict(request)
+    
+    corp_results = []
 
     user_query = req_data.get("query", "").strip()
     chat_name = req_data["chat_name"]
@@ -261,11 +264,20 @@ async def query_graph_with_cypher(request: QueryRequest):
     try:
         # Perform vector search
         results = vector_search(user_query, top_n=5) or []
-
+       
         # Ensure results is a list of dictionaries
         if not isinstance(results, list):
             raise ValueError(
                 "Unexpected results format, expected a list of dictionaries."
+            )
+        
+        # Return the corporate memory
+        corp_results = get_corporate_memory_graph(graph_driver.driver)
+        
+        # Ensure corp_results is a dictionary
+        if not isinstance(corp_results, dict):
+            raise ValueError(
+                "Unexpected corporate memory format, expected a dictionary."
             )
 
     except ValueError as ve:
@@ -287,6 +299,10 @@ async def query_graph_with_cypher(request: QueryRequest):
             neo4j_response.append(text)
         else:
             logging.warning("No text object included in neo4j responsee.")
+            
+    # Add corporate memory to neo4j_response
+    neo4j_response.append(corp_results)
+    
 
     try:
 
