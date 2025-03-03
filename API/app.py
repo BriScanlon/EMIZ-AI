@@ -31,7 +31,7 @@ from neo4j import GraphDatabase
 from helpers.process_document import process_document
 from helpers.chunk_text import chunk_text
 from helpers.vector_search import vector_search
-from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT, GRAPH_SYSTEM_PROMPT
+from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT, GRAPH_SYSTEM_PROMPT, GRAPH_SYSTEM_PROMPT2
 from llmconfig.canned_response import canned_response
 from utils import slugify, save_file, load_file
 from helpers.embed_text import embed_text
@@ -217,6 +217,18 @@ async def query_graph_with_cypher(request: QueryRequest):
     
     corp_results = []
 
+    # perform the corporate memory lookup
+    try: 
+        corp_results = get_corporate_memory_graph()
+        logging.debug(f"corp_results = {corp_results}")
+        # Add corporate memory to neo4j_response
+        # neo4j_response.append(corp_results)
+    except Exception as e:
+        logging.error(f"Corporate memory search failed: {e}")
+        corp_results = []
+    
+    corp_memory_str = json.dumps(corp_results, indent=2)
+
     user_query = req_data.get("query", "").strip()
     chat_name = req_data["chat_name"]
 
@@ -243,7 +255,7 @@ async def query_graph_with_cypher(request: QueryRequest):
 
     # Use default system prompt if empty
     if not isinstance(system_prompt, str) or not system_prompt.strip():
-        system_prompt = TEXT_SYSTEM_PROMPT + "\n" + GRAPH_SYSTEM_PROMPT
+        system_prompt = TEXT_SYSTEM_PROMPT + "\n" + GRAPH_SYSTEM_PROMPT2 + " " + corp_memory_str
         logging.debug(f"System Prompt = {system_prompt}")
 
     # Debug mode: Return canned response
@@ -262,15 +274,7 @@ async def query_graph_with_cypher(request: QueryRequest):
 
         return response_data
     
-    # perform the corporate memory lookup
-    try: 
-        corp_results = get_corporate_memory_graph()
-        logging.debug(f"corp_results = {corp_results}")
-        # Add corporate memory to neo4j_response
-        # neo4j_response.append(corp_results)
-    except Exception as e:
-        logging.error(f"Corporate memory search failed: {e}")
-        corp_results = []
+
 
     try:
         # Perform vector search
