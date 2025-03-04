@@ -123,7 +123,7 @@ def merge_understanding_graph_and_link_chunks(
                 
                 WITH c
                 MATCH (n:CorporateUnderstanding {name: $firstNodeName})
-                MERGE (c)-[:BELONGS_TO]->(n)
+                MERGE (c)-[:RELATED_TO]->(n)
                 """
                 session.run(
                     query,
