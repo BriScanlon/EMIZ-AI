@@ -62,22 +62,47 @@ def merge_understanding_graph_and_link_chunks(
 ):
     driver = GraphDatabase.driver(uri, auth=(user, password))
 
-    # 1️⃣ Merge Corporate Understanding nodes using their unique "name"
+    # 1. Ensure the ID counter exists and is stored as an integer
     with driver.session() as session:
-        for node in understanding_graph.get("nodes", []):
+        session.run(
+            """
+            MERGE (m:Meta {key: 'corporateUnderstandingId'})
+            ON CREATE SET m.value = 0
+            ON MATCH SET m.value = toInteger(m.value)
+            """
+        )
+
+    first_node_name = None  # Store the first node's name for linking
+
+    # 2. Merge Corporate Understanding nodes
+    with driver.session() as session:
+        for index, node in enumerate(understanding_graph.get("nodes", [])):
             query = """
             MERGE (n:CorporateUnderstanding {name: $name})
             ON CREATE SET n.category = $category, 
                           n.text = coalesce($text, '')
+
+            WITH n
+            OPTIONAL MATCH (m:Meta {key: 'corporateUnderstandingId'})
+            WHERE n.id IS NULL
+            CALL apoc.atomic.add(m, 'value', 1) YIELD newValue
+            SET n.id = coalesce(n.id, toInteger(newValue))
+            RETURN n.name
             """
-            session.run(
+            result = session.run(
                 query,
                 name=node["name"],
-                category=int(node["category"]),
+                category=int(node.get("category", 0)),  # Ensure a default value if missing
                 text=node.get("text", ""),
             )
 
-    # 2️⃣ Merge relationships between Corporate Understanding nodes
+            # Capture the first node name for linking to chunks
+            if index == 0:
+                record = result.single()
+                if record:
+                    first_node_name = record["n.name"]
+
+    # 3. Merge relationships based on the LLM-provided `links`
     with driver.session() as session:
         for link in understanding_graph.get("links", []):
             query = """
@@ -87,20 +112,24 @@ def merge_understanding_graph_and_link_chunks(
             """
             session.run(query, source=link["source"], target=link["target"])
 
-    # 3️⃣ Link the Chunks (by ID) to the CUKG Nodes We Just Created
-    with driver.session() as session:
-        for node in understanding_graph.get("nodes", []):
+    # 4. Link chunks ONLY to the first CorporateUnderstanding node
+    if first_node_name:
+        with driver.session() as session:
             for chunk in chunks:
                 query = """
-                MATCH (c:Chunk {chunk_id: $chunk_id})  // Find chunk by ID
-                MATCH (n:CorporateUnderstanding {name: $name})  // Find CUKG node
-                MERGE (c)-[:BELONGS_TO]->(n)  // Create link
-                MERGE (n)-[:CONTAINS]->(c)  // Bidirectional relationship
+                MERGE (c:Chunk {chunk_id: $chunk_id})
+                ON CREATE SET c.text = $text
+                ON MATCH SET c.text = coalesce($text, c.text)
+                
+                WITH c
+                MATCH (n:CorporateUnderstanding {name: $firstNodeName})
+                MERGE (c)-[:BELONGS_TO]->(n)
                 """
                 session.run(
                     query,
                     chunk_id=chunk["chunk_id"],
-                    name=node["name"],
+                    text=chunk.get("text", ""),
+                    firstNodeName=first_node_name,
                 )
 
     driver.close()
