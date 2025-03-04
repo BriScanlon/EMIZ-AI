@@ -62,31 +62,13 @@ def merge_understanding_graph_and_link_chunks(
 ):
     driver = GraphDatabase.driver(uri, auth=(user, password))
 
-    # 1. Ensure the ID counter exists and is stored as an integer
-    with driver.session() as session:
-        session.run(
-            """
-            MERGE (m:Meta {key: 'corporateUnderstandingId'})
-            ON CREATE SET m.value = 0
-            ON MATCH SET m.value = toInteger(m.value)
-            """
-        )
-
-    # 2. Merge Corporate Understanding nodes using their unique "name"
+    # 1️⃣ Merge Corporate Understanding nodes using their unique "name"
     with driver.session() as session:
         for node in understanding_graph.get("nodes", []):
             query = """
             MERGE (n:CorporateUnderstanding {name: $name})
             ON CREATE SET n.category = $category, 
                           n.text = coalesce($text, '')
-
-            WITH n
-            OPTIONAL MATCH (m:Meta {key: 'corporateUnderstandingId'})
-            WHERE n.id IS NULL
-
-            CALL apoc.atomic.add(m, 'value', 1) YIELD newValue
-            SET n.id = coalesce(n.id, toInteger(newValue))
-            RETURN n
             """
             session.run(
                 query,
@@ -95,7 +77,7 @@ def merge_understanding_graph_and_link_chunks(
                 text=node.get("text", ""),
             )
 
-    # 3. Merge relationships between Corporate Understanding nodes
+    # 2️⃣ Merge relationships between Corporate Understanding nodes
     with driver.session() as session:
         for link in understanding_graph.get("links", []):
             query = """
@@ -105,23 +87,20 @@ def merge_understanding_graph_and_link_chunks(
             """
             session.run(query, source=link["source"], target=link["target"])
 
-    # 4. Merge Chunk nodes and link them to the appropriate Corporate Understanding node
+    # 3️⃣ Link the Chunks (by ID) to the CUKG Nodes We Just Created
     with driver.session() as session:
-        for chunk in chunks:
-            query = """
-            MERGE (c:Chunk {chunk_id: $chunk_id})
-            ON CREATE SET c.text = $text
-            ON MATCH SET c.text = coalesce($text, c.text)
-            
-            WITH c
-            MATCH (n:CorporateUnderstanding {name: $componentName})
-            MERGE (c)-[:BELONGS_TO]->(n)
-            """
-            session.run(
-                query,
-                chunk_id=chunk["chunk_id"],
-                text=chunk.get("text", ""),
-                componentName=chunk["componentName"],
-            )
+        for node in understanding_graph.get("nodes", []):
+            for chunk in chunks:
+                query = """
+                MATCH (c:Chunk {chunk_id: $chunk_id})  // Find chunk by ID
+                MATCH (n:CorporateUnderstanding {name: $name})  // Find CUKG node
+                MERGE (c)-[:BELONGS_TO]->(n)  // Create link
+                MERGE (n)-[:CONTAINS]->(c)  // Bidirectional relationship
+                """
+                session.run(
+                    query,
+                    chunk_id=chunk["chunk_id"],
+                    name=node["name"],
+                )
 
     driver.close()
