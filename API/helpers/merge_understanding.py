@@ -2,6 +2,7 @@ import json
 from neo4j import GraphDatabase
 import dotenv
 import os
+import logging
 
 
 def merge_corporate_understanding_graph(graph_json: dict):
@@ -72,11 +73,27 @@ def merge_understanding_graph_and_link_chunks(
             """
         )
 
-    first_node_name = None  # Store the first node's name for linking
+    first_node_name = None  # Store first node's name for chunk linking
+    node_id_map = {}  # Store mapping from node names to their CUKG IDs
 
-    # 2. Merge Corporate Understanding nodes
+    # Extract category mappings from the graph response
+    category_map = {
+        cat["id"]: cat["name"] for cat in understanding_graph.get("categories", [])
+    }
+
+    # 2. Merge Corporate Understanding nodes and track new IDs
     with driver.session() as session:
-        for index, node in enumerate(understanding_graph.get("nodes", [])):
+        nodes = understanding_graph.get("nodes", [])
+
+        for index, node in enumerate(nodes):
+            # Handle category lookup from categories array (backward compatibility)
+            category_id = node.get("category")
+            category_name = (
+                category_map.get(category_id, "Unknown")
+                if category_id is not None
+                else node.get("type", "Unknown")
+            )
+
             query = """
             MERGE (n:CorporateUnderstanding {name: $name})
             ON CREATE SET n.category = $category, 
@@ -87,30 +104,42 @@ def merge_understanding_graph_and_link_chunks(
             WHERE n.id IS NULL
             CALL apoc.atomic.add(m, 'value', 1) YIELD newValue
             SET n.id = coalesce(n.id, toInteger(newValue))
-            RETURN n.name
+            RETURN n.id, n.name
             """
             result = session.run(
                 query,
                 name=node["name"],
-                category=int(node.get("category", 0)),  # Ensure a default value if missing
+                category=category_name,
                 text=node.get("text", ""),
             )
 
-            # Capture the first node name for linking to chunks
-            if index == 0:
-                record = result.single()
-                if record:
-                    first_node_name = record["n.name"]
+            record = result.single()
+            if record:
+                new_id, node_name = record["n.id"], record["n.name"]
+                node_id_map[node_name] = new_id  # Store mapped ID
 
-    # 3. Merge relationships based on the LLM-provided `links`
+                # Capture the first node name for linking to chunks
+                if index == 0:
+                    first_node_name = node_name
+
+    # 3. Merge relationships between Corporate Understanding nodes using tracked IDs
     with driver.session() as session:
-        for link in understanding_graph.get("links", []):
-            query = """
-            MATCH (a:CorporateUnderstanding {name: $source}),
-                  (b:CorporateUnderstanding {name: $target})
-            MERGE (a)-[:CONNECTED_TO]->(b)
-            """
-            session.run(query, source=link["source"], target=link["target"])
+        edges = understanding_graph.get("links", understanding_graph.get("edges", []))
+
+        for edge in edges:
+            source_name = nodes[edge["source"]]["name"]
+            target_name = nodes[edge["target"]]["name"]
+
+            source_id = node_id_map.get(source_name)
+            target_id = node_id_map.get(target_name)
+
+            if source_id is not None and target_id is not None:
+                query = """
+                MATCH (a:CorporateUnderstanding {id: $source_id}),
+                      (b:CorporateUnderstanding {id: $target_id})
+                MERGE (a)-[:CONNECTED_TO]->(b)
+                """
+                session.run(query, source_id=source_id, target_id=target_id)
 
     # 4. Link chunks ONLY to the first CorporateUnderstanding node
     if first_node_name:
@@ -123,7 +152,7 @@ def merge_understanding_graph_and_link_chunks(
                 
                 WITH c
                 MATCH (n:CorporateUnderstanding {name: $firstNodeName})
-                MERGE (c)-[:RELATED_TO]->(n)
+                MERGE (c)-[:BELONGS_TO]->(n)
                 """
                 session.run(
                     query,
