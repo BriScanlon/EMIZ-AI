@@ -31,9 +31,17 @@ from neo4j import GraphDatabase
 from helpers.process_document import process_document
 from helpers.chunk_text import chunk_text
 from helpers.vector_search import vector_search
-from llmconfig.system_prompts import TEXT_SYSTEM_PROMPT
+from llmconfig.system_prompts import (
+    TEXT_SYSTEM_PROMPT,
+    GRAPH_SYSTEM_PROMPT,
+    GRAPH_SYSTEM_PROMPT2,
+)
 from llmconfig.canned_response import canned_response
 from utils import slugify, save_file, load_file
+from helpers.embed_text import embed_text
+from helpers.split_message import split_message_object
+from helpers.corporate_memory import get_corporate_memory_graph
+from helpers.merge_understanding import merge_understanding_graph_and_link_chunks
 
 # environment settings
 NEO4J_URI = "bolt://neo4j-db-container"
@@ -41,13 +49,18 @@ NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "TestPassword")
 
 # ollama settings
-llm_default_model="phi4"
-llm_default_temp=0
+llm_default_model = "phi4_ctx_10000"
+llm_max_ctx_model = "phi4_ctx_10000"
+llm_default_temp = 0
 llm_port = os.getenv("OLLAMA_PORT_I", "11434")
-llm_base_url="http://ollama-container:{}".format(llm_port)
-llm_graph         = OllamaLLM(base_url=llm_base_url, model=llm_default_model, temperature=llm_default_temp)     # Used by the cypher query
-llm_text_response = OllamaLLM(base_url=llm_base_url, model=llm_default_model, temperature=llm_default_temp)     # Used to create the final text output
-llm_transformer   = LLMGraphTransformer(llm=llm_graph)
+llm_base_url = "http://ollama-container:{}".format(llm_port)
+llm_graph = OllamaLLM(
+    base_url=llm_base_url, model=llm_max_ctx_model, temperature=llm_default_temp
+)  # Used by the cypher query
+llm_text_response = OllamaLLM(
+    base_url=llm_base_url, model=llm_default_model, temperature=llm_default_temp
+)  # Used to create the final text output
+llm_transformer = LLMGraphTransformer(llm=llm_graph)
 
 llm_current_chat_name = None
 llm_current_chat_history = []
@@ -67,10 +80,19 @@ graph_driver.refresh_schema()
 # Define a Pydantic model for the request body
 class QueryRequest(BaseModel):
     query: str
-    system_prompt: str = Field(None, description = "System prompt to use, overrides the default one.")
-    chat_name: str = Field(None, description = "Chat session identifier.")
-    debug_test: bool = Field(False, description = "If you set this to true making a request you will get a canned response back")
-    verbose: bool  = Field(False, description = "If set to true this will include some additional debugging information not required to function, such as the system prompt.")
+    system_prompt: str = Field(
+        None, description="System prompt to use, overrides the default one."
+    )
+    chat_name: str = Field(None, description="Chat session identifier.")
+    debug_test: bool = Field(
+        False,
+        description="If you set this to true making a request you will get a canned response back",
+    )
+    verbose: bool = Field(
+        False,
+        description="If set to true this will include some additional debugging information not required to function, such as the system prompt.",
+    )
+
 
 # Cypher query connector
 cypher_chain = GraphCypherQAChain.from_llm(
@@ -80,6 +102,7 @@ cypher_chain = GraphCypherQAChain.from_llm(
     verbose=True,
     allow_dangerous_requests=True,
 )
+
 
 # Ensure ChatLogs folder exists
 CHAT_LOGS_DIR = "ChatLogs"
@@ -102,6 +125,7 @@ app.add_middleware(
 @app.get("/")
 def read_root():
     return {"message": "Service is running."}
+
 
 # upload document, process and transform to knowledge graph data
 @app.post("/documents")
@@ -160,11 +184,9 @@ async def post_documents(file: UploadFile = File(...)):
                         chunk_id=unique_chunk_id,
                         document_id=document_id,
                         text=chunk,
-                        vector=chunk_embeddings[
-                            i
-                        ].tolist(),
+                        vector=chunk_embeddings[i].tolist(),
                     )
-                    
+
                     if i > 0:
                         prev_chunk_id = f"{document_id}_{i - 1}"
                         session.run(
@@ -190,104 +212,119 @@ async def post_documents(file: UploadFile = File(...)):
             status_code=500, detail=f"Internal error during processing: {e}"
         )
 
+
 @app.post("/query")
 async def query_graph_with_cypher(request: QueryRequest):
-    """
-    Endpoint to query the Neo4j database using GraphCypherQAChain with Ollama.
-    """
     req_data = dict(request)
+
+    # perform the corporate memory lookup
+    try:
+        corp_results = get_corporate_memory_graph()
+        logging.debug(f"corp_results = {corp_results}")
+    except Exception as e:
+        logging.error(f"Corporate memory search failed: {e}")
+        corp_results = []
+
+    corp_memory_str = json.dumps(corp_results, indent=2)
 
     user_query = req_data.get("query", "").strip()
     chat_name = req_data["chat_name"]
-    
-    # Optional fields
     system_prompt = req_data["system_prompt"]
     debug_test = req_data.get("debug_test", False)
     verbose = req_data.get("verbose", False)
+    response_data = {}
 
-    # Predefine an empty response dictionary
-    response_data = {}  # Initialize an empty dictionary
-
-    # Check for empty query
     if not user_query or user_query.strip() == "":
         msg = "Query string is empty or missing"
         logging.warning(msg)
         raise HTTPException(status_code=418, detail=msg)
 
-    # Generate chat name if empty
     if not chat_name or chat_name.strip() == "":
         chat_name = slugify(user_query[:12])
         logging.info(f"Chat name was empty, generated new one: {chat_name}")
     else:
         chat_name = slugify(chat_name)
 
-    # Use default system prompt if empty
     if not isinstance(system_prompt, str) or not system_prompt.strip():
-        system_prompt = TEXT_SYSTEM_PROMPT
+        system_prompt = (
+            TEXT_SYSTEM_PROMPT + "\n" + GRAPH_SYSTEM_PROMPT2 + " " + corp_memory_str
+        )
+        logging.debug(f"System Prompt = {system_prompt}")
 
-    # Debug mode: Return canned response
     if debug_test:
-        logging.info("Debug test enabled, returning canned response.")        
-
-        # Add properties incrementally
+        logging.info("Debug test enabled, returning canned response.")
         response_data["status"] = 200
-        response_data["query"] = "You asked for a canned response so the query was not used."
+        response_data["query"] = (
+            "You asked for a canned response so the query was not used."
+        )
         response_data["chat_name"] = "Canned response"
-        if verbose: response_data["system_prompt"] = system_prompt
+        if verbose:
+            response_data["system_prompt"] = system_prompt
         response_data["results"] = canned_response()
-
         return response_data
 
     try:
-        # Perform vector search
-        results = vector_search(user_query, top_n=5) or []
-
-        # Ensure results is a list of dictionaries
+        results = vector_search(user_query, top_n=5)
         if not isinstance(results, list):
-            raise ValueError("Unexpected results format, expected a list of dictionaries.")
-                
-    except ValueError as ve:
-        logging.error(f"Data format error: {ve}")
-        raise HTTPException(status_code=500, detail=f"Data format error: {ve}")
+            raise ValueError(
+                "Unexpected results format, expected a list of dictionaries."
+            )
     except Exception as e:
         logging.error(f"Vector search failed: {e}")
         results = []
 
     neo4j_response = []
-        
+    chunks = []  # List for linking chunks
+    chunk_ids = []
     for result in results:
-        # for each result get the text value of property
         properties = result.get("properties", {})
         text = properties.get("text", "")
-        # get the text value of the property
+        chunk_id = properties.get("chunk_id")
+        numeric_chunk_id = result.get("id")
         if text:
-            # append text to neo4j_response
             neo4j_response.append(text)
+            if chunk_id:
+                chunks.append({"id": numeric_chunk_id, "chunk_id": chunk_id})
         else:
-            logging.warning("No text object included in neo4j responsee.")
+            logging.warning("No text object included in neo4j response.")
+
+
 
     try:
-        
-        #send the response to ollama llm with the original query
-        #response = llm_graph.invoke(f"{user_query}, {neo4j_response}", max_tokens=16000, temperature=0.0)
-        response = query_llm(user_query, neo4j_response, system_prompt=system_prompt, chat_name=chat_name, model_name=llm_default_model)
+        response = query_llm(
+            user_query,
+            neo4j_response,
+            system_prompt=system_prompt,
+            chat_name=chat_name,
+            model_name=llm_default_model,
+        )
 
-        logging.info(f"Neo4j Response: {json.dumps(neo4j_response)}")
+        final_response = split_message_object(response)
 
-        # Add properties incrementally
         response_data["status"] = 200
         response_data["query"] = user_query
         response_data["chat_name"] = chat_name
-        if verbose: response_data["system_prompt"] = system_prompt        
+        if verbose:
+            response_data["system_prompt"] = system_prompt
         response_data["results"] = [
             {
-                "message": response,            # TODO Need to break this into a method laters and add query_llm here
-                #"graph": neo4j_response         # TODO This needs to be done in its own method but since we need the results early for the other query we need to store it locally.
+                "message": final_response.get("message"),
+                "graph": final_response.get("node_graph"),
             }
         ]
-        # Save and return
+        
+            # Merge the chunk relationships into Neo4j.
+        try:
+            merge_understanding_graph_and_link_chunks(final_response.get("node_graph"), chunks, NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
+            
+        except Exception as e:
+            logging.error(f"Error merging chunk relationships: {e}")
+            raise HTTPException(
+                status_code=500,
+                detail=f"Error merging chunk relationships: {e}",
+            )
         save_chat_log(chat_name, user_query, response_data)
-        return response_data  
+        return response_data
 
     except Exception as e:
         logging.error(f"Error querying llm: {e}")
@@ -296,6 +333,7 @@ async def query_graph_with_cypher(request: QueryRequest):
             detail=f"An error occurred while querying that LLM : {e}",
         )
 
+
 def get_neo4j_query():
     # sends a query to the llm and get s a no4j query back.
     # Checks if query is valid with test function
@@ -303,13 +341,29 @@ def get_neo4j_query():
     # returns the neo4j query string.
     return "Placeholder for node graph"
 
-def get_graph_data(database_query):
+
+def get_graph_data(
+    user_query,
+    neo4j_response,
+    system_prompt=TEXT_SYSTEM_PROMPT,
+    chat_name="",
+    model_name="phi4",
+    max_tokens=16000,
+):
     # call database
     # This is a placeholder, someone else is implementing this
     # return a node graph. (json formatted)
     pass
 
-def query_llm(user_query, neo4j_response, system_prompt=TEXT_SYSTEM_PROMPT, chat_name="", model_name="phi4", max_tokens=16000):
+
+def query_llm(
+    user_query,
+    neo4j_response,
+    system_prompt=TEXT_SYSTEM_PROMPT,
+    chat_name="",
+    model_name="phi4",
+    max_tokens=16000,
+):
     """
     Sends a formatted query to the LLM with structured chat history, system prompt, and Neo4j graph data.
     Ensures the total token count does not exceed max_tokens.
@@ -338,7 +392,10 @@ def query_llm(user_query, neo4j_response, system_prompt=TEXT_SYSTEM_PROMPT, chat
 
         # Ensure there's an assistant response
         if assistant_messages:
-            assistant_message = {"role": "assistant", "content": assistant_messages[0].get("message", "")}
+            assistant_message = {
+                "role": "assistant",
+                "content": assistant_messages[0].get("message", ""),
+            }
             assistant_message_tokens = len(assistant_message["content"].split())
         else:
             logging.warning(f"❌ No response message found for: {entry['query']}")
@@ -352,9 +409,13 @@ def query_llm(user_query, neo4j_response, system_prompt=TEXT_SYSTEM_PROMPT, chat
             message_history.append(assistant_message)
             token_count += estimated_tokens
             messages_added += 2
-            logging.info(f"✅ Added: User({user_message_tokens} tokens), Assistant({assistant_message_tokens} tokens), Total({token_count}/{max_tokens})")
+            logging.info(
+                f"✅ Added: User({user_message_tokens} tokens), Assistant({assistant_message_tokens} tokens), Total({token_count}/{max_tokens})"
+            )
         else:
-            logging.warning(f"❌ Skipping due to token limit: User({user_message_tokens} tokens), Assistant({assistant_message_tokens} tokens), Total({token_count}/{max_tokens})")
+            logging.warning(
+                f"❌ Skipping due to token limit: User({user_message_tokens} tokens), Assistant({assistant_message_tokens} tokens), Total({token_count}/{max_tokens})"
+            )
             break  # Stop adding history if token limit is reached
 
     logging.info(f"🔹 Total messages included: {messages_added}")
@@ -369,7 +430,10 @@ def query_llm(user_query, neo4j_response, system_prompt=TEXT_SYSTEM_PROMPT, chat
 
     # If Neo4j response exists, include it as "assistant" message
     if neo4j_response:
-        neo4j_entry = {"role": "assistant", "content": json.dumps(neo4j_response, indent=2)}
+        neo4j_entry = {
+            "role": "assistant",
+            "content": json.dumps(neo4j_response, indent=2),
+        }
         neo4j_tokens = len(json.dumps(neo4j_response).split())
 
         if token_count + neo4j_tokens < max_tokens:
@@ -384,7 +448,8 @@ def query_llm(user_query, neo4j_response, system_prompt=TEXT_SYSTEM_PROMPT, chat
     print("=" * 50 + "\n")
 
     # Call LLM with full conversation history in structured JSON format
-    return llm_text_response.invoke(json.dumps(message_history), max_tokens=max_tokens)
+    return llm_text_response.invoke(json.dumps(message_history))
+
 
 def save_chat_log(chat_name: str, query: str, response: dict):
     """
@@ -399,7 +464,9 @@ def save_chat_log(chat_name: str, query: str, response: dict):
     log_entry = {
         "timestamp": datetime.utcnow().isoformat() + "Z",
         "query": query,  # User input
-        "results": response.get("results", [])  # Extract only the results, keeping the format
+        "results": response.get(
+            "results", []
+        ),  # Extract only the results, keeping the format
     }
 
     # Append new entry to in-memory history
@@ -421,8 +488,9 @@ def load_chat_history(chat_name):
     if llm_current_chat_name != chat_name:
         llm_current_chat_name = chat_name
         llm_current_chat_history = load_file(chat_file, CHAT_LOGS_DIR) or []
-    
+
     return chat_file
+
 
 @app.get("/chats")
 async def get_chats():
@@ -432,13 +500,16 @@ async def get_chats():
     try:
         # List all files in the ChatLogs directory
         chat_files = [
-            f.replace(".json", "") for f in os.listdir(CHAT_LOGS_DIR) if f.endswith(".json")
+            f.replace(".json", "")
+            for f in os.listdir(CHAT_LOGS_DIR)
+            if f.endswith(".json")
         ]
         return {"chats": chat_files}
     except Exception as e:
         logging.error(f"Error retrieving chat list: {e}")
         raise HTTPException(status_code=500, detail="Error retrieving chat list.")
-    
+
+
 @app.get("/chat_history/{chat_name}")
 async def get_chat_history(chat_name: str):
     """
@@ -452,7 +523,9 @@ async def get_chat_history(chat_name: str):
         chat_history = load_file(chat_file, CHAT_LOGS_DIR)
 
         # Extract responses sorted by timestamp
-        sorted_responses = sorted(chat_history, key=lambda x: x["timestamp"], reverse=True)
+        sorted_responses = sorted(
+            chat_history, key=lambda x: x["timestamp"], reverse=True
+        )
 
         return {"status": 200, "chat_name": chat_name, "chat_history": sorted_responses}
 
@@ -462,6 +535,7 @@ async def get_chat_history(chat_name: str):
     except Exception as e:
         logging.error(f"❌ Error retrieving chat history: {e}")
         raise HTTPException(status_code=500, detail="Error retrieving chat history.")
+
 
 @app.delete("/chat/{chat_name}")
 async def delete_chat(chat_name: str):
@@ -480,7 +554,8 @@ async def delete_chat(chat_name: str):
     except Exception as e:
         logging.error(f"Error deleting chat history: {e}")
         raise HTTPException(status_code=500, detail="Error deleting chat history.")
-    
+
+
 @app.put("/rename_chat/{chat_name}")
 async def rename_chat(chat_name: str, new_chat_name: str = Body(..., embed=True)):
     """
@@ -499,7 +574,9 @@ async def rename_chat(chat_name: str, new_chat_name: str = Body(..., embed=True)
 
     # Prevent overwriting an existing chat
     if os.path.exists(new_chat_file):
-        raise HTTPException(status_code=400, detail="A chat with the new name already exists.")
+        raise HTTPException(
+            status_code=400, detail="A chat with the new name already exists."
+        )
 
     try:
         os.rename(old_chat_file, new_chat_file)
@@ -507,7 +584,8 @@ async def rename_chat(chat_name: str, new_chat_name: str = Body(..., embed=True)
     except Exception as e:
         logging.error(f"Error renaming chat history: {e}")
         raise HTTPException(status_code=500, detail="Error renaming chat history.")
-    
+
+
 @app.get("/debug_chat_memory")
 async def debug_chat_memory():
     """
@@ -518,8 +596,9 @@ async def debug_chat_memory():
     return {
         "status": 200,
         "current_chat_name": llm_current_chat_name or "No chat loaded",
-        "chat_history": llm_current_chat_history or []
+        "chat_history": llm_current_chat_history or [],
     }
+
 
 @app.get("/batch")
 async def process_batch():
@@ -528,15 +607,21 @@ async def process_batch():
     Deletes each file after successful processing and streams real-time progress updates.
     """
     batch_folder = "batch"
-    
+
     # Ensure the batch folder exists
     if not os.path.exists(batch_folder):
         raise HTTPException(status_code=400, detail="Batch folder does not exist.")
 
-    files = [f for f in os.listdir(batch_folder) if os.path.isfile(os.path.join(batch_folder, f))]
-    
+    files = [
+        f
+        for f in os.listdir(batch_folder)
+        if os.path.isfile(os.path.join(batch_folder, f))
+    ]
+
     if not files:
-        raise HTTPException(status_code=400, detail="No files to process in the batch folder.")
+        raise HTTPException(
+            status_code=400, detail="No files to process in the batch folder."
+        )
 
     total_files = len(files)
 
@@ -547,7 +632,9 @@ async def process_batch():
             try:
                 with open(file_path, "rb") as file:
                     file_content = file.read()
-                    file_like = io.BytesIO(file_content)  # Convert bytes into a file-like object
+                    file_like = io.BytesIO(
+                        file_content
+                    )  # Convert bytes into a file-like object
 
                     file_upload = UploadFile(filename=filename, file=file_like)
 
@@ -557,15 +644,35 @@ async def process_batch():
                     # Delete the file after successful processing
                     os.remove(file_path)
 
-                    yield f"data: {{\"file\": \"{filename}\", \"status\": \"processed\", \"progress\": \"{idx} of {total_files}\"}}\n\n"
-                
+                    yield f'data: {{"file": "{filename}", "status": "processed", "progress": "{idx} of {total_files}"}}\n\n'
+
                 # Simulate a small delay (optional, for better streaming effect)
                 await asyncio.sleep(0.5)
 
             except Exception as e:
                 logging.error(f"Error processing file {filename}: {e}")
-                yield f"data: {{\"file\": \"{filename}\", \"status\": \"failed: {str(e)}\", \"progress\": \"{idx} of {total_files}\"}}\n\n"
+                yield f'data: {{"file": "{filename}", "status": "failed: {str(e)}", "progress": "{idx} of {total_files}"}}\n\n'
 
-        yield f"data: {{\"message\": \"Batch processing completed.\"}}\n\n"
+        yield f'data: {{"message": "Batch processing completed."}}\n\n'
 
     return StreamingResponse(process_files(), media_type="text/event-stream")
+
+
+# endpoint for saving query to the database
+@app.post("/query/save/")
+async def save_query():
+    # define the query and response to be saved
+    query = llm_current_chat_history[0].get("query")
+    message = llm_current_chat_history[0].get("results"[0].get("message"))
+
+    # check that query and message exists
+    if not query and message:
+        return HTTPException(status_code=400, detail="No chat currently loaded")
+
+    # embed text into vector IDs
+    query_embeddings = embed_text(query)
+    message_embeddings = embed_text(message)
+
+    # save embeddings to neo4j database as entity type response and connect to chunks that the response is related to
+
+    print()

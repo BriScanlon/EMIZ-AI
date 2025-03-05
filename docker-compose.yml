@@ -70,10 +70,10 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     ports:
-    - "${FRONTEND_I:-5173}:${FRONTEND_E:-5173}"
+      - "${FRONTEND_I:-5173}:${FRONTEND_E:-5173}"
     restart: unless-stopped
     depends_on:
-    - api-service
+      - api-service
 
 networks:
   default:
