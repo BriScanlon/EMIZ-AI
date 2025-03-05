@@ -95,17 +95,22 @@ def merge_understanding_graph_and_link_chunks(
             )
 
             query = """
-            MERGE (n:CorporateUnderstanding {name: $name})
-            ON CREATE SET n.category = $category, 
-                          n.text = coalesce($text, '')
+                MERGE (n:CorporateUnderstanding {name: $name})
+                ON CREATE SET n.category = $category, 
+                            n.text = coalesce($text, '')
 
-            WITH n
-            OPTIONAL MATCH (m:Meta {key: 'corporateUnderstandingId'})
-            WHERE n.id IS NULL
-            CALL apoc.atomic.add(m, 'value', 1) YIELD newValue
-            SET n.id = coalesce(n.id, toInteger(newValue))
-            RETURN n.id, n.name
-            """
+                WITH n
+                MERGE (m:Meta {key: 'corporateUnderstandingId'}) 
+                ON CREATE SET m.value = 0 
+                ON MATCH SET m.value = toInteger(m.value)
+
+                WITH n, m
+                WHERE n.id IS NULL
+                CALL apoc.atomic.add(m, 'value', 1) YIELD newValue
+                SET n.id = coalesce(n.id, toInteger(newValue))
+                RETURN n.id, n.name
+                """
+
             result = session.run(
                 query,
                 name=node["name"],
