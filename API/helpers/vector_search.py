@@ -22,27 +22,61 @@ def fetch_similar_chunks(tx, query_embedding, top_n):
     """
     Runs a Cypher query to compute cosine similarity between the query embedding
     and each Chunk node's stored vector.
+    If a chunk is linked to a CorporateUnderstanding node, fetches the entire connected subgraph.
     """
     cypher_query = """
     WITH $query_embedding AS query
     MATCH (c:Chunk)
     WHERE c.vector IS NOT NULL
     WITH c, gds.similarity.cosine(query, c.vector) AS similarity
-    RETURN c, similarity
     ORDER BY similarity DESC
-    LIMIT $top_n;
+    LIMIT $top_n
+    OPTIONAL MATCH (c)-[:BELONGS_TO]->(cu:CorporateUnderstanding)
+    
+    // If at least one CorporateUnderstanding node is linked, retrieve the entire CUKG
+    OPTIONAL MATCH path = (cu)-[:CONNECTED_TO*0..]->(related:CorporateUnderstanding)
+    
+    RETURN c, similarity, collect(DISTINCT cu) AS directly_linked,
+           collect(DISTINCT related) AS full_cukg;
     """
 
-    # Debug: Print the Cypher query (you may want to remove or mask this in production)
+    # Debug: Print the Cypher query
     logging.debug("Executing Cypher Query:\n%s", cypher_query)
 
     result = tx.run(cypher_query, query_embedding=query_embedding, top_n=top_n)
     results = []
     for record in result:
-        node = record["c"]
+        chunk_node = record["c"]
         similarity = record["similarity"]
+
+        # Directly linked CorporateUnderstanding nodes
+        directly_linked = (
+            [
+                {"id": entity.id, "properties": dict(entity)}
+                for entity in record["directly_linked"]
+            ]
+            if record["directly_linked"]
+            else []
+        )
+
+        # Full Corporate Understanding Knowledge Graph (CUKG)
+        full_cukg = (
+            [
+                {"id": entity.id, "properties": dict(entity)}
+                for entity in record["full_cukg"]
+            ]
+            if record["full_cukg"]
+            else []
+        )
+
         results.append(
-            {"id": node.id, "properties": dict(node), "similarity": similarity}
+            {
+                "id": chunk_node.id,
+                "properties": dict(chunk_node),
+                "similarity": similarity,
+                "directly_linked": directly_linked,
+                "full_cukg": full_cukg,  # This includes ALL connected CorporateUnderstanding nodes
+            }
         )
 
     # Debug: Log the response from the database
