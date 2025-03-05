@@ -3,6 +3,13 @@ from neo4j import GraphDatabase
 import dotenv
 import os
 import logging
+from sentence_transformers import SentenceTransformer
+
+# Load embedding model
+MODEL_NAME = "all-MiniLM-L6-v2"  # Ensure consistency
+model = SentenceTransformer(MODEL_NAME)
+
+SIMILARITY_THRESHOLD = 0.85  # Define similarity threshold for merging
 
 
 def merge_corporate_understanding_graph(graph_json: dict):
@@ -70,7 +77,7 @@ def merge_understanding_graph_and_link_chunks(
             MERGE (m:Meta {key: 'corporateUnderstandingId'})
             ON CREATE SET m.value = 0
             ON MATCH SET m.value = toInteger(m.value)
-            """
+        """
         )
 
     first_node_name = None  # Store first node's name for chunk linking
@@ -81,49 +88,73 @@ def merge_understanding_graph_and_link_chunks(
         cat["id"]: cat["name"] for cat in understanding_graph.get("categories", [])
     }
 
-    # 2. Merge Corporate Understanding nodes and track new IDs
     with driver.session() as session:
         nodes = understanding_graph.get("nodes", [])
 
         for index, node in enumerate(nodes):
-            # Handle category lookup from categories array (backward compatibility)
             category_id = node.get("category")
-            category_name = (
-                category_map.get(category_id, "Unknown")
-                if category_id is not None
-                else node.get("type", "Unknown")
-            )
+            category_name = category_map.get(category_id, node.get("type", "Unknown"))
 
-            query = """
-                MERGE (n:CorporateUnderstanding {name: $name})
-                ON CREATE SET n.category = $category, 
-                            n.text = coalesce($text, '')
+            node_name = node["name"]
+            node_embedding = model.encode(
+                node_name
+            ).tolist()  # Compute embedding for new node
 
-                WITH n
-                MERGE (m:Meta {key: 'corporateUnderstandingId'}) 
-                ON CREATE SET m.value = 0 
-                ON MATCH SET m.value = toInteger(m.value)
-
-                WITH n, m
-                WHERE n.id IS NULL
-                CALL apoc.atomic.add(m, 'value', 1) YIELD newValue
-                SET n.id = coalesce(n.id, toInteger(newValue))
-                RETURN n.id, n.name
-                """
+            # Step 1: Check for similar nodes in the database
+            query_find_similar = """
+            MATCH (existing:CorporateUnderstanding)
+            WHERE existing.vector IS NOT NULL
+            WITH existing, gds.similarity.cosine(existing.vector, $embedding) AS similarity
+            WHERE similarity >= $threshold
+            RETURN existing.name AS matched_name, similarity
+            ORDER BY similarity DESC
+            LIMIT 1;
+            """
 
             result = session.run(
-                query,
-                name=node["name"],
+                query_find_similar,
+                embedding=node_embedding,
+                threshold=SIMILARITY_THRESHOLD,
+            )
+            similar_node = result.single()
+
+            if similar_node:
+                # If a similar node exists, reuse its name
+                node_name = similar_node["matched_name"]
+
+            # Step 2: Merge node (using either exact name or most similar found)
+            query_merge = """
+            MERGE (n:CorporateUnderstanding {name: $name})
+            ON CREATE SET 
+                n.category = $category, 
+                n.text = coalesce($text, ''), 
+                n.vector = $embedding  // Store embedding for future similarity checks
+
+            WITH n
+            MERGE (m:Meta {key: 'corporateUnderstandingId'}) 
+            ON CREATE SET m.value = 0 
+            ON MATCH SET m.value = toInteger(m.value)
+
+            WITH n, m
+            WHERE n.id IS NULL
+            CALL apoc.atomic.add(m, 'value', 1) YIELD newValue
+            SET n.id = coalesce(n.id, toInteger(newValue))
+            RETURN n.id, n.name;
+            """
+
+            result = session.run(
+                query_merge,
+                name=node_name,
                 category=category_name,
                 text=node.get("text", ""),
+                embedding=node_embedding,
             )
 
             record = result.single()
             if record:
                 new_id, node_name = record["n.id"], record["n.name"]
-                node_id_map[node_name] = new_id  # Store mapped ID
+                node_id_map[node_name] = new_id
 
-                # Capture the first node name for linking to chunks
                 if index == 0:
                     first_node_name = node_name
 
