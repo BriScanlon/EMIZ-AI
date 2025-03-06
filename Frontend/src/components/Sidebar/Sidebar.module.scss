@@ -1,57 +1,28 @@
-// _variables.scss
-$sidebar-bg: #202123;
-$navbar-bg: #343541;
-$text-color: #fff;
-$secondary-text-color: #a9a9a9;
-$hover-color: #565869;
-$main-bg: #f4f4f4;
-$main-text-color: #333;
+@use "../../theme/themeColors.scss" as *;
 
 .sidebar {
-    margin-top: 60px;
-    background-color: $sidebar-bg;
-    color: $text-color;
-    width: 250px;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    height: calc(100vh - 90px); /* Sidebar takes the full height */
-    position: fixed; /* Keep sidebar fixed on the left */
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    overflow-y: auto; /* Sidebar content can scroll */
-    transition: transform 0.3s ease;
-  
-    &.closed {
-      transform: translateX(-100%);
-    }
-  
-    &.open {
-      transform: translateX(0);
-    }  
+  border-left: 2px solid;
+  margin-top: 60px;
+  background-color: $palette-grey-700;
+  color: $palette-common-white;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  height: calc(100vh - 90px); /* Sidebar takes the full height */
+  position: fixed; /* Keep sidebar fixed on the left */
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  overflow-y: auto; /* Sidebar content can scroll */
+  transition: transform 0.3s ease;
 
-  .sidebar-header {
-    // h2 {
-    //   font-size: 1.5rem;
-    //   margin-bottom: 1rem;
-    // }
+  &.closed {
+    transform: translateX(100%);
   }
 
-  .sidebar-links {
-    list-style: none;
-    padding: 0;
-
-    li {
-      padding: 0.5rem 0;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $hover-color;
-        border-radius: 8px;
-        padding-left: 0.5rem;
-      }
-    }
+  &.open {
+    transform: translateX(0);
   }
 
   .recent-searches {
@@ -72,24 +43,29 @@ $main-text-color: #333;
         justify-content: space-between;
         align-items: center;
         padding: 0.5rem 0;
-        border-bottom: 1px solid $hover-color;
+        border-bottom: 1px solid $palette-grey-500;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: $palette-grey-600;
+        }
 
         .search-text {
           font-size: 0.875rem;
         }
 
-        .search-tag {
-          font-size: 0.75rem;
-          color: $secondary-text-color;
-          margin-left: 0.5rem;
-        }
+        .icons {
+          display: flex;
+          gap: 0.5rem;
 
-        .delete-icon {
-          color: $secondary-text-color;
-          cursor: pointer;
+          .update-icon,
+          .delete-icon {
+            color: $palette-grey-300;
+            cursor: pointer;
 
-          &:hover {
-            color: $text-color;
+            &:hover {
+              color: $palette-error-main;
+            }
           }
         }
       }
@@ -97,7 +73,7 @@ $main-text-color: #333;
 
     p {
       font-size: 0.875rem;
-      color: $secondary-text-color;
+      color: $palette-grey-300;
     }
   }
 }

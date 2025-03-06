@@ -12,17 +12,16 @@ export async function postQuery({
   query,
   chat_name,
   debug_test = false,
-  verbose = true
+  verbose = true,
 }) {
   try {
     const response = await Axios.post(`${URL}/query`, {
       query,
       chat_name,
       debug_test,
-      verbose
+      verbose,
     });
     return response.data;
-    // console.log(response.data);
   } catch (error) {
     throw new Error(error.response?.data?.message || "Failed to post query");
   }
@@ -106,15 +105,6 @@ export async function queryGraph(
 }
 
 // Function to get chats
-// export async function getChats() {
-//   try {
-//     const response = await Axios.get(`${URL}/chats`);
-//     return response.data;
-//   } catch (error) {
-//     throw new Error(error.response?.data?.message || 'Failed to get chats');
-//   }
-// }
-
 export async function getChats() {
   try {
     const response = await Axios.get(urlChats);
@@ -135,6 +125,28 @@ export async function getChatHistory(chatName) {
     throw new Error(
       error.response?.data?.message || "Failed to get chat history"
     );
+  }
+}
+
+// Function to rename a chat
+export async function renameChatApi(chatName, newChatName) {
+  try {
+    const response = await Axios.put(`${URL}/rename_chat/${chatName}`, {
+      new_chat_name: newChatName,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to rename chat");
+  }
+}
+
+// Function to delete a chat
+export async function deleteChatApi(chatName) {
+  try {
+    const response = await Axios.delete(`${URL}/chat/${chatName}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to delete chat");
   }
 }
 

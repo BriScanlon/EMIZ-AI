@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import GraphIcon from "../../ui/GraphIcon/UiIcon";
 import styles from "./ChatInterface.module.scss";
+import Spinner from "../../ui/Spinner/Spinner";
 
-const graphIcon = () => (
+const graphIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     height="20px"
@@ -15,7 +16,7 @@ const graphIcon = () => (
   </svg>
 );
 
-const tableIcon = () => (
+const tableIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     height="24px"
@@ -27,40 +28,89 @@ const tableIcon = () => (
   </svg>
 );
 
-const ChatInterface = ({ chatConversation, chatRef }) => {
+const ChatInterface = ({
+  chatConversation,
+  chatRef,
+  queries,
+  queryResponses,
+}) => {
+  const [currentTimestamp, setCurrentTimestamp] = useState(
+    new Date().toISOString()
+  );
+
+  const combinedHistory = [];
+
+  if (queries && queryResponses) {
+    queries.forEach((query, index) => {
+      combinedHistory.push({
+        conversationType: "new",
+        query,
+        queryTimestamp: currentTimestamp,
+      });
+      if (queryResponses[index]) {
+        combinedHistory.push({
+          conversationType: "new",
+          response: queryResponses[index]?.message,
+          responseTimestamp: new Date().toISOString(),
+        });
+      }
+    });
+  } else {
+    chatConversation.forEach((chat) => {
+      combinedHistory.push({
+        conversationType: "old",
+        query: chat.query,
+        response: chat.results[0].message,
+        timestamp: chat.timestamp,
+      });
+    });
+  }
+
+  useEffect(() => {
+    chatRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [combinedHistory]);
+
   return (
-    <div className={styles.chatWindow}>
-      {chatConversation.map((chat, index) => (
-        <div key={index} className={`${styles.message} ${styles[chat.sender]}`}>
-          <div className={styles.bubble}>{chat.message}</div>
-          <div className={styles.messageFooter}>
-            <span className={styles.timestamp}>
-              {new Date().toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </span>
-            {chat.sender === "bot" && (
-              <>
-                <span>
-                  <Link
-                    to={`/graph?chat_id=${index}`}
-                    className={styles.iconContainer}
-                  >
-                    <GraphIcon icon={graphIcon} tooltipText="View in graph" />
-                  </Link>
-                </span>
-                <span>
-                  <Link
-                    to={`/table?chat_id=${index}`}
-                    className={styles.iconContainer}
-                  >
-                    <GraphIcon icon={tableIcon} tooltipText="View in table" />
-                  </Link>
-                </span>
-              </>
+    <div className={styles.chatContainer}>
+      {combinedHistory.map((chat, index) => (
+        <div key={index} className={styles.chatItem}>
+          <div className={styles.query}>
+            {chat.query}
+
+            {chat.conversationType === "new" && (
+              <span className={styles.timestamp}>
+                {new Date(chat.queryTimestamp).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+            )}
+
+            {chat.conversationType === "old" && (
+              <span className={styles.timestamp}>
+                {new Date(chat.timestamp).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
             )}
           </div>
+          {!chat.response && <Spinner />}
+          {chat.response && (
+            <div className={styles.response}>
+              <strong>Response:</strong> {chat.response}
+              <span className={styles.timestamp}>
+                {new Date(chat.timestamp).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+              <div className={styles.icons}>
+                <Link to={`/graph?chat_id=${index}`}>{graphIcon}</Link>
+                <Link to={`/table?chat_id=${index}`}>{tableIcon}</Link>
+              </div>
+            </div>
+          )}
         </div>
       ))}
       <div ref={chatRef} />

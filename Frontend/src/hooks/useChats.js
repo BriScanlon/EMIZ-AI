@@ -8,6 +8,7 @@ export function useChats() {
     isLoading,
     isError,
     error,
+    refetch, // Add refetch to the return object
   } = useQuery({
     queryKey: ["chats"],
     queryFn: () => getChatsApi(),
@@ -16,5 +17,5 @@ export function useChats() {
     },
   });
 
-  return { chats, isLoading, isError, error };
+  return { chats, isLoading, isError, error, refetch }; // Return refetch
 }

@@ -5,6 +5,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Footer from "../../components/Footer/Footer";
 import styles from "./Layout1.module.scss";
 import { Outlet } from "react-router-dom";
+import SecondaryNavbar from "../../components/Navbar/SecondaryNavbar";
 
 export default function Layout1() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -16,23 +17,23 @@ export default function Layout1() {
       {/* Top Navigation */}
       <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 
+      <SecondaryNavbar />
       {/* Main Content */}
       <div className={styles.content}>
-        {/* Sidebar */}
-        <aside
-          className={`${styles.sidebar} ${
-            !isSidebarOpen ? styles.collapsed : ""
-          }`}
-        >
-          <Sidebar isSidebarOpen={isSidebarOpen} />
-        </aside>
-
         {/* Main Section */}
         <main
-          className={`${styles.main} ${!isSidebarOpen ? styles.expanded : ""}`}
+          className={`${styles.main} ${!isSidebarOpen ? styles.collapsed : ""}`}
         >
           <Outlet />
         </main>
+        {/* Sidebar */}
+        <div
+          className={`${styles.sidebar} ${
+            isSidebarOpen ? styles.expanded : styles.collapsed
+          }`}
+        >
+          <Sidebar isSidebarOpen={isSidebarOpen} />
+        </div>
       </div>
 
       {/* Footer */}

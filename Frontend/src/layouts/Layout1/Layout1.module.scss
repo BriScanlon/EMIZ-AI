@@ -1,23 +1,35 @@
-$sidebar-width: 250px;
-$collapsed-width: 60px;
+$sidebar-width: 300px;
+$collapsed-width: 0px;
 $transition-speed: 0.3s;
 
+// .layout {
+//   margin-top: 60px;
+//   // height: 100vh;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+
 .layout {
-  margin-top: 60px;
-  height: 100vh;
+  margin-top: 60px; /* Ensure this is enough to accommodate the Navbar */
   display: flex;
   flex-direction: column;
+  height: 100vh; /* Ensure the layout takes the full height of the viewport */
 
   .content {
     display: flex;
     flex: 1;
+    // height: 90%;
 
     .sidebar {
       width: $sidebar-width;
       transition: width $transition-speed ease;
-      // background-color: #2c3e50;
-      // color: white;
-      // overflow: hidden;
+      background-color: #2c3e50;
+      color: white;
+      overflow: hidden;
+
+      &.expanded {
+        width: $sidebar-width;
+      }
 
       &.collapsed {
         width: $collapsed-width;
@@ -30,7 +42,7 @@ $transition-speed: 0.3s;
       padding: 20px;
       transition: margin-left $transition-speed ease;
 
-      &.expanded {
+      &.collapsed {
         margin-left: $collapsed-width;
       }
     }

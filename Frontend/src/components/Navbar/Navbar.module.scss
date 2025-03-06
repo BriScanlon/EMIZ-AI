@@ -7,7 +7,6 @@ $hover-color: #565869;
 $main-bg: #f4f4f4;
 $main-text-color: #333;
 
-
 .navbar {
   background-color: $navbar-bg;
   color: $text-color;
@@ -21,18 +20,19 @@ $main-text-color: #333;
   justify-content: space-between;
   padding: 0 1rem;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+  z-index: 2000; /* Ensure this is higher than the SecondaryNavbar */
 
   .menu-button {
-    background: none;
-    border: none;
+    border: 1px solid;
+    border-radius: 0;
+    padding: 5px;
     color: $text-color;
     font-size: 1.5rem;
     cursor: pointer;
   }
 
-  h1 {
-    margin: 12px;
-    font-size: 1.25rem;
+  .flex-items {
+    display: flex;
+    gap: 0.5rem;
   }
 }

@@ -1,0 +1,14 @@
+.appBar {
+  background-color: #3f51b5; // Primary color
+  box-shadow: none; // Remove default shadow
+  height: 60px; // Set height
+  position: fixed;
+  top: 60px; // Position below the main navbar
+  z-index: 1500; // Ensure this is below the main navbar
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between; // Adjust content alignment
+  padding: 0 20px; // Add padding
+}

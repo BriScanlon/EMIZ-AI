@@ -108,23 +108,13 @@ const NewConversation = () => {
   const { queries, queryResponses } = useSearch();
   const chatRef = useRef(null);
 
-  useEffect(() => {
-    chatRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [queries, queryResponses]);
-
-  const combinedHistory = [];
-
-  queries.forEach((query, index) => {
-    combinedHistory.push({ sender: "user", message: query });
-    if (queryResponses[index]) {
-      combinedHistory.push({
-        sender: "bot",
-        message: queryResponses[index]?.message,
-      });
-    }
-  });
-
-  return <ChatInterface chatConversation={combinedHistory} chatRef={chatRef} />;
+  return (
+    <ChatInterface
+      chatRef={chatRef}
+      queries={queries}
+      queryResponses={queryResponses}
+    />
+  );
 };
 
 export default NewConversation;

@@ -15,8 +15,7 @@ export function useChatHistory(chatName) {
   return {
     data,
     chatTitle: data?.chat_name,
-    query: data?.query || "",
-    results: data?.results || [],
+    chatHistory: data?.chat_history || [],
     isLoading,
     isError,
     error,

@@ -11,11 +11,9 @@ import Table from "./components/Table/Table";
 // import ScraperForm from "./components/ScraperForm";
 import SearchForm from "./components/SearchForm/SearchForm";
 
-import "./App.scss";
 // import theme from './theme/theme';
 import { getTheme } from "./theme/theme";
 import Sidebar from "./components/Sidebar/Sidebar-old";
-import Ssidebar from "./ui/Ssidebar";
 import { ScreenSizeProvider } from "./contexts/ScreenSizeContext";
 import { LightDarkModeProvider } from "./contexts/LightDarkModeContext";
 import SidebarNav from "./components/Sidebar/SidebarNav";
@@ -30,6 +28,7 @@ import PdfUpload from "./components/PdfUpload/PdfUpload";
 import Layout2 from "./layouts/Layout2/Layout2";
 import { useState } from "react";
 import { SearchProvider } from "./contexts/SearchContext";
+import ThemeSwitch from "./components/ThemeSwitch";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,6 +64,7 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
         <LightDarkModeProvider>
+          {/* <ThemeSwitch /> */}
           {/* <ScreenSizeProvider> */}
           <SearchProvider>
             {/* <div className="App"> */}
