@@ -102,27 +102,21 @@ import Spinner from "../../ui/Spinner/Spinner";
 import ChatInterface from "./ChatInterface";
 
 const ChatHistory = () => {
-  // const { selectedSearch: chatName } = useSearch();
   const { selectedSearch: chatNameFromContext } = useSearch();
-
   const chatName =
     chatNameFromContext || JSON.parse(localStorage.getItem("selectedSearch"));
 
-  const { results, isLoading } = useChatHistory(chatName);
-  const [chatHistory, setChatHistory] = useState([]);
+  const { data, isLoading } = useChatHistory(chatName);
   const chatRef = useRef(null);
-
-  useEffect(() => {
-    setChatHistory(results);
-  }, [results]);
-
-  useEffect(() => {
-    chatRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatHistory]);
 
   if (isLoading) return <Spinner />;
 
-  return <ChatInterface chatConversation={chatHistory} chatRef={chatRef} />;
+  return (
+    <ChatInterface
+      chatConversation={data?.chat_history || []}
+      chatRef={chatRef}
+    />
+  );
 };
 
 export default ChatHistory;

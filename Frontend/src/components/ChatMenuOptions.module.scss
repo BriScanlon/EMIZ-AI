@@ -1,0 +1,22 @@
+@use "../theme/themeColors.scss" as *;
+
+.menu {
+  .MuiPaper-root {
+    background-color: $palette-grey-700;
+    color: $palette-common-white;
+  }
+
+  .MuiMenuItem-root {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover {
+      background-color: $palette-grey-600;
+    }
+
+    .icon {
+      color: $palette-common-white;
+    }
+  }
+}

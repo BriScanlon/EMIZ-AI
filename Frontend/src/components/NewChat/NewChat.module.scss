@@ -1,0 +1,26 @@
+@use "../../theme/themeColors.scss" as *;
+
+.newChatButton {
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: $palette-primary-dark;
+  color: $palette-common-white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $palette-primary-dark;
+  }
+
+  span {
+    margin-left: 0.5rem;
+    font-size: 1rem;
+  }
+
+  svg {
+    font-size: 1.5rem;
+  }
+}
