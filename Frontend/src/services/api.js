@@ -11,7 +11,7 @@ const urlChat = `${URL}/chat`;
 export async function postQuery({
   query,
   chat_name,
-  debug_test = false,
+  debug_test = true,
   verbose = true,
 }) {
   try {

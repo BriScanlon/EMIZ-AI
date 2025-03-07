@@ -36,10 +36,44 @@ export default function Layout2({ onBack }) {
   };
 
   return (
-    // <SearchProvider>
     <div className={styles.layout}>
       <div className={styles.container}>
-        {/* Sidebar - Draggable and Toggleable */}
+        <main className={styles.mainContent}>
+          <button
+            onClick={onBack}
+            className={`${styles.button} ${styles.backButton}`}
+          >
+            <FaArrowLeft /> Back to Home
+          </button>
+
+          <div className={styles.buttonGroup}>
+            <Link
+              to="/graph"
+              className={`${styles.button} ${styles.graphButton}`}
+            >
+              <FaChartBar /> Graph View
+            </Link>
+
+            <Link
+              to="/table"
+              className={`${styles.button} ${styles.tableButton}`}
+            >
+              <FaTable /> Table View
+            </Link>
+
+            <button
+              onClick={() => setOverlayOpen(true)}
+              className={`${styles.button} ${styles.overlayButton}`}
+            >
+              Show Summary
+            </button>
+          </div>
+
+          <div className={styles.contentWrapper}>
+            <Outlet />
+          </div>
+        </main>
+
         {isSidebarOpen && (
           <aside
             className={styles.sidebar}
@@ -60,7 +94,6 @@ export default function Layout2({ onBack }) {
           </aside>
         )}
 
-        {/* Sidebar Toggle Button (When Sidebar is Closed) */}
         {!isSidebarOpen && (
           <button
             onClick={() => setSidebarOpen(true)}
@@ -70,50 +103,8 @@ export default function Layout2({ onBack }) {
             <FaBars />
           </button>
         )}
-
-        {/* Main Content Area */}
-        <main className={styles.mainContent}>
-          {/* Back Button */}
-          <button
-            onClick={onBack}
-            className="p-2 bg-blue-600 rounded-md text-white flex items-center gap-2"
-          >
-            <FaArrowLeft /> Back to Home
-          </button>
-
-          {/* Toggle Buttons */}
-          <div className="flex gap-4 mb-4">
-            <Link
-              to="/graph"
-              className="p-2 bg-blue-600 rounded-md text-white flex items-center gap-2"
-            >
-              <FaChartBar /> Graph View
-            </Link>
-
-            <Link
-              to="/table"
-              className="p-2 bg-green-600 rounded-md text-white flex items-center gap-2"
-            >
-              <FaTable /> Table View
-            </Link>
-
-            {/* Toggle Overlay Button */}
-            <button
-              onClick={() => setOverlayOpen(true)}
-              className="p-2 bg-gray-800 rounded-md text-white"
-            >
-              Show Summary
-            </button>
-          </div>
-
-          {/* Dynamic Content Section */}
-          <div className={styles.contentWrapper}>
-            <Outlet />
-          </div>
-        </main>
       </div>
 
-      {/* Right Overlay Section */}
       <Overlay
         isOpen={isOverlayOpen}
         onClose={() => setOverlayOpen(false)}
@@ -122,9 +113,7 @@ export default function Layout2({ onBack }) {
         <p>Here is a summary of the data being displayed...</p>
       </Overlay>
 
-      {/* Footer */}
       <Footer />
     </div>
-    // </SearchProvider>
   );
 }

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import GraphIcon from "../../ui/GraphIcon/UiIcon";
 import styles from "./ChatInterface.module.scss";
-import Spinner from "../../ui/Spinner/Spinner";
 
 const graphIcon = (
   <svg
@@ -34,26 +33,22 @@ const ChatInterface = ({
   queries,
   queryResponses,
 }) => {
-  const [currentTimestamp, setCurrentTimestamp] = useState(
-    new Date().toISOString()
-  );
+  const [isTyping, setIsTyping] = useState(false);
 
   const combinedHistory = [];
 
   if (queries && queryResponses) {
     queries.forEach((query, index) => {
+      const queryTimestamp = new Date().toISOString();
       combinedHistory.push({
         conversationType: "new",
         query,
-        queryTimestamp: currentTimestamp,
+        queryTimestamp,
+        response: queryResponses[index]?.message || null,
+        responseTimestamp: queryResponses[index]
+          ? new Date().toISOString()
+          : null,
       });
-      if (queryResponses[index]) {
-        combinedHistory.push({
-          conversationType: "new",
-          response: queryResponses[index]?.message,
-          responseTimestamp: new Date().toISOString(),
-        });
-      }
     });
   } else {
     chatConversation.forEach((chat) => {
@@ -62,6 +57,7 @@ const ChatInterface = ({
         query: chat.query,
         response: chat.results[0].message,
         timestamp: chat.timestamp,
+        node: chat?.results[0]?.graph?.nodes,
       });
     });
   }
@@ -69,6 +65,18 @@ const ChatInterface = ({
   useEffect(() => {
     chatRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [combinedHistory]);
+
+  useEffect(() => {
+    if (combinedHistory.some((chat) => chat.response === null)) {
+      setIsTyping(true);
+      const typingTimeout = setTimeout(() => {
+        setIsTyping(false);
+      }, 3000); // Simulate typing for 3 seconds
+      return () => clearTimeout(typingTimeout);
+    }
+  }, [combinedHistory]);
+
+  console.log(combinedHistory);
 
   return (
     <div className={styles.chatContainer}>
@@ -95,20 +103,32 @@ const ChatInterface = ({
               </span>
             )}
           </div>
-          {!chat.response && <Spinner />}
-          {chat.response && (
+
+          {chat.response === null ? (
+            <div className={styles.typingIndicator}>
+              {isTyping ? (
+                <span className={styles.typing}>Typing...</span>
+              ) : (
+                <span className={styles.dots}>...</span>
+              )}
+            </div>
+          ) : (
             <div className={styles.response}>
               <strong>Response:</strong> {chat.response}
               <span className={styles.timestamp}>
-                {new Date(chat.timestamp).toLocaleTimeString([], {
+                {new Date(
+                  chat.responseTimestamp || chat.timestamp
+                ).toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",
                 })}
               </span>
+              {/* {chat.node && ( */}
               <div className={styles.icons}>
                 <Link to={`/graph?chat_id=${index}`}>{graphIcon}</Link>
                 <Link to={`/table?chat_id=${index}`}>{tableIcon}</Link>
               </div>
+              {/* )} */}
             </div>
           )}
         </div>
