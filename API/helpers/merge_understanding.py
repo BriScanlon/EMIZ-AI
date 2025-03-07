@@ -183,9 +183,6 @@ def merge_understanding_graph_and_link_chunks(
             for chunk in chunks:
                 query = """
                 MERGE (c:Chunk {chunk_id: $chunk_id})
-                ON CREATE SET c.text = $text
-                ON MATCH SET c.text = coalesce($text, c.text)
-                
                 WITH c
                 MATCH (n:CorporateUnderstanding {name: $firstNodeName})
                 MERGE (c)-[:BELONGS_TO]->(n)
@@ -193,7 +190,6 @@ def merge_understanding_graph_and_link_chunks(
                 session.run(
                     query,
                     chunk_id=chunk["chunk_id"],
-                    text=chunk.get("text", ""),
                     firstNodeName=first_node_name,
                 )
 
