@@ -183,6 +183,7 @@ def merge_understanding_graph_and_link_chunks(
             for chunk in chunks:
                 query = """
                 MERGE (c:Chunk {chunk_id: $chunk_id})
+                WITH c
                 MATCH (n:CorporateUnderstanding {name: $firstNodeName})
                 MERGE (c)-[:BELONGS_TO]->(n)
                 """
