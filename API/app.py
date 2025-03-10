@@ -47,10 +47,12 @@ from helpers.merge_understanding import merge_understanding_graph_and_link_chunk
 NEO4J_URI = "bolt://neo4j-db-container"
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "TestPassword")
+CHUNK_SIZE_ENV = int(os.getenv("CHUNK_SIZE_ENV", 1000))
+LLM_DEFAULT_MODEL = os.getenv("LLM_DEFAULT_MODEL", "phi4_ctx_10000")
 
 # ollama settings
-llm_default_model = "phi4_ctx_10000"
-llm_max_ctx_model = "phi4_ctx_10000"
+llm_default_model = LLM_DEFAULT_MODEL
+llm_max_ctx_model = LLM_DEFAULT_MODEL
 llm_default_temp = 0
 llm_port = os.getenv("OLLAMA_PORT_I", "11434")
 llm_base_url = "http://ollama-container:{}".format(llm_port)
@@ -68,13 +70,15 @@ llm_current_chat_history = []
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # chunk settings
-CHUNK_SIZE = 1000
+CHUNK_SIZE = CHUNK_SIZE_ENV
 CHUNK_OVERLAP = 200
 
 # Neo4j settings
 graph_driver = Neo4jGraph(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
 
 graph_driver.refresh_schema()
+
+ENABLE_CHAT_LOGGING = False
 
 
 # Define a Pydantic model for the request body
@@ -459,6 +463,10 @@ def save_chat_log(chat_name: str, query: str, response: dict):
     global llm_current_chat_name, llm_current_chat_history
 
     chat_file = load_chat_history(chat_name)
+
+    if not ENABLE_CHAT_LOGGING:
+        logging.info(f"Chat logging is disabled. Skipping saving chat history for '{chat_name}'.")
+        return
 
     # Create structured log entry (removing unnecessary fields)
     log_entry = {
