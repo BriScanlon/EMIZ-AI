@@ -1,32 +1,18 @@
-# Stage 1: Install all dependencies (including devDependencies)
-FROM node:20-alpine AS development-dependencies-env
-COPY . /app
+# Stage 1: Install dependencies
+FROM node:20-alpine AS build-env
 WORKDIR /app
+COPY package.json package-lock.json ./
 RUN npm ci
 
-# Stage 2: Install only production dependencies (for final runtime)
-FROM node:20-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
-
-# Stage 3: Build the Vite React app
-FROM node:20-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-WORKDIR /app
-
-# Ensure Vite is installed before running the build (if missing)
-RUN npm install vite -g
-RUN npm install
+# Stage 2: Build the React app
+COPY . .
 RUN npm run build
 
-# Stage 4: Create a minimal final runtime image
+# Stage 3: Serve the React app using a lightweight server
 FROM node:20-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/dist /app/dist
 WORKDIR /app
+COPY --from=build-env /app/dist ./dist
+RUN npm install -g serve
 
-# Serve the built app
-CMD ["npx", "serve", "-s", "dist", "-l", "5173"]
+# Serve the built frontend
+CMD ["serve", "-s", "dist", "-l", "5173"]

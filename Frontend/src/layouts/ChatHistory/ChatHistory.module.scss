@@ -1,0 +1,110 @@
+.chat-history {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  height: calc(100% - 2rem);
+  padding: 1rem;
+  background-color: #f5f5f5;
+
+  & .chat-history__sidebar {
+    display: flex;
+    flex-direction: column;
+    height: calc(100%);
+    width: 350px;
+    max-width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+
+    & .chat-history__sidebar-title {
+      line-height: 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      justify-content: center;
+      padding: 1ch;
+      position: sticky;
+      top: 0;
+      background-color: white;
+
+      .chat-history__sidebar-title-icon {
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        height: 1.75rem;
+        width: 1.75rem;
+        cursor: pointer;
+        border-radius: 5px;
+
+        &:hover {
+          background-color: #e5e5e5;
+        }
+      }
+
+      .chat-history__sidebar-title-text {
+        line-height: normal;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+    }
+
+    & .chat-history__sidebar-list {
+      display: grid;
+      gap: 0.5rem;
+      padding: 1ch;
+
+      & .chat-history__sidebar-link {
+        text-decoration: none;
+        color: #000;
+        background-color: #f5f5f5;
+        width: calc(100% - 2ch);
+        padding: 1ch;
+        border-radius: 5px;
+
+        &:hover {
+          background-color: #e5e5e5;
+        }
+      }
+    }
+
+    & .chat-history__sidebar-upload-container {
+      padding: 1ch;
+      position: sticky;
+      bottom: 0;
+      background-color: white;
+      margin-top: auto;
+
+      & .chat-history__sidebar-upload {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        border-radius: 5px;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #000;
+        padding: 1ch;
+        align-items: center;
+
+        & .chat-history__sidebar-upload-icon {
+          padding: 0;
+          background-color: transparent;
+          border: none;
+          height: 1.75rem;
+          width: 1.75rem;
+        }
+
+        &:hover {
+          background-color: #e5e5e5;
+        }
+      }
+    }
+  }
+
+  & .chat-history__main {
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - 2rem);
+    width: 100%;
+  }
+}
