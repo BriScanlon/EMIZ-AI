@@ -1,50 +1,97 @@
 import { useEffect, useState } from 'react';
-
 import { Link, Outlet, useLocation } from 'react-router';
 
-// styles
+// Styles
 import useClassList, { mapClassesCurried } from '@blocdigital/useclasslist';
 import maps from './ChatHistory.module.scss';
 const mc = mapClassesCurried(maps, true);
 
+// Chat Item Component
+function ChatItem({
+  chatName,
+  onRename,
+  onDelete,
+  isEditing,
+  setEditingChat,
+  newChatName,
+  setNewChatName,
+}) {
+  return (
+    <div key={chatName} className={mc('chat-history__conversation-item')}>
+      <Link className={mc('chat-history__sidebar-link')} to={`/conversation/${chatName}`}>
+        {chatName}
+      </Link>
+
+      {/* Rename Input or Button */}
+      {isEditing ? (
+        <div className={mc('chat-history__rename-container')}>
+          <input
+            type="text"
+            value={newChatName}
+            onChange={(e) => setNewChatName(e.target.value)}
+            maxLength={12}
+            className={mc('chat-history__rename-input')}
+            placeholder="New name..."
+          />
+          <button onClick={() => onRename(chatName)} className={mc('chat-history__rename-save')}>
+            ✅
+          </button>
+          <button onClick={() => setEditingChat(null)} className={mc('chat-history__rename-cancel')}>
+            ❌
+          </button>
+        </div>
+      ) : (
+        <button onClick={() => setEditingChat(chatName)} className={mc('chat-history__rename-button')}>
+          ✏️ Rename
+        </button>
+      )}
+
+      {/* Delete Button */}
+      <button onClick={() => onDelete(chatName)} className={mc('chat-history__delete-button')}>
+        🗑️ Delete
+      </button>
+    </div>
+  );
+}
+
 export default function ChatHistory() {
   const classlist = useClassList({ defaultClass: 'chat-history', maps, string: true });
-
-  const [previousConversations, setPreviousConversations] = useState<string[]>();
+  const [previousConversations, setPreviousConversations] = useState<string[]>([]);
   const [editingChat, setEditingChat] = useState<string | null>(null);
   const [newChatName, setNewChatName] = useState<string>('');
   const pathname = useLocation().pathname;
 
-  useEffect(() => {
-    const fetchPreviousConversations = async () => {
+  // Fetch chat history
+  const fetchChatHistory = async () => {
+    try {
       const response = await fetch('http://127.0.0.1:8085/chats');
+      if (!response.ok) throw new Error('Failed to fetch chat history');
       const { chats } = await response.json();
       setPreviousConversations(chats);
-    };
-    fetchPreviousConversations();
+    } catch (error) {
+      console.error('🚨 Error fetching chat history:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchChatHistory();
   }, [pathname]);
 
-  // Handle deleting a chat
+  // Delete Chat
   const handleDeleteChat = async (chatName: string) => {
-    const confirmDelete = window.confirm(`Are you sure you want to delete "${chatName}"?`);
-    if (!confirmDelete) return;
+    if (!window.confirm(`Are you sure you want to delete "${chatName}"?`)) return;
 
     try {
-      const response = await fetch(`http://127.0.0.1:8085/chat/${chatName}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(`http://127.0.0.1:8085/chat/${chatName}`, { method: 'DELETE' });
+      if (!response.ok) throw new Error('Failed to delete chat');
 
-      if (!response.ok) {
-        throw new Error('Failed to delete chat');
-      }
-
-      setPreviousConversations(previousConversations.filter((chat) => chat !== chatName));
+      await fetchChatHistory(); // Refetch updated chat history
     } catch (error) {
       console.error('🚨 Error deleting chat:', error);
     }
   };
 
-  // Handle renaming a chat
+  // Rename Chat
   const handleRenameChat = async (chatName: string) => {
     if (!newChatName.trim() || newChatName.length > 12) {
       alert('Chat name must be 1-12 characters.');
@@ -58,19 +105,17 @@ export default function ChatHistory() {
         body: JSON.stringify({ new_chat_name: newChatName }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to rename chat');
-      }
+      if (!response.ok) throw new Error('Failed to rename chat');
 
-      setPreviousConversations(previousConversations.map((chat) => (chat === chatName ? newChatName : chat)));
       setEditingChat(null);
       setNewChatName('');
+      await fetchChatHistory(); // Refetch updated chat history
     } catch (error) {
       console.error('🚨 Error renaming chat:', error);
     }
   };
 
-return (
+  return (
     <div className={classlist}>
       <main className={mc('chat-history__main')}>
         <Outlet />
@@ -84,48 +129,25 @@ return (
             </svg>
           </Link>
         </div>
-        
+
         {/* New Conversation Button */}
         <Link className={mc('chat-history__sidebar-new-conversation')} to={`/`}>
-            <button className={mc('chat-history__new-conversation-button')}>➕ New Conversation</button>
+          <button className={mc('chat-history__new-conversation-button')}>➕ New Conversation</button>
         </Link>
 
         {/* List of previous conversations */}
         <div className={mc('chat-history__sidebar-list')}>
           {previousConversations?.map((conversation) => (
-            <div key={conversation} className={mc('chat-history__conversation-item')}>
-              <Link className={mc('chat-history__sidebar-link')} to={`/conversation/${conversation}`}>
-                {conversation}
-              </Link>
-
-              {/* Rename button */}
-              {editingChat === conversation ? (
-                <div className={mc('chat-history__rename-container')}>
-                  <input
-                    type="text"
-                    value={newChatName}
-                    onChange={(e) => setNewChatName(e.target.value)}
-                    maxLength={12}
-                    className={mc('chat-history__rename-input')}
-                  />
-                  <button onClick={() => handleRenameChat(conversation)} className={mc('chat-history__rename-save')}>
-                    ✅
-                  </button>
-                  <button onClick={() => setEditingChat(null)} className={mc('chat-history__rename-cancel')}>
-                    ❌
-                  </button>
-                </div>
-              ) : (
-                <button onClick={() => setEditingChat(conversation)} className={mc('chat-history__rename-button')}>
-                  ✏️ Rename
-                </button>
-              )}
-
-              {/* Delete button */}
-              <button onClick={() => handleDeleteChat(conversation)} className={mc('chat-history__delete-button')}>
-                🗑️ Delete
-              </button>
-            </div>
+            <ChatItem
+              key={conversation}
+              chatName={conversation}
+              onRename={handleRenameChat}
+              onDelete={handleDeleteChat}
+              isEditing={editingChat === conversation}
+              setEditingChat={setEditingChat}
+              newChatName={newChatName}
+              setNewChatName={setNewChatName}
+            />
           ))}
         </div>
       </aside>
