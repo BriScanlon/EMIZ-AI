@@ -11,6 +11,8 @@ export default function ChatHistory() {
   const classlist = useClassList({ defaultClass: 'chat-history', maps, string: true });
 
   const [previousConversations, setPreviousConversations] = useState<string[]>();
+  const [editingChat, setEditingChat] = useState<string | null>(null);
+  const [newChatName, setNewChatName] = useState<string>('');
   const pathname = useLocation().pathname;
 
   useEffect(() => {
@@ -22,7 +24,53 @@ export default function ChatHistory() {
     fetchPreviousConversations();
   }, [pathname]);
 
-  return (
+  // Handle deleting a chat
+  const handleDeleteChat = async (chatName: string) => {
+    const confirmDelete = window.confirm(`Are you sure you want to delete "${chatName}"?`);
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8085/chat/${chatName}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete chat');
+      }
+
+      setPreviousConversations(previousConversations.filter((chat) => chat !== chatName));
+    } catch (error) {
+      console.error('🚨 Error deleting chat:', error);
+    }
+  };
+
+  // Handle renaming a chat
+  const handleRenameChat = async (chatName: string) => {
+    if (!newChatName.trim() || newChatName.length > 12) {
+      alert('Chat name must be 1-12 characters.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8085/rename_chat/${chatName}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ new_chat_name: newChatName }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to rename chat');
+      }
+
+      setPreviousConversations(previousConversations.map((chat) => (chat === chatName ? newChatName : chat)));
+      setEditingChat(null);
+      setNewChatName('');
+    } catch (error) {
+      console.error('🚨 Error renaming chat:', error);
+    }
+  };
+
+return (
     <div className={classlist}>
       <main className={mc('chat-history__main')}>
         <Outlet />
@@ -36,28 +84,49 @@ export default function ChatHistory() {
             </svg>
           </Link>
         </div>
-        <div className={mc('chat-history__sidebar-list')}>
-          {/* New Conversation Button */}
-          <Link className={mc('chat-history__sidebar-new-conversation')} to={`/`}>
+        
+        {/* New Conversation Button */}
+        <Link className={mc('chat-history__sidebar-new-conversation')} to={`/`}>
             <button className={mc('chat-history__new-conversation-button')}>➕ New Conversation</button>
-          </Link>
+        </Link>
 
-          {/* List of Previous Conversations */}
+        {/* List of previous conversations */}
+        <div className={mc('chat-history__sidebar-list')}>
           {previousConversations?.map((conversation) => (
-            <Link className={mc('chat-history__sidebar-link')} to={`/conversation/${conversation}`} key={conversation}>
-              {conversation}
-            </Link>
+            <div key={conversation} className={mc('chat-history__conversation-item')}>
+              <Link className={mc('chat-history__sidebar-link')} to={`/conversation/${conversation}`}>
+                {conversation}
+              </Link>
+
+              {/* Rename button */}
+              {editingChat === conversation ? (
+                <div className={mc('chat-history__rename-container')}>
+                  <input
+                    type="text"
+                    value={newChatName}
+                    onChange={(e) => setNewChatName(e.target.value)}
+                    maxLength={12}
+                    className={mc('chat-history__rename-input')}
+                  />
+                  <button onClick={() => handleRenameChat(conversation)} className={mc('chat-history__rename-save')}>
+                    ✅
+                  </button>
+                  <button onClick={() => setEditingChat(null)} className={mc('chat-history__rename-cancel')}>
+                    ❌
+                  </button>
+                </div>
+              ) : (
+                <button onClick={() => setEditingChat(conversation)} className={mc('chat-history__rename-button')}>
+                  ✏️ Rename
+                </button>
+              )}
+
+              {/* Delete button */}
+              <button onClick={() => handleDeleteChat(conversation)} className={mc('chat-history__delete-button')}>
+                🗑️ Delete
+              </button>
+            </div>
           ))}
-        </div>
-        <div className={mc('chat-history__sidebar-upload-container')}>
-          <Link to="/upload" className={mc('chat-history__sidebar-upload')}>
-            <span className={mc('chat-history__sidebar-upload-text')}>Upload Files</span>
-            <span className={mc('chat-history__sidebar-upload-icon')}>
-              <svg viewBox="0 -960 960 960" fill="#000000">
-                <path d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
-              </svg>
-            </span>
-          </Link>
         </div>
       </aside>
     </div>
