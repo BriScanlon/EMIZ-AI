@@ -8,11 +8,9 @@ import ChatInput from '../../components/ChatInput';
 const mc = mapClassesCurried(maps, true);
 
 const cannedQueries = [
-  'Tell me a joke',
-  "What's the weather like today?",
-  'How do you make a cake?',
-  'What is the capital of France?',
-  'Can you explain quantum mechanics?',
+  'Help me design a maintainance schedule please.',
+  "What information is needed to calculate ongoing running costs of a vehicle?",
+  'I am new, suggest some orientation tasks please.',
 ];
 
 export default function Home() {
@@ -71,8 +69,9 @@ export default function Home() {
     <div className={mc('conversation__main')}>
       <div className={mc('conversation__container')}>
         <div className={mc('conversation__canned-queries')}>
-          {cannedQueries.map((query) => (
+          {cannedQueries.map((query, index) => (
             <button
+              key={index} // ✅ This ensures each button has a unique key
               className={mc('conversation__canned-query')}
               onClick={() => performQueryRequest(query)}
               disabled={loading}
