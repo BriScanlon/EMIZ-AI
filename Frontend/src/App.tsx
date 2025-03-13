@@ -3,12 +3,12 @@ import { Route, Routes } from 'react-router';
 // pages
 import Home from './pages/Home';
 import Conversation from './pages/Conversation';
+import Graph from './pages/Graph/Graph';
+import Upload from './pages/Upload';
 
 // layouts
 import ChatHistory from './layouts/ChatHistory';
-import Upload from './pages/Upload';
 import ChatExtension from './layouts/ChatExtension';
-import Graph from './pages/Graph/Graph';
 
 function App() {
   return (

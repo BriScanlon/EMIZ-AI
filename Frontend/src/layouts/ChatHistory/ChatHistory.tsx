@@ -37,6 +37,12 @@ export default function ChatHistory() {
           </Link>
         </div>
         <div className={mc('chat-history__sidebar-list')}>
+          {/* New Conversation Button */}
+          <Link className={mc('chat-history__sidebar-new-conversation')} to={`/`}>
+            <button className={mc('chat-history__new-conversation-button')}>➕ New Conversation</button>
+          </Link>
+
+          {/* List of Previous Conversations */}
           {previousConversations?.map((conversation) => (
             <Link className={mc('chat-history__sidebar-link')} to={`/conversation/${conversation}`} key={conversation}>
               {conversation}
