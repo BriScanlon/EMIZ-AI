@@ -28,7 +28,6 @@ export default function Home() {
   
     console.log("🚀 Sending API Request...");
     console.log("📨 Query Payload:", {
-      chat_name: query.slice(0, 12),
       query,
       debug_test: false,
       verbose: true,
@@ -39,7 +38,6 @@ export default function Home() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          chat_name: query.slice(0, 12),
           query,
           debug_test: false,
           verbose: true,
