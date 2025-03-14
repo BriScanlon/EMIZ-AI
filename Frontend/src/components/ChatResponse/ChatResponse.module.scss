@@ -1,0 +1,42 @@
+.response {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+
+  & .response__bubble {
+    background-color: rgb(212, 212, 212);
+    width: fit-content;
+    max-width: 70%;
+    padding: 0.625rem 1.25rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    overflow-y: auto;
+
+    & .response__text {
+    }
+
+    & .response__actions {
+      display: flex;
+      justify-content: flex-end;
+
+      & .response__actions-graph {
+        width: fit-content;
+        background-color: transparent;
+        line-height: 0;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+
+        & .response__actions-graph-icon {
+          height: 1.5rem;
+          width: 1.5rem;
+          margin: 1ch;
+        }
+
+        &:hover {
+          background-color: #e5e5e5;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+.upload {
+  display: flex;
+  height: 100%;
+
+  & .upload__content {
+    margin: auto;
+  }
+}
