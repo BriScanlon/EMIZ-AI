@@ -33,10 +33,11 @@ export default function Chat({ className }: ChatProps) {
     () =>
       conversationHistory?.map((chatMessage) => {
         const response = chatMessage.results?.[0].message;
-
-        return { response, timestamp: chatMessage.timestamp, query: chatMessage.query };
+        const graph = chatMessage.results?.[0].graph; // ✅ Ensure graph data is passed
+  
+        return { response, timestamp: chatMessage.timestamp, query: chatMessage.query, graph };
       }),
-    [conversationHistory],
+    [conversationHistory]
   );
 
   return (
@@ -45,10 +46,15 @@ export default function Chat({ className }: ChatProps) {
         {Loading && <ChatThinking thinking="Thinking..." />}
         {Loading && <ChatQuery query={latestQuery || 'ERROR'} />}
         {error && <ChatResponse response={error} conversationId={conversationId || 'ERROR'} index={0} />}
-        {history?.map(({ response, timestamp, query }, index) => {
+        {history?.map(({ response, timestamp, query, graph }, index) => {
           return (
             <Fragment key={timestamp}>
-              <ChatResponse response={response} conversationId={conversationId || 'ERROR'} index={index} />
+              <ChatResponse
+                response={response}
+                conversationId={conversationId || 'ERROR'}
+                index={index}
+                graph={graph} // ✅ Pass graph data
+              />
               <ChatQuery query={query} />
             </Fragment>
           );

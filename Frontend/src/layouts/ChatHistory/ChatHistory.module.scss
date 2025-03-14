@@ -108,3 +108,76 @@
     width: 100%;
   }
 }
+
+.chat-history__new-conversation-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.chat-history__new-conversation-button:hover {
+  background-color: #0056b3;
+}
+
+.chat-history__conversation-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.chat-history__rename-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.chat-history__rename-input {
+  width: 120px;
+  padding: 4px;
+  font-size: 14px;
+}
+
+.chat-history__rename-button,
+.chat-history__delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px;
+  transition: 0.2s;
+}
+
+.chat-history__rename-button:hover {
+  color: #007bff;
+}
+
+.chat-history__delete-button:hover {
+  color: red;
+}
+
+.chat-history__rename-save {
+  background: green;
+  color: white;
+  padding: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.chat-history__rename-cancel {
+  background: red;
+  color: white;
+  padding: 4px;
+  border: none;
+  cursor: pointer;
+}

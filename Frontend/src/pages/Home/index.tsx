@@ -8,11 +8,9 @@ import ChatInput from '../../components/ChatInput';
 const mc = mapClassesCurried(maps, true);
 
 const cannedQueries = [
-  'Tell me a joke',
-  "What's the weather like today?",
-  'How do you make a cake?',
-  'What is the capital of France?',
-  'Can you explain quantum mechanics?',
+  'Help me design a maintainance schedule please.',
+  "What information is needed to calculate ongoing running costs of a vehicle?",
+  'I am new, suggest some orientation tasks please.',
 ];
 
 export default function Home() {
@@ -27,33 +25,51 @@ export default function Home() {
 
   const performQueryRequest = async (query: string) => {
     setLoading(true);
+  
+    console.log("🚀 Sending API Request...");
+    console.log("📨 Query Payload:", {
+      query,
+      debug_test: false,
+      verbose: true,
+    });
+  
     try {
       const response = await fetch(`http://127.0.0.1:8085/query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_name: query.slice(0, 12), query, debug_test: false, verbose: true }),
+        body: JSON.stringify({
+          query,
+          debug_test: false,
+          verbose: true,
+        }),
       });
-
+  
+      console.log("🔍 API Response Status:", response.status);
+  
       if (!response.ok) {
-        throw new Error('Failed to send query');
+        console.error("❌ API Error - Response was not OK:", response);
+        throw new Error(`Failed to send query: ${response.statusText}`);
       }
-
-      const { chat_name } = await response.json();
-
-      navigate(`/conversation/${chat_name}`);
+  
+      const jsonResponse = await response.json();
+      console.log("📦 API Response Data:", jsonResponse);
+  
+      navigate(`/conversation/${jsonResponse.chat_name}`);
     } catch (error) {
-      console.error(error);
+      console.error("🚨 API Request Failed:", error);
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className={mc('conversation__main')}>
       <div className={mc('conversation__container')}>
         <div className={mc('conversation__canned-queries')}>
-          {cannedQueries.map((query) => (
+          {cannedQueries.map((query, index) => (
             <button
+              key={index} // ✅ This ensures each button has a unique key
               className={mc('conversation__canned-query')}
               onClick={() => performQueryRequest(query)}
               disabled={loading}
