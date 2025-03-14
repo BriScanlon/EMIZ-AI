@@ -1,0 +1,12 @@
+.chat {
+  height: 100%;
+  max-width: calc(100vw - 3rem - 350px);
+
+  & .chat__messages {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    height: calc(100% - 68px - 2ch);
+    padding: 1ch;
+  }
+}

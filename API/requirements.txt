@@ -3,6 +3,7 @@ langchain_experimental
 langchain_ollama
 neo4j
 neo4j-graphrag
+neo4j-graphrag[ollama]
 pandas
 uvicorn
 fastapi
@@ -10,3 +11,6 @@ json_repair
 python-multipart
 PyPDF2
 python-docx
+sentence_transformers
+Ollama
+eval-type-backport

@@ -1,0 +1,17 @@
+.query {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  & .query__bubble {
+    background-color: rgb(212, 212, 212);
+    width: fit-content;
+    max-width: 70%;
+    padding: 0.625rem 1.25rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+
+    & .query__text {
+    }
+  }
+}

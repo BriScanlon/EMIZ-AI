@@ -1,0 +1,9 @@
+body,
+html,
+#root {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  background-color: #f5f5f5;
+  font-family: century-gothic, sans-serif;
+}
