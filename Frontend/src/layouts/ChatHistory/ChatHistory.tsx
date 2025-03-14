@@ -15,7 +15,7 @@ function ChatItem({
   setEditingChat,
   newChatName,
   setNewChatName,
-}) {
+}:{chatName:string, onRename: any, onDelete: any, isEditing: any, setEditingChat: any, newChatName: any, setNewChatName: any }) {
   return (
     <div key={chatName} className={mc('chat-history__conversation-item')}>
       <Link className={mc('chat-history__sidebar-link')} to={`/conversation/${chatName}`}>
@@ -145,6 +145,16 @@ export default function ChatHistory() {
               setNewChatName={setNewChatName}
             />
           ))}
+        </div>
+        <div className={mc('chat-history__sidebar-upload-container')}>
+          <Link to="/upload" className={mc('chat-history__sidebar-upload')}>
+            <span className={mc('chat-history__sidebar-upload-text')}>Upload Files</span>
+            <span className={mc('chat-history__sidebar-upload-icon')}>
+              <svg viewBox="0 -960 960 960" fill="#000000">
+                <path d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
+              </svg>
+            </span>
+          </Link>
         </div>
       </aside>
     </div>

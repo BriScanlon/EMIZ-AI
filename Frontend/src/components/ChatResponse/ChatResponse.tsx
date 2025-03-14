@@ -1,5 +1,5 @@
 import Markdown from 'react-markdown';
-import { Link,useNavigate, useLocation } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 
 // styles
 import useClassList, { mapClassesCurried } from '@blocdigital/useclasslist';
